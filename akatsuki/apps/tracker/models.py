@@ -7,8 +7,8 @@ class Tienda(models.Model):
 
 class TiendaPrecios(models.Model):
     tienda = models.ForeignKey(Tienda, on_delete=models.CASCADE)
-    tipo = models.CharField()
-    bs4_path = models.CharField()
+    tipo = models.CharField(max_length=50)
+    bs4_path = models.CharField(max_length=200)
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
@@ -17,9 +17,9 @@ class Producto(models.Model):
 
 class Historial(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    tipo = models.CharField()
+    tipo = models.CharField(max_length=50)
     fecha = models.DateTimeField(auto_now_add=True)
-    precio = IntegerField()
+    precio = models.IntegerField()
 
     class Disponibilidad(models.IntegerChoices):
         NO = 0, _('No')
