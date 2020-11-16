@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import TrackerView, HomeView
+from .views import TrackerView
 
 urlpatterns = [
     path('tracker/', TrackerView.as_view()),
-    path('home/', HomeView.as_view()),
 ]
