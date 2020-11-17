@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     "apps.tracker",
     "apps.users",
+    "apps.others",
 ]
 
 MIDDLEWARE = [

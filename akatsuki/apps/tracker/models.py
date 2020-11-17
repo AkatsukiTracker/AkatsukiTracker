@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from apps.users.models import Usuario
+
 class Tienda(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     dominio = models.URLField(unique=True)
@@ -28,4 +30,7 @@ class Historial(models.Model):
 
     disponible = models.IntegerField( choices=Disponibilidad.choices )
 
+class ProductoUsuario(models.Model):
+    user = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
