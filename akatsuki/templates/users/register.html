@@ -1,6 +1,6 @@
 {% extends "users/template.html" %}
 {% load static %}
-{% block title %}Login {% endblock %}
+{% block title %}Register{% endblock %}
 {% block content %}
 
 <div class="container-fluid">
@@ -16,7 +16,7 @@
     <div class="col-12 col-md-6 col-lg-4">
       <div class="card border-akatsuki shadow-akatsuki">
         <div class="card-body">
-          <h3 class="display-4 mb-3 text-center">Inicia sesion</h3>
+          <h3 class="display-4 mb-3 text-center">Registrate</h3>
             {% for message in messages %}
               <div class="alert alert-warning" role="alert">
                 {{message}}
@@ -48,12 +48,9 @@
                 </div>
                 <input type="text" name="password2" placeholder="Repite tu contraseña" class="form-control">
               </div>
-
               <div class="d-flex justify-content-center mt-3">
                 <button class="btn bg-akatsuki shadow-akatsuki text-white mdi mdi-send" type="submit" value="Register Account"> Registarse</button>
               </div>
-
-
             </form>
         </div>
       </div>
