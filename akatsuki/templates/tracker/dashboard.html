@@ -1,0 +1,72 @@
+{% extends "tracker/template.html" %}
+{% load static %}
+{% block title %}Mis productos{% endblock %}
+{% block content %}
+
+{% extends "tracker/template.html" %}
+{% load static %}
+{% block title %}Mis productos{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col">
+        <h1 class="display-4 my-5">Mis productos</h1>
+        <table class="table table-striped border rounded shadow mb-5">
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Tienda</th>
+              <th scope="col">Ultimo precio</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">El meo pc gamer</th>
+              <td>nose</td>
+              <td>$10.000</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">El meo xiaomi</th>
+              <td>por ahi</td>
+              <td>$110.000</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">La mea silla gamer</th>
+              <td>a lavuelta</td>
+              <td>$1.100.000</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% endblock %}
