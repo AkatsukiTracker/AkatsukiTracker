@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .models import *
-from .forms import CreateUserForm#, ProductoUsuario
+from .forms import CreateUserForm
 
 
 def registerPage(request):
@@ -59,8 +59,3 @@ def logoutUser(request):
 @login_required(login_url='login')
 def home(request):
     return render(request, 'home/index.html', context)
-'''
-@login_required(login_url='login')
-def add_product(request):
-    return render(request, 'tracker/add_product.html', context)
-'''
