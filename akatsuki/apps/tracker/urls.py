@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import TrackerView
+from . import views
 
 urlpatterns = [
-    path('tracker/', TrackerView.as_view()),
+    path('', views.dashboard, name="dashboard"),
+    path('profile/', views.profile, name="profile"),
+    #path('add_product/', views.add_product, name="add_product"),
 ]

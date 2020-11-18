@@ -1,9 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-
-class User(models.Model):
+class Usuario(User):
     #id automatica
-    username = models.CharField(max_length=50, unique=True)
-    email = models.EmailField(blank=True, unique=True)
-    password = models.CharField(max_length=256)
-    
+    pass
