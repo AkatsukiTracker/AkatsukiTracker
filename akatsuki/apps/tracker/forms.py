@@ -1,9 +1,13 @@
 from django.forms import ModelForm
-from .models import ProductoUsuario
+from .models import *
 from django import forms
 
-class AddProductForm(ModelForm):
+class CheckUrlForm(ModelForm):
 	class Meta:
-		model = ProductoUsuario
+		model = Producto
 		fields = '__all__'
 
+class ProductosForm(ModelForm):
+	class Meta:
+		model = Producto
+		fields = '__all__'
