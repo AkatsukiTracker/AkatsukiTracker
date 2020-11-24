@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "apps.tracker",
     "apps.users",
     "apps.others",
+
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -114,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
