@@ -14,6 +14,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from .models import *
 from .forms import *
+from .serializers import *
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 @login_required(login_url='login')
@@ -23,6 +27,40 @@ def dashboard(request):
 @login_required(login_url='login')
 def profile(request):
     return render(request, 'tracker/profile.html')
+
+def check_url(request):
+    tmpl_vars = {'form': CheckUrlForm()}
+    return render(request, 'tracker/check_url.html', tmpl_vars)
+
+@login_required(login_url='login')
+@api_view(['GET','POST'])
+def add_product(request, pk):
+    if request.method == 'POST':
+        pass
+
+@api_view(['GET'])
+def see_products(request, num=1):
+    if request.method == 'GET':
+        n = num * 10
+        productos = Producto.objects.all()[n-10:n]
+        serializer = ProductoSerializer(productos, many=True)
+        return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # EN DESARROLLO
 '''
