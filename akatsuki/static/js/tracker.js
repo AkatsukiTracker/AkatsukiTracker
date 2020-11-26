@@ -6,8 +6,7 @@ function check_url(){
       if (response.status !== 200)  return false;
         response.json().then(function(data) {
           console.log(data)
-          document.querySelector("#input-nombre").value = data['data']['nombre']
-          document.querySelector("#input-nombreTienda").value = data['data']['tienda']
+          document.querySelector("#input-datos").value = JSON.stringify(data['data'])
         }
       );
     })

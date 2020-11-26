@@ -16,13 +16,14 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from .models import *
 from .forms import *
-from .serializers import *
 from django.contrib.auth.models import User
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .scrapers import *
+
+import json
 
 
 @login_required(login_url='login')
@@ -65,11 +66,12 @@ def check_url(request):
 
 @login_required(login_url='login')
 def add_product(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         #usuario
         user = User.objects.filter(username=request.user.username)[0]
         #DATOS
-        datos = datos['datos']
+        datos = request.POST
+        datos = json.loads(datos['datos'])
 
         #producto
         nombre_producto = datos['nombre']
@@ -97,7 +99,7 @@ def add_product(request):
         for i in range(len(precios)):
             historial = Historial(producto = producto, tipo = tipo_precios[i], precio = int(precios[i]), bs4path = paths[i], disponible=1)
             historial.save()
-        
+
         #ProductoUsuario
         productoUsuario = ProductoUsuario(producto = producto, user = user)
         productoUsuario.save()

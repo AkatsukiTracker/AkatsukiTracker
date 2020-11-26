@@ -81,14 +81,12 @@
       <div class="modal-body">
         <form action="add_product/" method="POST" id="form-addProduct">
           {% csrf_token %}
-          <input type="text" class="form-control" id="input-nombre"
-           name="nombre">
-           <input type="text" class="form-control" id="input-nombreTienda"
-           name="nombreTienda">
+          <input type="text" class="form-control" id="input-datos"
+           name="datos">
           <div class="input-group">
             <input type="url" class="form-control" id="input-url" name="url">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary mdi mdi-check" type="button">Comprobar</button>
+              <button class="btn btn-outline-secondary mdi mdi-check" type="button" onclick="check_url()">Comprobar</button>
             </div>
           </div>
           <small class="form-text text-muted">Recuerda que debe ser una tienda soportada</small>
