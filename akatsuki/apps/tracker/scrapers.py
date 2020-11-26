@@ -6,19 +6,8 @@ class FalabellaInitialScraper():
     def __init__(self, link):
         self.link = link
         soup = BeautifulSoup(requests.get(link).content, features="html.parser")
-        codigo = ""
-        for i in link[47:]:
-            if i == "/":
-                break
-            codigo += i
-        self.nombreProducto = ""
-        for i in link[47+len(codigo)+1:]:
-            if i == "/":
-                break
-            elif i == "-":
-                self.nombreProducto += " "
-            else:
-                self.nombreProducto += i   
+        codigo = link.split('/')[5]
+        self.nombreProducto = link.split('/')[6].replace('-',' ')
         selectText = ("#testId-pod-prices-{} > ol > li").format(codigo)
         data = soup.select(selectText)
 
@@ -111,23 +100,23 @@ class FalabellaScraper():
         try:
             self.precio = soup.select(path)[0].text
         except:
-            codigo = ""
-            for i in link[47:]:
-                if i == "/":
-                    break
-                codigo += i
+            codigo = self.link.split('/')[5]
             selectText = ("#testId-pod-prices-{} > ol > li").format(codigo)
             jsx = soup.select(selectText)[0].attrs["class"][0]
 
             self.path = selectText + "." + jsx + path[-21:]
-            self.precio = soup.select(self.path)[0].text
-            self.status = 1
+            try:
+                self.precio = soup.select(self.path)[0].text
+                self.status = 1
+            except:
+                self.status = 2
     
     def check_status(self):
         return self.status
+        #Status: 0 = OK, 1 = CHANGED PATH, 2 = NO DISPONIBLE
 
     def get_precio(self):
         return self.precio
 
-    def get_precio_and_path(self):
-        return (self.precio, self.path)
+    def get_path(self):
+        return self.path

@@ -17,6 +17,7 @@ from django.views.generic import TemplateView
 from .models import *
 from .forms import *
 from .serializers import *
+from django.contrib.auth.models import User
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -31,11 +32,9 @@ def dashboard(request):
 @login_required(login_url='login')
 def profile(request):
     return render(request, 'tracker/profile.html')
-'''
-def check_url(request):
-    tmpl_vars = {'form': CheckUrlForm()}
-    return render(request, 'tracker/check_url.html', tmpl_vars)
-'''
+
+def trending(request):
+    return render(request, 'tracker/trending.html' )
 
 @api_view(['GET', 'POST'])
 def hello_world(request):
@@ -44,15 +43,9 @@ def hello_world(request):
     return Response({"message": "Hello, world!"})
 
 @login_required(login_url='login')
-@api_view(['POST','GET','PUT'])
+@api_view(['POST','GET'])
 def check_url(request):
 
-    if request.method == 'POST':
-        base_url = reverse('add_product')
-        context = {"xd":"owo"}
-        urlcontext = urlencode({'context': context})
-        url = "{}?{}".format(base_url, urlcontext)
-        return redirect(url)
     if request.method == 'GET':
         link = request.GET['url']
         tienda = link.split('/')[2]
@@ -66,70 +59,49 @@ def check_url(request):
             tienda = "falabella"
             #paths
             paths = scraper.get_paths()
-        #serializer = CheckUrlSerializer(data = {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link})
-        #serializer.is_valid()
+
         return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link}})
-    return Response({"message": "Introduce un link para continuar"})
+    return Response({"message": "NOT OK"})
 
 @login_required(login_url='login')
 def add_product(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         #usuario
-        username = request.user.username
-        pk = request.user.pk
-        #producto
+        user = User.objects.filter(username=request.user.username)[0]
+        #DATOS
+        datos = datos['datos']
 
-        datos = request.POST
-        tienda = Tienda.objects.all()[0]
-        producto = Producto(nombre = datos['nombre'], link = datos['url'], tienda = tienda)
+        #producto
+        nombre_producto = datos['nombre']
+        link = datos['link']
+
+        #tienda
+        tienda = Tienda.objects.filter(nombre=datos["tienda"])[0]    #[0]?
+
+        #historiales
+        precios = []
+        tipo_precios = []
+        paths = []
+        for i in datos["precios"]:
+            tipo_precios.append(i)
+            precios.append(datos["precios"][i])
+            paths.append(datos["paths"][i])
+
+        #Crear Instancias de los Modelos
+
+        #Producto
+        producto = Producto(nombre = nombre_producto, link = link, tienda = tienda)
         producto.save()
+
+        #Historiales
+        for i in range(len(precios)):
+            historial = Historial(producto = producto, tipo = tipo_precios[i], precio = int(precios[i]), bs4path = paths[i], disponible=1)
+            historial.save()
+        
+        #ProductoUsuario
+        productoUsuario = ProductoUsuario(producto = producto, user = user)
+        productoUsuario.save()
 
 
         return HttpResponse("OK")
-    return HttpResponse(request.GET.get("xd"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# EN DESARROLLO
-'''
-@login_required(login_url='login')
-def add_product(request):
-    AddProductFormSet = inlineformset_factory(Producto, ProductoUsuario, fk_name='producto', fields=('',))
-    user = Usuario.objects.get(id=request.user.id)
-    try:
-        producto = Producto.objects.get(id=ProductoUsuario.producto)
-        formset = AddProductFormSet(queryset=producto.objects.none(), instance=user)
-    except:
-        producto = Producto.objects.none()
-        formset = AddProductFormSet(queryset=producto, instance=user)
-
-    if request.method == 'POST':
-        #print('Printing POST:', request.POST)
-        form = AddProductForm(request.POST)
-        formset = OrderFormSet(request.POST, instance=user)
-        if formset.is_valid():
-            formset.save()
-            return redirect('/')
-
-    context = {'form':formset}
-    return render(request, 'tracker/add_product.html', context)
-'''
+    return HttpResponse("NOT OK")
