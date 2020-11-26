@@ -53,8 +53,8 @@ def check_url(request):
         urlcontext = urlencode({'context': context})
         url = "{}?{}".format(base_url, urlcontext)
         return redirect(url)
-    if request.method == 'PUT':
-        link = request.data
+    if request.method == 'GET':
+        link = request.GET['url']
         tienda = link.split('/')[2]
         if tienda == "www.falabella.com":
             scraper = FalabellaInitialScraper(link)
@@ -68,7 +68,7 @@ def check_url(request):
             paths = scraper.get_paths()
         #serializer = CheckUrlSerializer(data = {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link})
         #serializer.is_valid()
-        return Response({"message": "Funcionó!", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link}})
+        return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link}})
     return Response({"message": "Introduce un link para continuar"})
 
 @login_required(login_url='login')
@@ -78,12 +78,19 @@ def add_product(request):
         username = request.user.username
         pk = request.user.pk
         #producto
-        return HttpResponse("xd")
+
+        datos = request.POST
+        tienda = Tienda.objects.all()[0]
+        producto = Producto(nombre = datos['nombre'], link = datos['url'], tienda = tienda)
+        producto.save()
+
+
+        return HttpResponse("OK")
     return HttpResponse(request.GET.get("xd"))
 
-    
-    
-        
+
+
+
 
 
 
@@ -114,7 +121,7 @@ def add_product(request):
     except:
         producto = Producto.objects.none()
         formset = AddProductFormSet(queryset=producto, instance=user)
-    
+
     if request.method == 'POST':
         #print('Printing POST:', request.POST)
         form = AddProductForm(request.POST)
@@ -124,5 +131,5 @@ def add_product(request):
             return redirect('/')
 
     context = {'form':formset}
-    return render(request, 'tracker/add_product.html', context) 
+    return render(request, 'tracker/add_product.html', context)
 '''

@@ -79,9 +79,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="add_product/" method="POST" id="form-addProduct">
+          {% csrf_token %}
+          <input type="text" class="form-control" id="input-nombre"
+           name="nombre">
+           <input type="text" class="form-control" id="input-nombreTienda"
+           name="nombreTienda">
           <div class="input-group">
-            <input type="email" class="form-control">
+            <input type="url" class="form-control" id="input-url" name="url">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary mdi mdi-check" type="button">Comprobar</button>
             </div>
@@ -91,7 +96,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" disabled>Cerrar</button>
-        <button type="button" class="btn bg-akatsuki text-white" disabled>Ok</button>
+        <button type="submit" form="form-addProduct" class="btn bg-akatsuki text-white">Ok</button>
       </div>
     </div>
   </div>
