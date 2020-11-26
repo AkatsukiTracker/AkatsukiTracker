@@ -1,0 +1,100 @@
+{% extends "tracker/template.html" %}
+{% load static %}
+{% block title %}Mis productos{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col">
+        <div class="row my-5 justify-content-between">
+          <div class="col-7">
+             <h1 class="display-4">Mis productos</h1>
+          </div>
+          <div class="col-3 align-self-center">
+            <button class="btn bg-akatsuki text-white mdi mdi-plus shadow" data-toggle="modal" data-target="#modal-newProduct">Agregar producto</button>
+          </div>
+        </div>
+        <table class="table table-striped border rounded shadow mb-5">
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Tienda</th>
+              <th scope="col">Ultimo precio</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">El meo pc gamer</th>
+              <td>nose</td>
+              <td>$10.000</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">El meo xiaomi</th>
+              <td>por ahi</td>
+              <td>$110.000</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">La mea silla gamer</th>
+              <td>a lavuelta</td>
+              <td>$1.100.000</td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-newProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar producto</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="input-group">
+            <input type="email" class="form-control">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary mdi mdi-check" type="button">Comprobar</button>
+            </div>
+          </div>
+          <small class="form-text text-muted">Recuerda que debe ser una tienda soportada</small>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" disabled>Cerrar</button>
+        <button type="button" class="btn bg-akatsuki text-white" disabled>Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
