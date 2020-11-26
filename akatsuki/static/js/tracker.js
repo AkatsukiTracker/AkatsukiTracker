@@ -1,5 +1,4 @@
 function check_url(){
-
   var url = document.querySelector("#input-url").value
   fetch(`check_url?url=${url}`, {method: "GET"})
     .then( function(response) {
@@ -7,6 +6,7 @@ function check_url(){
         response.json().then(function(data) {
           console.log(data)
           document.querySelector("#input-datos").value = JSON.stringify(data['data'])
+          document.querySelector("#producto-nombre").textContent = data['data']['nombre']
         }
       );
     })
