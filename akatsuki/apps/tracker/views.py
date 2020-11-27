@@ -49,19 +49,26 @@ def check_url(request):
 
     if request.method == 'GET':
         link = request.GET['url']
-        tienda = link.split('/')[2]
-        if tienda == "www.falabella.com":
-            scraper = FalabellaInitialScraper(link)
+        try:
+            tienda = link.split('/')[2]
+        except:
+            pass
+        if len(link) != 0 and tiendaDisponible(tienda):
+            if tienda == "www.falabella.com":
+                scraper = FalabellaInitialScraper(link)
+                #tienda
+                tienda = "falabella"
+
             #precios
             precios = scraper.get_precios()
             #nombre
             nombre = scraper.get_nombre()
-            #tienda
-            tienda = "falabella"
             #paths
             paths = scraper.get_paths()
+            #link imagen
+            img = scraper.get_img()
 
-        return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link}})
+            return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link, "img": img}})
     return Response({"message": "NOT OK"})
 
 @login_required(login_url='login')
@@ -76,6 +83,7 @@ def add_product(request):
         #producto
         nombre_producto = datos['nombre']
         link = datos['link']
+        img = datos['img']
 
         #tienda
         tienda = Tienda.objects.filter(nombre=datos["tienda"])[0]    #[0]?
@@ -92,7 +100,7 @@ def add_product(request):
         #Crear Instancias de los Modelos
 
         #Producto
-        producto = Producto(nombre = nombre_producto, link = link, tienda = tienda)
+        producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img)
         producto.save()
 
         #Historiales
@@ -106,4 +114,6 @@ def add_product(request):
 
 
         return HttpResponse("OK")
+    if request.method == 'GET':
+        return redirect('dashboard')
     return HttpResponse("NOT OK")
