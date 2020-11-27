@@ -1,6 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 
+def string_to_number(string): #no la mejor funcion, pero weno
+    n = ""
+    numbers = ["0","1","2","3","4","5","6","7","8","9"]
+    for i in string:
+        if i in numbers:
+            n += i
+    return int(n)
+
+
 class FalabellaInitialScraper():
     tienda = "falabella"
     def __init__(self, link):
@@ -40,18 +49,18 @@ class FalabellaInitialScraper():
                 p_normal = soup.select(path_tarjeta)[0].text
   
         try:
-            self.p_normal = p_normal
+            self.p_normal = string_to_number(p_normal)
             self.path_normal = path_normal
         except:
             pass
         else:
             try:
-                self.p_tarjeta = p_tarjeta
+                self.p_tarjeta = string_to_number(p_tarjeta)
                 self.path_tarjeta = path_tarjeta
             except:
                 pass
             try:
-                self.p_oferta = p_oferta
+                self.p_oferta = string_to_number(p_oferta)
                 self.path_oferta = path_oferta
             except:
                 pass          
@@ -98,7 +107,7 @@ class FalabellaScraper():
         soup = BeautifulSoup(requests.get(link).content, features="html.parser") 
         self.status = 0
         try:
-            self.precio = soup.select(path)[0].text
+            self.precio = string_to_number(soup.select(path)[0].text)
         except:
             codigo = self.link.split('/')[5]
             selectText = ("#testId-pod-prices-{} > ol > li").format(codigo)
@@ -106,7 +115,7 @@ class FalabellaScraper():
 
             self.path = selectText + "." + jsx + path[-21:]
             try:
-                self.precio = soup.select(self.path)[0].text
+                self.precio = string_to_number(soup.select(self.path)[0].text)
                 self.status = 1
             except:
                 self.status = 2
