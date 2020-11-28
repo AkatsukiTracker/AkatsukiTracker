@@ -44,9 +44,9 @@ class FalabellaInitialScraper():
                 p_normal = soup.select(path_normal)[0].text
             else:
                 path_oferta = selectText + "." + jsx + ".price-0 > div > span"
-                path_tarjeta = selectText + "." + jsx + ".price-1 > div > span"
+                path_normal = selectText + "." + jsx + ".price-1 > div > span"
                 p_oferta = soup.select(path_oferta)[0].text
-                p_normal = soup.select(path_tarjeta)[0].text
+                p_normal = soup.select(path_normal)[0].text
   
         try:
             self.p_normal = string_to_number(p_normal)
@@ -64,7 +64,9 @@ class FalabellaInitialScraper():
                 self.path_oferta = path_oferta
             except:
                 pass          
-
+        
+        self.img_link = ("https://falabella.scene7.com/is/image/Falabella/{}_1?wid=800&hei=800&qlt=70").format(codigo)
+        
 
     def get_link(self):
         return self.link
@@ -101,6 +103,9 @@ class FalabellaInitialScraper():
             pass
         return paths
 
+    def get_img(self):
+        return self.img_link
+
 class FalabellaScraper():
 
     def __init__(self, link, path):
@@ -129,3 +134,11 @@ class FalabellaScraper():
 
     def get_path(self):
         return self.path
+
+def tiendaDisponible(tienda):
+    lista =["www.falabella.com",
+
+    ]
+    if tienda in lista:
+        return True
+    return Falsex

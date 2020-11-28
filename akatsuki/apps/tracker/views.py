@@ -28,6 +28,32 @@ import json
 
 @login_required(login_url='login')
 def dashboard(request):
+    if request.method == 'GET':
+
+        data = {}
+
+        user = User.objects.filter(username=request.user.username)[0]
+        productos_usuarios = ProductoUsuario.objects.filter(user=user)
+        productos = []
+        for i in productos_usuarios:
+            productos.append(i.producto)
+        for prod in productos:
+            producto = prod.nombre
+            tienda = (prod.tienda).nombre
+            img = prod.img_link
+            link = prod.link
+            historiales = Historial.objects.filter(producto = prod)
+            ultimo_historial = historiales[::-1][0]
+            precio = ultimo_historial.precio
+            
+            data[prod] = {
+                "producto":producto,
+                "tienda":tienda,
+                "img":img,
+                "link":link,
+                "precios":precio,
+            }
+        return HttpResponse(data)
     return render(request, 'tracker/index.html')
 
 @login_required(login_url='login')
@@ -37,31 +63,32 @@ def profile(request):
 def trending(request):
     return render(request, 'tracker/trending.html' )
 
-@api_view(['GET', 'POST'])
-def hello_world(request):
-    if request.method == 'POST':
-        return Response({"message": "Got some data!", "data": request.data})
-    return Response({"message": "Hello, world!"})
-
 @login_required(login_url='login')
 @api_view(['POST','GET'])
 def check_url(request):
 
     if request.method == 'GET':
         link = request.GET['url']
-        tienda = link.split('/')[2]
-        if tienda == "www.falabella.com":
-            scraper = FalabellaInitialScraper(link)
+        try:
+            tienda = link.split('/')[2]
+        except:
+            pass
+        if len(link) != 0 and tiendaDisponible(tienda):
+            if tienda == "www.falabella.com":
+                scraper = FalabellaInitialScraper(link)
+                #tienda
+                tienda = "falabella"
+
             #precios
             precios = scraper.get_precios()
             #nombre
             nombre = scraper.get_nombre()
-            #tienda
-            tienda = "falabella"
             #paths
             paths = scraper.get_paths()
+            #link imagen
+            img = scraper.get_img()
 
-        return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link}})
+            return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link, "img": img}})
     return Response({"message": "NOT OK"})
 
 @login_required(login_url='login')
@@ -76,6 +103,7 @@ def add_product(request):
         #producto
         nombre_producto = datos['nombre']
         link = datos['link']
+        img = datos['img']
 
         #tienda
         tienda = Tienda.objects.filter(nombre=datos["tienda"])[0]    #[0]?
@@ -92,7 +120,7 @@ def add_product(request):
         #Crear Instancias de los Modelos
 
         #Producto
-        producto = Producto(nombre = nombre_producto, link = link, tienda = tienda)
+        producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img)
         producto.save()
 
         #Historiales
@@ -106,4 +134,6 @@ def add_product(request):
 
 
         return HttpResponse("OK")
+    if request.method == 'GET':
+        return redirect('dashboard')
     return HttpResponse("NOT OK")

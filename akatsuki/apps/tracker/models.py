@@ -11,6 +11,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     link = models.URLField(unique=True)
     tienda = models.ForeignKey(Tienda, on_delete=models.CASCADE)
+    img_link = models.URLField(null=True)
 
     def get_link(self):
         return self.link
