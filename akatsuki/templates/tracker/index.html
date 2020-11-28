@@ -12,57 +12,81 @@
              <h1 class="display-4">Mis productos</h1>
           </div>
           <div class="col-3 align-self-center">
-            <button class="btn bg-akatsuki text-white mdi mdi-plus shadow" data-toggle="modal" data-target="#modal-newProduct">Agregar producto</button>
+            <button class="btn bg-akatsuki text-white mdi mdi-plus shadow" data-toggle="modal" data-target="#modal-newProduct">Agregar producto</button >
           </div>
         </div>
-        <table class="table table-striped border rounded shadow mb-5">
-          <thead>
-            <tr>
-              <th scope="col">Producto</th>
-              <th scope="col">Tienda</th>
-              <th scope="col">Ultimo precio</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">El meo pc gamer</th>
-              <td>nose</td>
-              <td>$10.000</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">El meo xiaomi</th>
-              <td>por ahi</td>
-              <td>$110.000</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">La mea silla gamer</th>
-              <td>a lavuelta</td>
-              <td>$1.100.000</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="row justify-content-center" hidden>
+          <div class="col-12 col-md-6">
+            <img src="{% static 'img/empty.webp' %}" class="responsive-img" style="width: 100%">
+          </div>
+          <div class="col-12 col-md-6 mt-5">
+            <div class="row justify-content-center">
+              <div class="col-10">
+                <h1 class="display-4 text-center">No hay nada por aqui</h1>
+              </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+              <div class="col-8">
+                <button class="btn bg-akatsuki btn-block text-white mdi mdi-plus shadow btn-lg" data-toggle="modal" data-target="#modal-newProduct">
+                  Agregar mi primer producto
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <table class="table table-striped border rounded shadow mb-5">
+              <thead>
+                <tr>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Tienda</th>
+                  <th scope="col">Ultimo precio</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">El meo pc gamer</th>
+                  <td>nose</td>
+                  <td>$10.000</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">El meo xiaomi</th>
+                  <td>por ahi</td>
+                  <td>$110.000</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">La mea silla gamer</th>
+                  <td>a lavuelta</td>
+                  <td>$1.100.000</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -85,18 +109,18 @@
           <div class="input-group">
             <input type="url" class="form-control" id="input-url" name="url">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary mdi mdi-check" type="button" onclick="check_url()">Comprobar</button>
+              <button id="btn-checkUrl" class="btn btn-outline-secondary mdi mdi-check" type="button" onclick="check_url()">Comprobar</button>
             </div>
           </div>
           <small class="form-text text-muted">Recuerda que debe ser una tienda soportada</small>
-          <div class="mt-3">
-            <h5 class="text-center" id="producto-nombre"></h5>
+          <div class="mt-5">
+            <h1 class="text-center display-4" id="producto-nombre"></h1>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="submit" form="form-addProduct" class="btn bg-akatsuki text-white">Ok</button>
+        <button id="btn-submitUrl" type="submit" form="form-addProduct" class="btn bg-akatsuki text-white" disabled>Ok</button>
       </div>
     </div>
   </div>

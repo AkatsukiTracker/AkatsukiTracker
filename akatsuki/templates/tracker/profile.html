@@ -1,0 +1,20 @@
+{% extends "tracker/template.html" %}
+{% load static %}
+{% block title %}Mis productos{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col my-5">
+      <h1 class="display-4">Mi perfil</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <img src="{% static 'img/user.jpg' %}" style="width: 100%" class="img-thumbnail rounded mx-auto d-block">
+    </div>
+    <div class="col-8">
+      <h1 class="display-4">Pain </h1>
+    </div>
+  </div>
+</div>
+{% endblock %}
