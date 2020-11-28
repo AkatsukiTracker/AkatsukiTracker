@@ -28,6 +28,32 @@ import json
 
 @login_required(login_url='login')
 def dashboard(request):
+    if request.method == 'GET':
+
+        data = {}
+
+        user = User.objects.filter(username=request.user.username)[0]
+        productos_usuarios = ProductoUsuario.objects.filter(user=user)
+        productos = []
+        for i in productos_usuarios:
+            productos.append(i.producto)
+        for prod in productos:
+            producto = prod.nombre
+            tienda = (prod.tienda).nombre
+            img = prod.img_link
+            link = prod.link
+            historiales = Historial.objects.filter(producto = prod)
+            ultimo_historial = historiales[::-1][0]
+            precio = ultimo_historial.precio
+            
+            data[prod] = {
+                "producto":producto,
+                "tienda":tienda,
+                "img":img,
+                "link":link,
+                "precios":precio,
+            }
+        return HttpResponse(data)
     return render(request, 'tracker/index.html')
 
 @login_required(login_url='login')
@@ -36,12 +62,6 @@ def profile(request):
 
 def trending(request):
     return render(request, 'tracker/trending.html' )
-
-@api_view(['GET', 'POST'])
-def hello_world(request):
-    if request.method == 'POST':
-        return Response({"message": "Got some data!", "data": request.data})
-    return Response({"message": "Hello, world!"})
 
 @login_required(login_url='login')
 @api_view(['POST','GET'])
