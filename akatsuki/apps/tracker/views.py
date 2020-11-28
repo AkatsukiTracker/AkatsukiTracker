@@ -53,7 +53,7 @@ def dashboard(request):
                 "link":link,
                 "precios":precio,
             }
-        return HttpResponse(data)
+        return render(request, 'tracker/index.html', data)
     return render(request, 'tracker/index.html')
 
 @login_required(login_url='login')
