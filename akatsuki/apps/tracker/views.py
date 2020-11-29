@@ -55,6 +55,30 @@ def profile(request):
     return render(request, 'tracker/profile.html')
 
 def trending(request):
+    if request.method == 'GET':
+        args = {"productos": []}
+
+        productos = Producto.objects.all()
+
+        for producto in productos:
+
+            productosUsuarios = ProductoUsuario.objects.filter(producto = producto)
+
+            ultimo_historial = Historial.objects.filter(producto = producto)[::-1][0]
+
+            d_producto = {
+                "id": producto.id,
+                "nombre": producto.nombre,
+                "tienda": (producto.tienda).nombre,
+                "img": producto.img_link,
+                "link": producto.link,
+                "precios": ultimo_historial.precio,
+                "subscripciones": len(productosUsuarios)
+            }
+
+            args["productos"].append(d_producto)
+
+        return render(request, 'tracker/trending.hmtl', args)
     return render(request, 'tracker/trending.html' )
 
 @login_required(login_url='login')
