@@ -29,31 +29,25 @@ import json
 @login_required(login_url='login')
 def dashboard(request):
     if request.method == 'GET':
-
-        data = {}
-
+        args = {"productos": []}
         user = User.objects.filter(username=request.user.username)[0]
-        productos_usuarios = ProductoUsuario.objects.filter(user=user)
-        productos = []
-        for i in productos_usuarios:
-            productos.append(i.producto)
-        for prod in productos:
-            producto = prod.nombre
-            tienda = (prod.tienda).nombre
-            img = prod.img_link
-            link = prod.link
-            historiales = Historial.objects.filter(producto = prod)
-            ultimo_historial = historiales[::-1][0]
-            precio = ultimo_historial.precio
-            
-            data[prod] = {
-                "producto":producto,
-                "tienda":tienda,
-                "img":img,
-                "link":link,
-                "precios":precio,
+
+        for p in ProductoUsuario.objects.filter(user=user):
+            producto = p.producto
+            ultimo_historial = Historial.objects.filter(producto = producto)[::-1][0]
+
+            d_producto = {
+                "id": producto.id,
+                "nombre": producto.nombre,
+                "tienda": (producto.tienda).nombre,
+                "img": producto.img_link,
+                "link": producto.link,
+                "precios": ultimo_historial.precio
             }
-        return render(request, 'tracker/index.html', data)
+
+            args["productos"].append(d_producto)
+
+        return render(request, 'tracker/index.html', args)
     return render(request, 'tracker/index.html')
 
 @login_required(login_url='login')

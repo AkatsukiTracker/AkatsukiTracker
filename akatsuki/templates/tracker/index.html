@@ -23,12 +23,13 @@
               <th scope="col">Ultimo precio</th>
               <th scope="col"></th>
             </tr>
-          </thead>
+          </thead>   
           <tbody>
-            <tr>
-              <th scope="row">El meo pc gamer</th>
-              <td>nose</td>
-              <td>$10.000</td>
+            {%for i in productos%}
+            <tr>              
+              <th scope="row">{{i.nombre}}</th>
+              <td>{{i.tienda}}</td>
+              <td>$ {{i.precios}} </td>
               <td>
                 <div class="btn-group">
                   <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
@@ -37,30 +38,7 @@
                 </div>
               </td>
             </tr>
-            <tr>
-              <th scope="row">El meo xiaomi</th>
-              <td>por ahi</td>
-              <td>$110.000</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">La mea silla gamer</th>
-              <td>a lavuelta</td>
-              <td>$1.100.000</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                  <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                </div>
-              </td>
-            </tr>
+            {%endfor%}
           </tbody>
         </table>
       </div>
