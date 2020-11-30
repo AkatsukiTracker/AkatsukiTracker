@@ -138,35 +138,45 @@ def add_product(request):
         link = datos['link']
         img = datos['img']
 
-        #tienda
-        tienda = Tienda.objects.filter(nombre=datos["tienda"])[0]    #[0]?
+        producto = Producto.objects.filter(link = link)
 
-        #historiales
-        precios = []
-        tipo_precios = []
-        paths = []
-        for i in datos["precios"]:
-            tipo_precios.append(i)
-            precios.append(datos["precios"][i])
-            paths.append(datos["paths"][i])
+        if len(producto) == 1:
+            producto = producto[0]
+            if len(ProductoUsuario.objects.filter(producto=producto, user=user)) == 1:
+                return HttpResponse("Este producto ya está entre sus subscripciones")
+            else:
+                productoUsuario = ProductoUsuario(producto = producto, user = user)
+                productoUsuario.save()
+        else:
 
-        #Crear Instancias de los Modelos
+            #tienda
+            tienda = Tienda.objects.filter(nombre=datos["tienda"])[0]
+            
+            #historiales
+            precios = []
+            tipo_precios = []
+            paths = []
+            for i in datos["precios"]:
+                tipo_precios.append(i)
+                precios.append(datos["precios"][i])
+                paths.append(datos["paths"][i])
 
-        #Producto
-        producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img)
-        producto.save()
+            #Crear Instancias de los Modelos
 
-        #Historiales
-        for i in range(len(precios)):
-            historial = Historial(producto = producto, tipo = tipo_precios[i], precio = int(precios[i]), bs4path = paths[i], disponible=1)
-            historial.save()
+            #Producto
+            producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img)
+            producto.save()
 
-        #ProductoUsuario
-        productoUsuario = ProductoUsuario(producto = producto, user = user)
-        productoUsuario.save()
+            #Historiales
+            for i in range(len(precios)):
+                historial = Historial(producto = producto, tipo = tipo_precios[i], precio = int(precios[i]), bs4path = paths[i], disponible=1)
+                historial.save()
 
+            #ProductoUsuario
+            productoUsuario = ProductoUsuario(producto = producto, user = user)
+            productoUsuario.save()
 
-        return HttpResponse("OK")
+        return redirect('dashboard')
     if request.method == 'GET':
         return redirect('dashboard')
     return HttpResponse("NOT OK")
