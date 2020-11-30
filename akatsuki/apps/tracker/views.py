@@ -29,20 +29,25 @@ import json
 @login_required(login_url='login')
 def dashboard(request):
     if request.method == 'GET':
-        args = {"productos": []}
         user = User.objects.filter(username=request.user.username)[0]
+        args = {
+                "productos": [],
+                "user": user
+                }
+
 
         for p in ProductoUsuario.objects.filter(user=user):
             producto = p.producto
-            ultimo_historial = Historial.objects.filter(producto = producto)[::-1][0]
+            historial = Historial.objects.filter(producto = producto)
 
             d_producto = {
                 "id": producto.id,
                 "nombre": producto.nombre,
-                "tienda": (producto.tienda).nombre,
+                "tienda": (producto.tienda).nombre.capitalize(),
                 "img": producto.img_link,
                 "link": producto.link,
-                "precios": ultimo_historial.precio
+                "precio": historial[::-1][0].precio,
+                "historial": historial
             }
 
             args["productos"].append(d_producto)
@@ -52,11 +57,21 @@ def dashboard(request):
 
 @login_required(login_url='login')
 def profile(request):
-    return render(request, 'tracker/profile.html')
+    user = User.objects.filter(username=request.user.username)[0]
+    args = {"user": user}
+    return render(request, 'tracker/profile.html', args)
 
 def trending(request):
     if request.method == 'GET':
-        args = {"productos": []}
+        if request.user.username != "":
+          user = User.objects.filter(username=request.user.username)[0]
+        else:
+          user = False
+
+        args = {
+                "productos": [],
+                "user": user
+                }
 
         productos = Producto.objects.all()
 
@@ -69,16 +84,16 @@ def trending(request):
             d_producto = {
                 "id": producto.id,
                 "nombre": producto.nombre,
-                "tienda": (producto.tienda).nombre,
+                "tienda": (producto.tienda).nombre.capitalize(),
                 "img": producto.img_link,
                 "link": producto.link,
-                "precios": ultimo_historial.precio,
+                "precio": ultimo_historial.precio,
                 "subscripciones": len(productosUsuarios)
             }
 
             args["productos"].append(d_producto)
 
-        return render(request, 'tracker/trending.hmtl', args)
+        return render(request, 'tracker/trending.html', args)
     return render(request, 'tracker/trending.html' )
 
 @login_required(login_url='login')

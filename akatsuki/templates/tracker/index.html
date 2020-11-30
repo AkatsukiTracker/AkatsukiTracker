@@ -3,6 +3,8 @@
 {% block title %}Mis productos{% endblock %}
 {% block content %}
 
+
+
 <div class="container-fluid">
   <div class="container-lg">
     <div class="row">
@@ -46,42 +48,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">El meo pc gamer</th>
-                  <td>nose</td>
-                  <td>$10.000</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">El meo xiaomi</th>
-                  <td>por ahi</td>
-                  <td>$110.000</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">La mea silla gamer</th>
-                  <td>a lavuelta</td>
-                  <td>$1.100.000</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical"></button>
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-refresh"></button>
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-delete"></button>
-                    </div>
-                  </td>
-                </tr>
+                {% for producto in productos %}
+                  <tr>
+                    <th class="align-middle">{{producto.nombre}}</th>
+                    <td class="align-middle">{{producto.tienda}}</td>
+                    <td class="align-middle">${{producto.precio}}</td>
+                    <td>
+                      <div class="btn-group">
+                        <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical">Info</button>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>

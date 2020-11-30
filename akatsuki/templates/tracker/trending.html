@@ -12,46 +12,20 @@
       </div>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+      {% for producto in productos %}
       <div class="col mt-4">
-        <div class="card" >
-          <img src="..." class="card-img-top" alt="...">
+        <div class="card h-100" >
+          <img src="{{  producto.img  }}" class="card-img-top" alt="...">
           <div class="card-body">
-           <h5 class="card-title">Card title</h5>
-           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-           <a href="#" class="btn btn-primary btn-block">Añadir</a>
+            <h5 class="card-title">{{ producto.nombre }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ producto.tienda }}</h6>
+            <p class="card-text">${{ producto.precio }} <br>
+            {{ producto.subscripciones }} Suscritos</p>
+            <a href="#" class="btn btn-primary btn-block">Añadir</a>
           </div>
         </div>
       </div>
-      <div class="col mt-4">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-           <h5 class="card-title">Card title</h5>
-           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-           <a href="#" class="btn btn-primary btn-block">Añadir</a>
-          </div>
-        </div>
-      </div>
-      <div class="col mt-4">
-        <div class="card" >
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-           <h5 class="card-title">Card title</h5>
-           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-           <a href="#" class="btn btn-primary btn-block">Añadir</a>
-          </div>
-        </div>
-      </div>
-      <div class="col mt-4">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-           <h5 class="card-title">Card title</h5>
-           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-           <a href="#" class="btn btn-primary btn-block">Añadir</a>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
