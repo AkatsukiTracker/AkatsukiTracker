@@ -108,7 +108,7 @@ def trending(request):
     return render(request, 'tracker/trending.html' )
 
 @login_required(login_url='login')
-@api_view(['POST','GET'])
+@api_view(['GET'])
 def check_url(request):
 
     if request.method == 'GET':
@@ -188,6 +188,45 @@ def add_product(request):
             productoUsuario.save()
 
         return redirect('dashboard')
-    if request.method == 'GET':
+    return redirect('dashboard')
+
+
+@login_required(login_url='login')
+def delete_product(request):
+    if request.method == 'POST':
+        user = User.objects.filter(username=request.user.username)[0]
+        datos = request.POST
+        datos = json.loads(datos['datos'])
+        link = datos['link'] #Producto
+        producto = Producto.objects.filter(link=link)
+        producto_usuario = ProductoUsuario.objects.filter(producto = producto, user = user)[0]
+        producto_usuario.delete()
         return redirect('dashboard')
-    return HttpResponse("NOT OK")
+    return redirect('dashboard')
+
+@login_required(login_url='login')
+@api_view(['GET'])
+def check_info(request):
+    if request.method == 'GET':
+
+        args = {"historiales": {},}
+
+        link = request.GET['url']
+        producto = Producto.objects.filter(link = link)[0]
+
+        args["producto"] = producto.nombre
+
+        historiales = Historial.objects.filter(producto = producto)
+        for i in historiales:
+            nombre_historial = i.tipo
+            precio = i.precio
+            fecha = i.fecha
+            disponibilidad = i.disponible
+
+            if nombre_historial not in args["historiales"]:
+                args["historiales"][nombre_historial] = []
+            args["historiales"][nombre_historial].append( (precio, fecha, disponibilidad) )
+
+        return Response( args )
+    return redirect('dashboard')
+
