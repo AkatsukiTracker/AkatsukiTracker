@@ -17,6 +17,7 @@ from django.views.generic import TemplateView
 from .models import *
 from .forms import *
 from django.contrib.auth.models import User
+from apps.users.models import Usuario
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -58,7 +59,17 @@ def dashboard(request):
 @login_required(login_url='login')
 def profile(request):
     user = User.objects.filter(username=request.user.username)[0]
-    args = {"user": user}
+    username = user.username
+    email = user.email
+
+    try:
+        img = Usuario.objects.filter(username=request.user.username)[0].img_perfil
+        len(img)
+    except:
+        img = "img/user.png"
+    else:
+        img = img.name[7:]
+    args = {"nombre": username, "email": email, "img": img}
     return render(request, 'tracker/profile.html', args)
 
 def trending(request):

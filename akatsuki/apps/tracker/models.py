@@ -9,7 +9,7 @@ class Tienda(models.Model):
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
-    link = models.URLField(max_length=65000, unique=True)
+    link = models.URLField(max_length=255, unique=True)
     tienda = models.ForeignKey(Tienda, on_delete=models.CASCADE)
     img_link = models.URLField(null=True)
 
