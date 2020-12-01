@@ -1,2 +1,62 @@
 {% extends "home/template.html" %}
-Somos 4 estudiantes de la Universidad Tecnica Federico Santa Maria, que buscamos desarrollar una especie de tracker bla bla bla.........
+{% load static %}
+{% block content %}
+<div class="card mb-3 mt-4 ml-5 mr-5" align = "center" >
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{% static 'nube.png' %}" class="card-img mt-4" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h2 class="card-title">¿Quienes somos?</h2>
+        <p class="card-text">Somos un grupo de 4 estudiantes de la Universidad Tecnica Federico Santa Maria, que estamos llevando a cabo nuestro proyecto final del ramo Introduccion a la Ingenieria, en el cual estamos aplicando los conocimientos de este ramo.
+        En este, nuestro proyecto, queriamos lograr hacer una especie de tracker para que la gente, en el contexto en el que estamos viviendo, no tenga la necesidad de salir excesivas veces a la tienda unicamente para ir a revisar si su producto deseado sufrio algun cambio. Asi como tambien intentar ayudar a la gente a obtener el mejor precio posible en los objetos de las tiendas compatibles con nuestra pagina web.</p>
+        <p class="card-text"><small class="text-muted">AkatsukiTracker S.A.</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-deck mb-5 mt-4">
+  <div class="card ml-5">
+    <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Vicente Figueroa</h5>
+      <p class="card-text">Estudiante de Ingenieria Informatica en la Universidad Tecnica Federico Santa Maria, 18 años de edad, experiencia con Scraping y Django.  </p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Back / vicente.figueroa@usm.cl</small>
+    </div>
+  </div>
+  <div class="card">
+    <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Jose Gonzalez</h5>
+      <p class="card-text">Estudiante de Ingenieria Informatica en la Universidad Tecnica Federico Santa Maria, 18 años de edad, experiencia con programacion en Python y Git.</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Back / jose.gonzalezba@usm.cl</small>
+    </div>
+  </div>
+  <div class="card">
+    <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Vicente Lineros</h5>
+      <p class="card-text">Estudiante de Ingenieria Informatica en la Universidad Tecnica Federico Santa Maria, 19 años de edad, experiencia con experiencia en </p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Front / vicente.lineros@usm.cl</small>
+    </div>
+  </div>
+  <div class="card mr-5">
+    <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Juan Francisco Baquedano</h5>
+      <p class="card-text">Estudiante de Ingenieria Informatica en la Universidad Tecnica Federico Santa Maria, 19 años de edad, experiencia con programacion en Python y C++. </p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Front / juan.baquedano@usm.cl</small>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "home/template.html" %}
+{% load static %}
+{% block content %}
+<div class="row row-cols-1 row-cols-md-2 ml-3 mr-3 mt-4 mb-4">
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static 'redes.jpg' %}" height="370" class="card-img-top" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title mdi mdi-email-alert">Correo Electronico</h5>
+        <p class="card-text mdi mdi-label">  a.tracker@gmail.com</p>
+        <p class="card-text mdi mdi-label">  ak.tracker@outlook.com</p>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static 'redes2.jpg' %}" height = "370" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title mdi mdi-phone-forward">Llamada telefonica / SMS</h5>
+        <p class="card-text mdi mdi-label" >  +56967879800</p>
+        <p class="card-text mdi mdi-label" >   (2) 2303 7000</p>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static 'redes3.jpg' %}" height = "370" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title mdi mdi-camera-front-variant">Redes Sociales</h5>
+        <p class="card-text mdi mdi-facebook">   Akatsuki Tracker</p>
+        <p class="card-text mdi mdi-instagram">  @atracker</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static 'redes4.jpg' %}" height="370" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title mdi mdi-draw">Libro de comentarios</h5>
+        <p class="card-text">
+          <button>Ir...</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
