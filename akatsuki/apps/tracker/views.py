@@ -37,12 +37,6 @@ def profile(request):
 def trending(request):
     return render(request, 'tracker/trending.html' )
 
-@api_view(['GET', 'POST'])
-def hello_world(request):
-    if request.method == 'POST':
-        return Response({"message": "Got some data!", "data": request.data})
-    return Response({"message": "Hello, world!"})
-
 @login_required(login_url='login')
 @api_view(['POST','GET'])
 def check_url(request):
@@ -58,6 +52,34 @@ def check_url(request):
                 scraper = FalabellaInitialScraper(link)
                 #tienda
                 tienda = "falabella"
+
+            elif tienda == "www.abcdin.cl":
+                scraper = AbcdinInitialScraper(link)
+                tienda = "abcdin"
+
+            elif tienda == "simple.ripley.cl":
+                scraper = RipleyInitialScraper(link)
+                tienda = "ripley"
+
+            elif tienda == "www.paris.cl":
+                scraper = ParisInitialScraper(link)
+                tienda = "paris"
+
+            elif tienda == "www.pcfactory.cl":
+                scraper = PCFactoryInitialScraper(link)
+                tienda = "pcfactory"
+
+            elif tienda == "www.antartica.cl":
+                scraper = AntarticaInitialScraper(link)
+                tienda = "antartica"
+
+            elif tienda == "www.cruzverde.cl":
+                scraper = CruzVerdeInitialScraper(link)
+                tienda = "cruzverde"
+
+            elif tienda == "www.sparta.cl":
+                scraper = SpartaInitialScraper(link)
+                tienda = "sparta"
 
             #precios
             precios = scraper.get_precios()
