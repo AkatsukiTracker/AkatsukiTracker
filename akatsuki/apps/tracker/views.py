@@ -118,10 +118,7 @@ def check_url(request):
         except:
             pass
         if len(link) != 0 and tiendaDisponible(tienda):
-            if tienda == "www.falabella.com":
-                scraper = FalabellaInitialScraper(link)
-                #tienda
-                tienda = "falabella"
+            _, tienda, scraper, _ = seleccionar_scraper(tienda, link)
 
             #precios
             precios = scraper.get_precios()

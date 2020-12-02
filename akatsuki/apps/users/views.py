@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
-
+from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -25,8 +25,15 @@ def registerPage(request):
                 form.save()
                 username = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password1')
-                messages.success(request, 'Account was created for ' + username)
-
+                messages.success(request, 'La cuenta fue creada para ' + username)
+                '''
+                send_mail(
+                    'Cuenta Creada en AkatsukiTracker', #Titulo  
+                    'Tu cuenta fue creada exitosamente en AkatsukiTracker, desde ahora puedes disfrutar bla bla....', #Mensaje
+                    'akatsuki_tracker@mail.com', #Emisor
+                    form.cleaned_data.get('email'), #Destinatario
+                )
+                '''
                 user = authenticate(request, username=username, password=password)
                 login(request, user)
                 return redirect('dashboard')

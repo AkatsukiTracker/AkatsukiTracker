@@ -18,8 +18,8 @@ def about_view(request):
         else:
             user = False
         args = {"user": user}
-        return render(request, "about/index.html", args)
-    return render(request, "about/index.html")
+        return render(request, "home/about.html", args)
+    return render(request, "home/about/.html")
 
 def contacto_view(request):
     if request.method == 'GET':
@@ -28,5 +28,5 @@ def contacto_view(request):
         else:
             user = False
         args = {"user": user}
-        return render(request, "contacto/index.html", args)
-    return render(request, "contacto/index.html")    
+        return render(request, "home/contacto.html", args)
+    return render(request, "home/contacto.html")    

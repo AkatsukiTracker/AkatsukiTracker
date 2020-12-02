@@ -9,6 +9,22 @@ def string_to_number(string): #no la mejor funcion, pero weno
             n += i
     return int(n)
 
+def seleccionar_scraper(url_tienda, link):
+    tiendas = [ #formato (url, tienda, scraper_inicial, scraper)
+        ("www.falabella.com", "falabella", FalabellaInitialScraper(link), FalabellaScraper(link)),
+        ("www.lider.cl", "lider", LiderInitialScraper(link), "algo"),
+    ]
+    for i in tiendas:
+        if i[0] == url_tienda:
+            return i
+
+def tiendaDisponible(tienda):
+    lista =["www.falabella.com",
+            "www.lider.cl",
+    ]
+    if tienda in lista:
+        return True
+    return False
 
 class FalabellaInitialScraper():
     tienda = "falabella"
@@ -135,10 +151,41 @@ class FalabellaScraper():
     def get_path(self):
         return self.path
 
-def tiendaDisponible(tienda):
-    lista =["www.falabella.com",
 
-    ]
-    if tienda in lista:
-        return True
-    return Falsex
+class LiderInitialScraper():
+    tienda = "paris"
+    def __init__(self,link):
+        self.link = link
+        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
+        if link.split("/")[3] == "catalogo":
+            text = soup.find_all("script")[2].string
+            self.nombreProducto = text[text.find("name")+4+3:text.find("image")-3]
+            self.img_link = text[text.find("image")+5+3:text.find("description")-3]
+            precio = text[text.rfind("price")+5+2:len(text)-2]
+            self.path = "script-2-[price]"
+        elif link.split("/")[3] == "supermercado":
+            codigo = link.split("/")[6]
+            self.nombreProducto = soup.select("#span-display-name")[0].text +" "+ soup.select("#span-display-name")[0].next_sibling.text
+            self.img_link = "https://images.lider.cl/wmtcl?source=url%5Bfile:/productos/{}a.jpg&sink".format(codigo)
+            precio = soup.select("#productPrice > p.price")[0].text
+            self.path = "#productPrice > p.price"
+
+        self.precio = string_to_number(precio)
+
+    def get_link(self):
+        return self.link
+
+    def get_tienda(self):
+        return self.tienda
+
+    def get_nombre(self):
+        return self.nombreProducto
+
+    def get_img(self):
+        return self.img_link
+
+    def get_precios(self):
+        return {"precio_más_bajo":self.precio}
+
+    def get_paths(self):
+        return {"precio_más_bajo":self.path}
