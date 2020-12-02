@@ -20,7 +20,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-akatsuki" >
+<nav class="navbar navbar-expand-md navbar-dark bg-akatsuki shadow" >
   <a class="navbar-brand" href="/">
     <img class="mr-4" src="{% static 'logo/transparente.png' %}" height="50" alt="AkatsukiLogo">
   </a>
@@ -29,19 +29,27 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav mr-auto">
-      <a href="/trending" class="nav-link"> Trending</a>
-      <a href="/about" class="nav-link"> Quienes somos</a>
+      {% if user %}
+        <a href="/tracker" class="nav-link"> Mis productos</a>
+      {% endif %}
+      <a href="/tracker/trending" class="nav-link"> Trending</a>
+      <a href="/about" class="nav-link"> Nosotros</a>
       <a href="/contacto" class="nav-link"> Contactanos</a>
     </div>
-      <a href="/login" class="btn btn-outline-light mdi mdi-login mr-2" > Log in</a>
-      <a href="/register" class="btn btn-outline-light mdi mdi-new-box"> Sign Up</a>
+      {% if user %}
+        <a href="/tracker/profile" class="btn btn-outline-light mr-2">{{user}}</a>
+        <a href="/logout" class="btn btn-outline-light mdi mdi-logout">Log out</a>
+      {% else %}
+        <a href="/login" class="btn btn-outline-light mdi mdi-login mr-2" > Log in</a>
+        <a href="/register" class="btn btn-outline-light mdi mdi-new-box"> Sign Up</a>
+      {% endif %}
   </div>
 </nav>
 
 
 {% block content %}{% endblock %}
 
-<footer class="text-white container-fluid bg-akatsuki">
+<footer class=" container-fluid text-white  bg-akatsuki mt-5">
   <div class="row align-items-center" style="min-height:30vh">
     <div class="col text-center">
       Proyecto para IGW
@@ -50,7 +58,7 @@
       <a class="mdi mdi-webpack text-white" href="">Akatusuki en GitHub</a>
     </div>
     <div class="col text-center">
-      evpdfis
+
     </div>
   </div>
 </footer>

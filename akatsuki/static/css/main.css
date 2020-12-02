@@ -24,6 +24,9 @@ nav {
 .mt-10{
   margin-top: 15vh!important;
 }
+.mb-10{
+  margin-bottom: 15vh!important;
+}
 
 .shadow-primary{
   box-shadow: 0 .5rem 1rem rgba(0,123,255,.15)!important;
@@ -38,7 +41,7 @@ nav {
   box-shadow: 0 .5rem 1rem rgba(209,236,241,.60)!important;
 }
 .shadow-akatsuki{
-  box-shadow: 0 .5rem 1rem rgba(222,238,255,.60)!important;
+  box-shadow: 0 .5rem 1rem rgba(105,3,18,.60)!important;
 }
 
 .border-akatsuki{
