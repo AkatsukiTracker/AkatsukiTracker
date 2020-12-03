@@ -9,14 +9,41 @@ def string_to_number(string): #no la mejor funcion, pero weno
             n += i
     return int(n)
 
-def seleccionar_scraper(url_tienda, link):
-    tiendas = [ #formato (url, tienda, scraper_inicial, scraper)
-        ("www.falabella.com", "falabella", FalabellaInitialScraper(link), FalabellaScraper(link)),
-        ("www.lider.cl", "lider", LiderInitialScraper(link), "algo"),
-    ]
-    for i in tiendas:
-        if i[0] == url_tienda:
-            return i
+def seleccionar_scraper_initial(tienda, link):
+    if tienda == "www.falabella.com":
+        scraper = FalabellaInitialScraper(link)            
+        tienda = "falabella"
+
+    elif tienda == "www.abcdin.cl":
+        scraper = AbcdinInitialScraper(link)
+        tienda = "abcdin"
+
+    elif tienda == "simple.ripley.cl":
+        scraper = RipleyInitialScraper(link)
+        tienda = "ripley"
+
+    elif tienda == "www.paris.cl":
+        scraper = ParisInitialScraper(link)
+        tienda = "paris"
+
+    elif tienda == "www.pcfactory.cl":
+        scraper = PCFactoryInitialScraper(link)
+        tienda = "pcfactory"
+
+    elif tienda == "www.antartica.cl":
+        scraper = AntarticaInitialScraper(link)
+        tienda = "antartica"
+
+    elif tienda == "www.cruzverde.cl":
+        scraper = CruzVerdeInitialScraper(link)
+        tienda = "cruzverde"
+
+    elif tienda == "www.sparta.cl":
+        scraper = SpartaInitialScraper(link)
+        tienda = "sparta"
+
+    return (tienda, scraper)
+            
 
 def tiendaDisponible(tienda):
     lista =["www.falabella.com",

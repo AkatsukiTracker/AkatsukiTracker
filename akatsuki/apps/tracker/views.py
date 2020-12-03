@@ -118,35 +118,7 @@ def check_url(request):
         except:
             pass
         if len(link) != 0 and tiendaDisponible(tienda):
-            _, tienda, scraper, _ = seleccionar_scraper(tienda, link)
-
-            elif tienda == "www.abcdin.cl":
-                scraper = AbcdinInitialScraper(link)
-                tienda = "abcdin"
-
-            elif tienda == "simple.ripley.cl":
-                scraper = RipleyInitialScraper(link)
-                tienda = "ripley"
-
-            elif tienda == "www.paris.cl":
-                scraper = ParisInitialScraper(link)
-                tienda = "paris"
-
-            elif tienda == "www.pcfactory.cl":
-                scraper = PCFactoryInitialScraper(link)
-                tienda = "pcfactory"
-
-            elif tienda == "www.antartica.cl":
-                scraper = AntarticaInitialScraper(link)
-                tienda = "antartica"
-
-            elif tienda == "www.cruzverde.cl":
-                scraper = CruzVerdeInitialScraper(link)
-                tienda = "cruzverde"
-
-            elif tienda == "www.sparta.cl":
-                scraper = SpartaInitialScraper(link)
-                tienda = "sparta"
+            tienda, scraper = seleccionar_scraper_initial(tienda, link)
 
             #precios
             precios = scraper.get_precios()
