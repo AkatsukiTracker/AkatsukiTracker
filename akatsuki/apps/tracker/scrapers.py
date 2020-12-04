@@ -499,10 +499,10 @@ class PCFactoryInitialScraper(BaseInitialScraper):
 
     def get_paths(self):
         paths = dict()
-        paths["precio-normal"] = self.path_normal
-        paths["precio-efectivo"] = self.path_efectivo
+        paths["precio_normal"] = self.path_normal
+        paths["precio_efectivo"] = self.path_efectivo
         try:
-          paths["precio-internet"] = self.path_internet
+          paths["precio_internet"] = self.path_internet
         except:
           pass
         return paths
