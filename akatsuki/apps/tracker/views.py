@@ -84,7 +84,7 @@ def trending(request):
                 "user": user
                 }
 
-        productos = Producto.objects.all()
+        productos = Producto.objects.all()[::-1]
 
         for producto in productos:
 

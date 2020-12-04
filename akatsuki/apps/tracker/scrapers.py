@@ -51,6 +51,10 @@ def seleccionar_scraper_initial(tienda, link):
         scraper = SpartaInitialScraper(link)
         tienda = "sparta"
 
+    elif tienda == "www.jumbo.cl":
+        scraper = JumboScraper(link)
+        tienda = "jumbo"
+
     return (tienda, scraper)
 
 def tiendaDisponible(tienda):
@@ -63,6 +67,7 @@ def tiendaDisponible(tienda):
             "www.antartica.cl",
             "www.cruzverde.cl",
             "sparta.cl",
+            "www.jumbo.cl",
     ]
     if tienda in lista:
         return True
@@ -673,4 +678,48 @@ class SpartaInitialScraper(BaseInitialScraper):
       if self.p_oferta != "Oferta no disponible":
         paths["precio_oferta_internet"] = self.path_oferta
       return paths
+
+class JumboScraper(BaseInitialScraper):
+    tienda = "jumbo"
+    def __init__(self, link):
+        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
+
+        text = soup.select("body > script")[0].string
+
+        nombre = text[text.find("productName")+11+5:text.find("productReference")-5]
+        cantidad = text[text.find("unit_multiplier")+15+5:text.find("promotions")-5]
+        unidad = text[text.find("measurement_unit")+20+5:text.find("unit_multiplier")-9]
+        marca = text[text.find("brand")+5+5:text.find("SkuData")-5]
+
+        nombreProducto = nombre +" "+ cantidad +" "+ unidad +" "+ marca
+
+        imgUrl = text[text.find("images")+6+20:text.find("imageTag")-5]
+
+        precio = text[text.find("Price")+5+3:text.find("ListPrice")-3]
+        precioOferta = text[text.find("ListPrice")+9+3:text.find("PriceWith")-3]
+
+        self.nombreProducto = nombreProducto
+        self.img_link = imgUrl
+        self.precio = string_to_number(precio)
+        self.path_normal = "path_normal"
+        if precio != precioOferta:
+            self.precio_oferta = string_to_number(precioOferta)
+            self.path_oferta = "path_oferta"
+        #No hay paths, y la info siempre está en el mismo lugar     
+
+    def get_precios(self):
+        precios = {"precio_normal": self.precio}
+        try:
+            precios["precio_oferta"] = self.precio_oferta
+        except:
+            pass
+        return precios
+    
+    def get_paths(self):
+        paths = {"precio_normal": self.path_normal}
+        try:
+            precios["precio_oferta"] = self.path_oferta
+        except:
+            pass
+        return paths
 
