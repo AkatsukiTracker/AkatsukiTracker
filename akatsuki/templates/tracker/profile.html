@@ -10,10 +10,12 @@
   </div>
   <div class="row">
     <div class="col-4">
-      <img src="{% static 'img/user.jpg' %}" style="width: 100%" class="img-thumbnail rounded mx-auto d-block">
+      {%with img as avatar%}
+      <img src="{%static avatar%}" style="width: 100%" class="img-thumbnail rounded mx-auto d-block">
+      {%endwith%}
     </div>
     <div class="col-8">
-      <h1 class="display-4">Pain </h1>
+      <h1 class="display-4"> {{ nombre }} </h1>
     </div>
   </div>
 </div>

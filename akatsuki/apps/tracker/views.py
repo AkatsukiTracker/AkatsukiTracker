@@ -17,6 +17,7 @@ from django.views.generic import TemplateView
 from .models import *
 from .forms import *
 from django.contrib.auth.models import User
+from apps.users.models import Usuario
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -64,7 +65,17 @@ def dashboard(request):
 @login_required(login_url='login')
 def profile(request):
     user = User.objects.filter(username=request.user.username)[0]
-    args = {"user": user}
+    username = user.username
+    email = user.email
+
+    try:
+        img = Usuario.objects.filter(username=request.user.username)[0].img_perfil
+        len(img)
+    except:
+        img = "img/user.png"
+    else:
+        img = img.name[7:]
+    args = {"nombre": username, "email": email, "img": img}
     return render(request, 'tracker/profile.html', args)
 
 def trending(request):
@@ -79,7 +90,7 @@ def trending(request):
                 "user": user
                 }
 
-        productos = Producto.objects.all()
+        productos = Producto.objects.all()[::-1]
 
         for producto in productos:
 
@@ -103,7 +114,7 @@ def trending(request):
     return render(request, 'tracker/trending.html' )
 
 @login_required(login_url='login')
-@api_view(['POST','GET'])
+@api_view(['GET'])
 def check_url(request):
 
     if request.method == 'GET':
@@ -113,10 +124,7 @@ def check_url(request):
         except:
             pass
         if len(link) != 0 and tiendaDisponible(tienda):
-            if tienda == "www.falabella.com":
-                scraper = FalabellaInitialScraper(link)
-                #tienda
-                tienda = "falabella"
+            tienda, scraper = seleccionar_scraper_initial(tienda, link)
 
             #precios
             precios = scraper.get_precios()
@@ -183,6 +191,45 @@ def add_product(request):
             productoUsuario.save()
 
         return redirect('dashboard')
-    if request.method == 'GET':
+    return redirect('dashboard')
+
+
+@login_required(login_url='login')
+def delete_product(request):
+    if request.method == 'POST':
+        user = User.objects.filter(username=request.user.username)[0]
+        datos = request.POST
+        datos = json.loads(datos['datos'])
+        link = datos['link'] #Producto
+        producto = Producto.objects.filter(link=link)
+        producto_usuario = ProductoUsuario.objects.filter(producto = producto, user = user)[0]
+        producto_usuario.delete()
         return redirect('dashboard')
-    return HttpResponse("NOT OK")
+    return redirect('dashboard')
+
+@login_required(login_url='login')
+@api_view(['GET'])
+def check_info(request):
+    if request.method == 'GET':
+
+        args = {"historiales": {},}
+
+        link = request.GET['url']
+        producto = Producto.objects.filter(link = link)[0]
+
+        args["producto"] = producto.nombre
+
+        historiales = Historial.objects.filter(producto = producto)
+        for i in historiales:
+            nombre_historial = i.tipo
+            precio = i.precio
+            fecha = i.fecha
+            disponibilidad = i.disponible
+
+            if nombre_historial not in args["historiales"]:
+                args["historiales"][nombre_historial] = []
+            args["historiales"][nombre_historial].append( (precio, fecha, disponibilidad) )
+
+        return Response( args )
+    return redirect('dashboard')
+

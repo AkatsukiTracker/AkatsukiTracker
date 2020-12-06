@@ -7,14 +7,20 @@ class Tienda(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     dominio = models.URLField(unique=True)
 
+    def __str__(self):
+        return "Tienda: " + self.nombre
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
-    link = models.URLField(max_length=65000, unique=True)
+    link = models.URLField(max_length=255, unique=True)
     tienda = models.ForeignKey(Tienda, on_delete=models.CASCADE)
     img_link = models.URLField(null=True)
 
     def get_link(self):
         return self.link
+
+    def __str__(self):
+        return "Producto: " + self.nombre
 
 class Historial(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -30,6 +36,9 @@ class Historial(models.Model):
 
     disponible = models.IntegerField( choices=Disponibilidad.choices )
 
+    def __str__(self):
+        return "Historial:   tipo: " + self.tipo + ", fecha: " + str(self.fecha) + ", producto: " + self.producto.nombre
+
 class ProductoUsuario(models.Model):
     user = models.ForeignKey(User, 
         on_delete=models.CASCADE,
@@ -40,3 +49,6 @@ class ProductoUsuario(models.Model):
         on_delete=models.CASCADE,
         related_name='producto',
         )
+
+    def __str__(self):
+        return "Usuario: " + self.user.username + ", Producto: " + self.producto.nombre
