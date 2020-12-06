@@ -1,12 +1,13 @@
 function check_url(){
   var url = document.querySelector("#input-url").value
   url = 'https://www.' + url.replace('https://','').replace('www.','')
-  console.log("URL: " + url)
+  url_escaped = encodeURIComponent(url)
+  console.log("URL: " + url_escaped)
 
   if (links.includes(url)){
     existMode()
   }else{
-    fetch(`check_url?url=${url}`, {method: "GET"})
+    fetch(`check_url?url=${url_escaped}`, {method: "GET"})
       .then( function(response) {
         if (response.status !== 200)  return errorMode('error');
         response.json().then(function(data) {
