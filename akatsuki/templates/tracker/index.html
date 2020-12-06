@@ -1,14 +1,24 @@
 {% extends "tracker/template.html" %}
 {% load static %}
 {% block title %}Mis productos{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  {% autoescape off %}
+    const productos = {{ productos_json }}
+    const links = {{ links }}
+    const historiales = {{ historiales }}
+
+  {% endautoescape %}
+
+</script>
+{% endblock %}
 {% block content %}
-
-
 
 <div class="container-fluid px-0 px-sm-3">
   <div class="container-lg px-1 px-sm-3">
     <div class="row px-3">
       <div class="col">
+
         <div class="row my-5  justify-content-between">
           <div class="col-6 col-sm-8">
              <h1 class="display-4">Mis productos</h1>
@@ -27,21 +37,22 @@
           <table class="table table-striped border rounded shadow mb-5">
             <thead>
               <tr>
-                <th>Producto</th>
-                <th class="d-none d-sm-block">Tienda</th>
-                <th>Ultimo precio</th>
+                <th class="align-middle">Producto</th>
+                <th class="align-middle d-none d-sm-table-cell">Tienda</th>
+                <th class="align-middle" >Ultimo precio</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {% for producto in productos %}
+
                 <tr>
                   <th class="align-middle">{{producto.nombre}}</th>
                   <td class="align-middle d-none d-sm-table-cell">{{producto.tienda}}</td>
                   <td class="align-middle">${{producto.precio}}</td>
                   <td>
                     <div class="btn-group">
-                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical">Info</button>
+                      <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical" data-toggle="modal" data-target="#modal-details" onclick="details({{producto.id}})">Info</button>
                     </div>
                   </td>
                 </tr>
@@ -74,8 +85,8 @@
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modal-newProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Agregar -->
+<div class="modal fade" id="modal-newProduct" tabindex="-1">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,13 +107,45 @@
           </div>
           <small class="form-text text-muted">Recuerda que debe ser una tienda soportada</small>
           <div class="mt-5">
-            <h1 class="text-center display-4" id="producto-nombre"></h1>
+            <h1 class="text-center display-4 mb-5" id="producto-nombre"></h1>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-        <button id="btn-submitUrl" type="submit" form="form-addProduct" class="btn bg-akatsuki text-white" disabled>Ok</button>
+        <button id="btn-submitUrl" type="submit" form="form-addProduct" class="btn bg-akatsuki text-white" disabled>Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Info -->
+<div class="modal fade" id="modal-details" tabindex="-1" >
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modalDetails-title" class="modal-title">Nombre del producto</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <canvas id="canvas-chart" width="400" height="200"></canvas>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <a id="modalDetails-shop" class="btn btn-light btn-block btn-lg border mdi mdi-cart">Ver en tienda</a>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button id="modalDetails-delete" class="btn btn-outline-secondary mdi-trash">Eliminar producto</button>
+        <a id="modalDetails-deleteConfirm" class="btn bg-akatsuki text-white mdi mdi-trash" href="" hidden>Eliminar</a>
+        <button id="modalDetails-deleteNotConfirm" data-dismiss="modal" class="btn bg-akatsuki text-white">Ok</button>
       </div>
     </div>
   </div>

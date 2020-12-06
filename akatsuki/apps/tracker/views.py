@@ -24,6 +24,7 @@ from rest_framework.response import Response
 from .scrapers import *
 
 import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 @login_required(login_url='login')
@@ -32,6 +33,9 @@ def dashboard(request):
         user = User.objects.filter(username=request.user.username)[0]
         args = {
                 "productos": [],
+                "productos_json": {},
+                "historiales": {},
+                "links": [],
                 "user": user
                 }
 
@@ -47,10 +51,12 @@ def dashboard(request):
                 "img": producto.img_link,
                 "link": producto.link,
                 "precio": historial[::-1][0].precio,
-                "historial": historial
             }
-
             args["productos"].append(d_producto)
+            args["productos_json"][producto.id] = d_producto
+            args["historiales"][producto.id] = json.dumps(list(historial.values_list('tipo', 'fecha', 'precio' )), cls=DjangoJSONEncoder)
+            args["links"].append(producto.link)
+
 
         return render(request, 'tracker/index.html', args)
     return render(request, 'tracker/index.html')
@@ -151,7 +157,7 @@ def add_product(request):
 
             #tienda
             tienda = Tienda.objects.filter(nombre=datos["tienda"])[0]
-            
+
             #historiales
             precios = []
             tipo_precios = []
