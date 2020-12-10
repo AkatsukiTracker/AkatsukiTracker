@@ -57,6 +57,12 @@ def seleccionar_scraper_initial(tienda, link):
 
     return (tienda, scraper)
 
+def seleccionar_scraper(tienda, link, path):
+  if tienda == "falabella":
+    scraper = FalabellaScraper(link, path)
+  return scraper
+
+
 def tiendaDisponible(tienda):
     lista =["www.falabella.com",
             "www.lider.cl",
@@ -180,7 +186,7 @@ class FalabellaScraper():
         try:
             self.precio = string_to_number(soup.select(path)[0].text)
         except:
-            codigo = self.link.split('/')[5]
+            codigo = link.split('/')[5]
             selectText = ("#testId-pod-prices-{} > ol > li").format(codigo)
             jsx = soup.select(selectText)[0].attrs["class"][0]
 
