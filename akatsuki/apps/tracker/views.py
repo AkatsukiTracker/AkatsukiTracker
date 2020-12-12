@@ -123,6 +123,7 @@ def check_url(request):
             tienda = link.split('/')[2]
         except:
             pass
+        print(tienda,tiendaDisponible(tienda))
         if len(link) != 0 and tiendaDisponible(tienda):
             tienda, scraper = seleccionar_scraper_initial(tienda, link)
 
