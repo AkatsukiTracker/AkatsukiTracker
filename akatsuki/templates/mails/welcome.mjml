@@ -1,0 +1,34 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <mj-image width="100px" src="/assets/img/logo-small.png"></mj-image>
+
+        <mj-divider border-color="#F45E43"></mj-divider>
+
+        <mj-text font-size="20px" color="#F45E43" font-family="helvetica">Hello World</mj-text>
+
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#222">
+      <mj-column vertical-align="middle">
+        <mj-text color="#FFF">
+          <h3 align="center">
+            AkatsukiTracker
+          </h3>
+        </mj-text>
+      </mj-column>
+      <mj-column vertical-align="middle">
+        <mj-social font-size="15px" icon-size="30px" mode="horizontal" color="#FFF">
+          <mj-social-element name="facebook" href="https://mjml.io/">
+            GitHub
+          </mj-social-element>
+          <mj-social-element name="google" href="https://mjml.io/">
+            Google
+          </mj-social-element>
+        </mj-social>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
