@@ -4,60 +4,73 @@
 <div class="container-fluid">
   <div class="container-xl">
     <div class="row justify-content-center mt-10">
-      <div class="col-7">
+      <div class="col-12 col-sm-7">
         <div class="card shadow">
           <div class="row">
             <div class="col">
               <div class="card-body">
                 <h5 class="card-title display-4">Compra con los mejores precios!</h5>
-                <p class="card-text">En Akatsuki tracker podras... consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore </p>
+                <p class="card-text">AkatsukiTracker sera tu nueva herramienta de compras favorita, en ella podras lograr aprovechar al maximo las bajas de precios en nuestras tiendas seleccionadas, esto por medio de nuestra notificacion por correo hacia nuestro cliente. Todo esto en simples 3 pasos:
+                </p>
+                <p class="card-text mdi mdi-label">  Inicia sesion o  registrate en la parte superior derecha.
+                </p>
+                <p class="card-text mdi mdi-label">  Busca tu producto, copia el link y clickea "Agregar"
+                </p>
+                <p class="card-text mdi mdi-label">  Clickea "Agregar producto", pega el link de tu producto, y listo!
+                </p>
+
                 <p class="card-text"><small class="text-muted"></small></p>
-                <a class="nav-link btn btn-lg bg-akatsuki shadow-akatsuki text-white mdi mdi-chevron-triple-right" href="register">Comienza ya!</a>
+                {% if user %}
+                  <a class="nav-link btn btn-lg bg-akatsuki shadow-akatsuki text-white mdi mdi-chevron-triple-right" href="/tracker">Mis productos</a>
+                {% else %}
+                  <a class="nav-link btn btn-lg bg-akatsuki shadow-akatsuki text-white mdi mdi-chevron-triple-right" href="register">Comienza ya!</a>
+                {% endif %}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-5 align-self-center mt-lg-5 ">
-        <img class="img-fluid border m-auto d-none" src=" {% static 'trade.jpg' %}" >
-        <img src="{% static 'logo/nube.png' %}" class="img-fluid m-auto d-block" height="80" style="max-height: 20vh">
+      <div class="col-12 col-sm-5 align-self-center my-10 ">
+        <img src="{% static 'logo/nube.png' %}" class="img-fluid mx-auto d-block" height="80" style="max-height: 20vh">
       </div>
     </div>
-    <div class="row mt-10">
-      <div class="col">
-        <div class="card-deck">
-          <div class="card shadow">
-            <img src="{% static 'stonks.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Funcionalidad 1</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small class="text-muted">Algun comentario </small></p>
-            </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 mt-5">
+      <div class="col mt-4 ">
+        <div class="card shadow h-100">
+          <img src="{% static 'stonks.jpg' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Compra al mejor precio</h5>
+            <p class="card-text">AkatsukiTracker tiene la capacidad de analizar los precios de nuestras tiendas seleccionadas, logrando ayudar al cliente para que obtenga su objeto deseado por el menor precio posible.</p>
+            <p class="card-text"><small class="text-muted mdi mdi-cash-usd"></small></p>
           </div>
-          <div class="card shadow">
-            <img src="{% static 'scam.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Funcionalidad 2</h5>
-              <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-              <p class="card-text"><small class="text-muted">Algun comentario </small></p>
-            </div>
+        </div>
+      </div>
+      <div class="col mt-4">
+        <div class="card shadow h-100">
+          <img src="{% static 'scam.jpg' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">No caigas en el juego comercial</h5>
+            <p class="card-text">Contamos con la prevencion contra los cambios de precios que aplican convenientemente las tiendas, evitando que nuestro cliente termine siendo estafado.</p>
+            <p class="card-text"><small class="text-muted mdi mdi-cart-plus"></small></p>
           </div>
-          <div class="card shadow">
-            <img src="{% static 'correo.png' %}" class="card-img-top" alt="..."
-              height="195">
-            <div class="card-body">
-              <h5 class="card-title">Funcionalidad 3</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-              <p class="card-text"><small class="text-muted">Algun comentario </small></p>
-            </div>
+        </div>
+      </div>
+      <div class="col mt-4">
+        <div class="card shadow h-100">
+          <img src="{% static 'correo.png' %}" class="card-img-top" alt="..."
+            height="195">
+          <div class="card-body">
+            <h5 class="card-title">Notificacion instantanea</h5>
+            <p class="card-text">Para facilitar a nuestros clientes, por medio de un SignUp, almacenando el correo del cliente junto con su producto, de este modo, al momento de que su procuto baje, se le sera notificado mediante e-mail.</p>
+            <p class="card-text"><small class="text-muted mdi mdi-email-alert"></small></p>
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-10">
+    <div class="row mt-5">
       <div class="col">
         <div class="card mb-3 shadow">
-          <img src="{% static 'logos.png' %}" class="card-img-top" alt="...">
+          <img src="{% static 'tiendas_parcial.png' %}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Compatibilidad</h5>
             <p class="card-text">Nuestro sistema de trackeo nos permite trabajar con estas tiendas bla bla bla.....</p>
@@ -68,6 +81,5 @@
     </div>
   </div>
 </div>
-
 
 {% endblock %}

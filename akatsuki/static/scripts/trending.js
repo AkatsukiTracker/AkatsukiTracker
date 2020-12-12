@@ -3,7 +3,7 @@ load_productos()
 // Load all posts on page load
 function load_productos() {
     $.ajax({
-        url : "api/v1/productos/", // the endpoint
+        url : "trending", // the endpoint
         type : "GET", // http method
         // handle a successful response
         success : function(json) {
