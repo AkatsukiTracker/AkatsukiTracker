@@ -1,6 +1,6 @@
 function check_url(){
   var url = document.querySelector("#input-url").value
-  url = 'https://www.' + url.replace('https://','').replace('http://','').replace('www.','')
+  url = 'https://' + url.replace('https://','').replace('http://','').replace('www.','')
   url_escaped = encodeURIComponent(url)
   console.log("URL: " + url_escaped)
 
@@ -99,7 +99,9 @@ function deleteProduct(id){
   console.log("DELETE: ", id)
 
   document.getElementById("modalDetails-delete").hidden = true
-  document.getElementById("modalDetails-deleteConfirm").hidden = false
+  confirm = document.getElementById("modalDetails-deleteConfirm")
+  confirm.hidden = false
+  confirm.href = `/tracker/delete_product/?id=${id}`
   var not = document.getElementById("modalDetails-deleteNotConfirm")
   not.textContent = "Conservar"
   not.classList.remove('bg-akatsuki')

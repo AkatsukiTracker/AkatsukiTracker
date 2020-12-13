@@ -196,12 +196,9 @@ def add_product(request):
 
 @login_required(login_url='login')
 def delete_product(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         user = User.objects.filter(username=request.user.username)[0]
-        datos = request.POST
-        datos = json.loads(datos['datos'])
-        link = datos['link'] #Producto
-        producto = Producto.objects.filter(link=link)
+        producto = Producto.objects.filter(id=json.loads(request.GET['id']))[0]
         producto_usuario = ProductoUsuario.objects.filter(producto = producto, user = user)[0]
         producto_usuario.delete()
         return redirect('dashboard')
