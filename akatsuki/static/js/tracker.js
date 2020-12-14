@@ -1,6 +1,6 @@
 function check_url(){
   var url = document.querySelector("#input-url").value
-  url = 'https://' + url.replace('https://','').replace('http://','').replace('www.','')
+  url = url.replace('https://','').replace('http://','').replace('www.','')
   url_escaped = encodeURIComponent(url)
   console.log("URL: " + url_escaped)
 

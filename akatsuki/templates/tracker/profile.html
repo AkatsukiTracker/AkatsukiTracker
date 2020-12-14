@@ -1,22 +1,176 @@
 {% extends "tracker/template.html" %}
 {% load static %}
 {% block title %}Mis productos{% endblock %}
+
+{% block script %}
+
+<script defer type="text/javascript" src="{% static 'js/profile.js' %}"></script>
+
+{% endblock %}
+
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col my-5">
-      <h1 class="display-4">Mi perfil</h1>
+<div class="container-fluid">
+  <div class="container-xl">
+    <div class="row mt-4">
+      <div class="col">
+        <div class="card shadow">
+          <div class="row no-gutters">
+            <div class="col-6 col-sm-4 col-md-2">
+              <img src="{%static img%}" style="width: 100%" class="card-img">
+            </div>
+            <div class="col-6 col-sm-8 col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">{{ nombre }}</h5>
+                <p class="card-text">{{ email }}</p>
+                <p class="card-text"><small class="text-muted">Usuario desde x tiempo</small></p>
+                <h1 class="display-4 text-center">  </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-4">
-      {%with img as avatar%}
-      <img src="{%static avatar%}" style="width: 100%" class="img-thumbnail rounded mx-auto d-block">
-      {%endwith%}
-    </div>
-    <div class="col-8">
-      <h1 class="display-4"> {{ nombre }} </h1>
+    <div class="row mt-4">
+      <div class="col-12 col-sm-6">
+        <div class="card shadow h-100">
+          <div class="card-body">
+            <h5 class="card-title">Ajustes de cuenta</h5>
+            <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#modal-password">
+              Cambiar contraseña
+            </button>
+            <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#modal-email">
+              Cambiar mail
+            </button>
+             <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#modal-picture">
+              Cambiar imagen
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 mt-2 mt-sm-0">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5 class="card-title">Ajustes de notificaciones</h5>
+            <form>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="check-oferta">
+                <label class="custom-control-label" for="check-oferta">Productos en oferta</label>
+              </div>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="check-destacados">
+                <label class="custom-control-label" for="check-destacados">Productos destacados</label>
+              </div>
+            </form>
+            <button type="button" class="btn btn-primary btn-block mt-2" disabled>
+              Confirmar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modal-email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cambiar mail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form-email" method="POST" class="needs-validation" novalidate>
+          <div class="form-group">
+            <label >Nueva direccion</label>
+            <input type="email" class="form-control" required>
+            <div class="invalid-feedback">
+              Ingresa un correo valido.
+            </div>
+            <small id="emailHelp" class="form-text text-muted">Recibiras un correo notificando el cambio</small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" form="form-email" class="btn btn-primary">Cambiar mail</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-password" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cambio de contraseña</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form-password" method="POST" class="needs-validation" novalidate>
+          <div class="form-group">
+            <label>Contraseña actual</label>
+            <input type="password" class="form-control" id="input-oldPassword" required>
+            <div class="invalid-feedback">
+              Ingresa una contraseña valida.
+            </div>
+            <small class="form-text text-muted"></small>
+          </div>
+          <div class="form-group mt-4">
+            <label>Nueva contraseña</label>
+            <input type="password" class="form-control" id="input-newPassword1" name="password1" required>
+            <div class="invalid-feedback">
+              Ingresa una contraseña valida.
+            </div>
+            <small class="form-text text-muted"></small>
+          </div>
+          <div class="form-group">
+            <label>Repite tu nueva contraseña</label>
+            <input type="password" class="form-control" id="input-newPassword2" name="password2" required>
+            <div class="invalid-feedback">
+              Ingresa una contraseña valida.
+            </div>
+            <small class="form-text text-muted"></small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" form="form-password" class="btn btn-primary">Cambiar contraseña</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-picture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cambio de imagen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form-picture" method="POST" action="/tracker/profile_picture" class="needs-validation" novalidate>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" name="picture">
+            <label class="custom-file-label" for="customFile" accept="image/*" required>Escoger imagen</label>
+            <div class="invalid-feedback">
+              Sube una imagen valida.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" form="form-picture" class="btn btn-primary">Cambiar imagen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
