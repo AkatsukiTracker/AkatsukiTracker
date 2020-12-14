@@ -21,7 +21,7 @@
             <h6 class="card-subtitle mb-2 text-muted">{{ producto.tienda }}</h6>
             <p class="card-text">${{ producto.precio }} <br>
             {{ producto.subscripciones }} Suscritos</p>
-            <a href="#" class="btn btn-primary btn-block">Añadir</a>
+            <button class="btn btn-primary btn-block" onclick="add_product({{ producto.url }})">Añadir</button>
           </div>
         </div>
       </div>
