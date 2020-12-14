@@ -135,9 +135,9 @@ def check_url(request):
     if request.method == 'GET':
         link = request.GET['url']
         try:
-            tienda = link.split('/')[2]
+            tienda = link.split('/')[0]
         except:
-            pass
+            return tienda
         if len(link) != 0 and tiendaDisponible(tienda):
             tienda, scraper = seleccionar_scraper_initial(tienda, link)
 

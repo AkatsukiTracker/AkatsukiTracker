@@ -78,21 +78,11 @@ function details(data){
   not.classList.remove('btn-outline-secondary')
 
   document.getElementById("modalDetails-title").textContent = productos[data].nombre
-  document.getElementById("modalDetails-shop").href = productos[data].link
   document.getElementById("modalDetails-delete").onclick = function(){deleteProduct(productos[data].id)}
   document.getElementById("modalDetails-deleteConfirm").hidden = true
 
+  load_graph();
 
-  var myLineChart = new Chart(document.getElementById('canvas-chart').getContext('2d'), {
-      type: 'line',
-       data: {
-          datasets: [{
-              data: [10, 20, 30, 40, 50, 60]
-          }],
-          labels: ['January', 'February', 'March', 'April', 'May', 'June']
-      },
-      options: {}
-  });
 }
 
 function deleteProduct(id){
@@ -107,4 +97,17 @@ function deleteProduct(id){
   not.classList.remove('bg-akatsuki')
   not.classList.remove('text-white')
   not.classList.add('btn-outline-secondary')
+}
+
+function load_graph(data){
+  var myLineChart = new Chart(document.getElementById('canvas-chart').getContext('2d'), {
+      type: 'line',
+       data: {
+          datasets: [{
+              data: [10, 20, 30, 40, 50, 60]
+          }],
+          labels: ['January', 'February', 'March', 'April', 'May', 'June']
+      },
+      options: {}
+  });
 }
