@@ -75,7 +75,7 @@ def profile(request):
         img = img[0].img_perfil.name[7:]
     else:
         img = "img/user.png"
-        
+
     args = {"nombre": username, "email": email, "img": img}
     return render(request, 'tracker/profile.html', args)
 
@@ -84,7 +84,8 @@ def profile_picture(request):
     if request.method == 'POST':
         img = request.POST["picture"]
         if img:
-            user = request.Usuario.objects.filter(username=request.user.username)[0]
+            user = User.objects.filter(username=request.user.username)[0]
+
             user.img_perfil = img
             user.save()
             return redirect("profile")
@@ -165,8 +166,8 @@ def add_product(request):
         #producto
         nombre_producto = datos['nombre']
         link = datos['link']
-            #hash del link       
-        result = hashlib.md5(link.encode()) 
+            #hash del link
+        result = hashlib.md5(link.encode())
         link_hash = result.hexdigest()
 
         img = datos['img']
