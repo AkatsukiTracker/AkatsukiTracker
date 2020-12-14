@@ -82,16 +82,10 @@ def profile(request):
 @login_required(login_url='login')
 def profile_picture(request):
     if request.method == 'POST':
-        img = request.POST["picture"]
-        if img:
-            user = User.objects.filter(username=request.user.username)[0]
-
-            user.img_perfil = img
-            user.save()
-            return redirect("profile")
-        else:
-            return redirect("profile")
-
+        form = ImgPerfilForm(request.POST, request.FILES)
+        if form.is_valid():
+           form.save()
+        return redirect("profile")
     return redirect("profile")
 
 def trending(request):
