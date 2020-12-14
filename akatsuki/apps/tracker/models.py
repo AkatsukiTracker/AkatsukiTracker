@@ -12,9 +12,10 @@ class Tienda(models.Model):
 
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
-    link = models.URLField(max_length=255, unique=True)
+    link = models.URLField(max_length=20000)
     tienda = models.ForeignKey(Tienda, on_delete=models.CASCADE)
-    img_link = models.URLField(null=True)
+    img_link = models.URLField(null=True, max_length=20000)
+    link_hash = models.CharField(max_length = 100, unique=True, default=None)
 
     def get_link(self):
         return self.link
@@ -31,8 +32,7 @@ class Historial(models.Model):
 
     class Disponibilidad(models.IntegerChoices):
         NO = 0, _('No')
-        YES = 1, _('Yes')
-        __empty__ = _('(Unknown)')
+        Si = 1, _('Si')
 
     disponible = models.IntegerField( choices=Disponibilidad.choices )
 
@@ -49,6 +49,10 @@ class ProductoUsuario(models.Model):
         on_delete=models.CASCADE,
         related_name='producto',
         )
+    class Notificaciones(models.IntegerChoices):
+        NO = 0, _('No')
+        Si = 1, _('Si')
+    notificaciones = models.IntegerField( choices=Notificaciones.choices, default=1)
 
     def __str__(self):
         return "Usuario: " + self.user.username + ", Producto: " + self.producto.nombre

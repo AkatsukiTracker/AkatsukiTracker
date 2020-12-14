@@ -27,6 +27,8 @@ from .scrapers import *
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
+import hashlib
+
 
 @login_required(login_url='login')
 def dashboard(request):
@@ -68,15 +70,28 @@ def profile(request):
     username = user.username
     email = user.email
 
-    try:
-        img = Usuario.objects.filter(username=request.user.username)[0].img_perfil
-        len(img)
-    except:
-        img = "img/user.png"
+    img = Usuario.objects.filter(username=request.user.username)
+    if img:
+        img = img[0].img_perfil.name[7:]
     else:
-        img = img.name[7:]
+        img = "img/user.png"
+        
     args = {"nombre": username, "email": email, "img": img}
     return render(request, 'tracker/profile.html', args)
+
+@login_required(login_url='login')
+def profile_picture(request):
+    if request.method == 'POST':
+        img = request.POST["picture"]
+        if img:
+            user = request.Usuario.objects.filter(username=request.user.username)[0]
+            user.img_perfil = img
+            user.save()
+            return redirect("profile")
+        else:
+            return redirect("profile")
+
+    return redirect("profile")
 
 def trending(request):
     if request.method == 'GET':
@@ -150,6 +165,10 @@ def add_product(request):
         #producto
         nombre_producto = datos['nombre']
         link = datos['link']
+            #hash del link       
+        result = hashlib.md5(link.encode()) 
+        link_hash = result.hexdigest()
+
         img = datos['img']
 
         producto = Producto.objects.filter(link = link)
@@ -178,7 +197,7 @@ def add_product(request):
             #Crear Instancias de los Modelos
 
             #Producto
-            producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img)
+            producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img, link_hash= link_hash)
             producto.save()
 
             #Historiales
@@ -187,7 +206,7 @@ def add_product(request):
                 historial.save()
 
             #ProductoUsuario
-            productoUsuario = ProductoUsuario(producto = producto, user = user)
+            productoUsuario = ProductoUsuario(producto = producto, user = user, notificaciones= 1)
             productoUsuario.save()
 
         return redirect('dashboard')
