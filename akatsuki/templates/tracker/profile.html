@@ -82,6 +82,7 @@
       </div>
       <div class="modal-body">
         <form id="form-email" method="POST" class="needs-validation" novalidate>
+          {% csrf_token %}
           <div class="form-group">
             <label >Nueva direccion</label>
             <input type="email" class="form-control" required>
@@ -111,6 +112,7 @@
       </div>
       <div class="modal-body">
         <form id="form-password" method="POST" class="needs-validation" novalidate>
+          {% csrf_token %}
           <div class="form-group">
             <label>Contraseña actual</label>
             <input type="password" class="form-control" id="input-oldPassword" required>
@@ -156,6 +158,7 @@
       </div>
       <div class="modal-body">
         <form id="form-picture" method="POST" action="/tracker/profile_picture" class="needs-validation" novalidate>
+          {% csrf_token %}
           <div class="custom-file">
             <input type="file" class="custom-file-input" name="picture">
             <label class="custom-file-label" for="customFile" accept="image/*" required>Escoger imagen</label>
