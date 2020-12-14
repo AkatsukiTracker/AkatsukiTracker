@@ -157,17 +157,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-picture" method="POST" action="/tracker/profile_picture" class="needs-validation" novalidate>
-          {% csrf_token %}
+        <form id="form-picture" method="POST" action="/tracker/profile_picture" enctype="multipart/form-data" class="needs-validation" novalidate>
+          {% csrf_token %} <!--
           <div class="custom-file">
             <input type="file" class="custom-file-input" name="picture">
             <label class="custom-file-label" for="customFile" accept="image/*" required>Escoger imagen</label>
             <div class="invalid-feedback">
-              Sube una imagen valida.
+              Sube una imagen valida.           
             </div>
-          </div>
+          -->
+          {{ form.as_p }}
+          <button type="submit">Upload</button> 
+          <!--</div>-->
         </form>
-      </div>
+      </div>    
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="submit" form="form-picture" class="btn btn-primary">Cambiar imagen</button>
