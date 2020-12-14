@@ -1,34 +1,118 @@
 <mjml>
+
   <mj-body>
+<mj-section background-color="#8B0000">
+  <mj-column>
+    <mj-text  font-style="italic"
+              font-size="40px"
+              align = center
+              color="#FFFFFF">
+      ¡Bienvenido!
+    </mj-text>
+  </mj-column>
+</mj-section>
+  <mj-section background-url="https://pbs.twimg.com/media/DxhwpPwVYAEL7Co?format=jpg&name=large"
+              background-size="cover"
+              background-repeat="no-repeat">
+
+    <mj-column width="600px">
+
+          <mj-text  align="center"
+                color="#fff"
+                font-size="40px"
+                font-family="Helvetica Neue">Gracias por unirte a AkatsukiTracker</mj-text>
+
+      <mj-button background-color="#F63A4D"
+                 href="#">
+        Ir de compras
+      </mj-button>
+
+    </mj-column>
+
+  </mj-section>
+  <mj-section background-color="#fafafa">
+        <mj-column width="400px">
+
+          <mj-text font-style="italic"
+                   font-size="20px"
+                   font-family="Helvetica Neue"
+                   color="#626262">
+                Hola Akatsuki! Gracias por registrarte.</mj-text>
+
+                <mj-text color="#525252">
+                Gracias a tu registro podrás agregar productos a tu lista, y recibir información periódicamente sobre sus modificaciones de precios, y ser notificado instantáneamente a esta dirección de correo.
+          </mj-text>
+            <mj-text color="#525252">
+                Saludos.
+          </mj-text>
+            <mj-text color="#525252"
+                     font-style="italic">
+                Equipo de AkatsukiTracker.
+          </mj-text>
+             <mj-text color="#525252"
+                     font-style="italic"
+                     font-size = "9px"
+                     align = right>
+                Este es un mensaje automático. Cualquier respuesta no será recibida por nosotros.
+          </mj-text>
+
+
+    </mj-column>
+  </mj-section>
     <mj-section>
       <mj-column>
 
-        <mj-image width="100px" src="/assets/img/logo-small.png"></mj-image>
+<mj-section background-color="white">
 
-        <mj-divider border-color="#F45E43"></mj-divider>
+  <mj-column>
+    <mj-image width="200px"
+              src="https://3.bp.blogspot.com/-I2jD0kfcDZc/Uq28MlK_ljI/AAAAAAAABvg/OZS74X1-LCc/s1600/Akatsuki-nube.png" />
+  </mj-column>
 
-        <mj-text font-size="20px" color="#F45E43" font-family="helvetica">Hello World</mj-text>
 
-      </mj-column>
-    </mj-section>
-    <mj-section background-color="#222">
+  <mj-column>
+    <mj-text font-style="italic"
+             font-size="20px"
+             font-family="Helvetica Neue"
+             color="#626262">
+        Compra con los mejores precios!
+      </mj-text>
+
+      <mj-text color="#525252">
+AkatsukiTracker sera tu nueva herramienta de compras favorita, en ella podras lograr aprovechar al maximo las bajas de precios en nuestras tiendas seleccionadas, esto por medio de nuestra notificacion por correo hacia nuestro cliente. Todo esto en simples 3 pasos:
+
+Inicia sesion o registrate en la parte superior derecha.
+Busca tu producto, copia el link y clickea "Agregar"
+
+Clickea "Agregar producto", pega el link de tu producto, y listo!</mj-text>
+
+
+  </mj-column>
+</mj-section>
+
+    <mj-section background-color="#8B0000">
       <mj-column vertical-align="middle">
-        <mj-text color="#FFF">
+        <mj-text color="#FFFFFF">
           <h3 align="center">
             AkatsukiTracker
           </h3>
         </mj-text>
       </mj-column>
+
       <mj-column vertical-align="middle">
         <mj-social font-size="15px" icon-size="30px" mode="horizontal" color="#FFF">
           <mj-social-element name="facebook" href="https://mjml.io/">
-            GitHub
+            Facebook
           </mj-social-element>
           <mj-social-element name="google" href="https://mjml.io/">
             Google
           </mj-social-element>
+          <mj-social-element name="instagram" href="https://mjml.io/">
+            Instragram
+          </mj-social-element>
+          <mj-social-element name="github" href="https://mjml.io/">
+            Github
+          </mj-social-element>
         </mj-social>
       </mj-column>
     </mj-section>
-  </mj-body>
-</mjml>
