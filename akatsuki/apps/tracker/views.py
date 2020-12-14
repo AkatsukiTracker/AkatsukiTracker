@@ -86,7 +86,12 @@ def profile_picture(request):
         if form.is_valid():
            form.save()
         return redirect("profile")
-    return redirect("profile")
+    else:
+        form = ImgPerfilForm()
+    return render(request, 'tracker/profile.html', {
+        'form': form
+    })
+    
 
 def trending(request):
     if request.method == 'GET':
