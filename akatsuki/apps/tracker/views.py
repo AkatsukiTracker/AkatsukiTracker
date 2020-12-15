@@ -91,8 +91,8 @@ def profile_picture(request):
     return render(request, 'tracker/profile.html', {
         'form': form
     })
-    
 
+    
 def trending(request):
     if request.method == 'GET':
         if request.user.username != "":
@@ -135,9 +135,9 @@ def check_url(request):
     if request.method == 'GET':
         link = request.GET['url']
         try:
-            tienda = link.split('/')[0]
+            tienda = link.split('/')[2]
         except:
-            return tienda
+            pass
         if len(link) != 0 and tiendaDisponible(tienda):
             tienda, scraper = seleccionar_scraper_initial(tienda, link)
 
