@@ -21,9 +21,16 @@ from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
   def handle(self, **options):
+    '''
     subject = 'MAIL TEST'
     message = f'Este es un msg de prueba'
     email_from = settings.EMAIL_HOST_USER 
     recipient_list = ['vicente.figueroa@usm.cl'] 
     send_mail( subject, message, email_from, recipient_list ) 
+    '''
+    historial1 = Historial.objects.all()[0]
+    historial2 = Historial.objects.all()[::-1][0]
+
+    print(historial1.fecha)
+    print(historial2.fecha)
     
