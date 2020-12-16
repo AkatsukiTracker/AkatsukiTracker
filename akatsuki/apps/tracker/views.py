@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 from urllib.parse import urlencode
 from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 from django.contrib.auth import authenticate, login, logout
 
@@ -76,18 +77,11 @@ def profile(request):
     else:
         img = "img/user.png"
 
-    args = {"nombre": username, "email": email, "img": img}
+    fecha = user.date_joined
+
+    args = {"nombre": username, "email": email, "img": img, "fecha": fecha}
     return render(request, 'tracker/profile.html', args)
-
-@login_required(login_url='login')
-def profile_picture(request):
-    if request.method == 'POST':
-        form = ImgPerfilForm(request.POST, request.FILES)
-        if form.is_valid():
-           form.save()
-        return redirect("profile")
-    return redirect("profile")
-
+    
 def trending(request):
     if request.method == 'GET':
         if request.user.username != "":
@@ -130,9 +124,9 @@ def check_url(request):
     if request.method == 'GET':
         link = request.GET['url']
         try:
-            tienda = link.split('/')[0]
+            tienda = link.split('/')[2]
         except:
-            return tienda
+            pass
         if len(link) != 0 and tiendaDisponible(tienda):
             tienda, scraper = seleccionar_scraper_initial(tienda, link)
 
@@ -243,4 +237,54 @@ def check_info(request):
 
         return Response( args )
     return redirect('dashboard')
+
+@login_required(login_url='login')
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'tracker/change_password.html', {
+        'form': form
+    })
+
+@login_required(login_url='login')
+def change_email(request):
+    if request.method == 'POST':
+        form = EmailChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your email was successfully updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = EmailChangeForm(request.user)
+    return render(request, 'tracker/change_email.html', {
+        'form': form
+    })
+
+@login_required(login_url='login')
+def profile_picture(request):
+    if request.method == 'POST':
+        form = ImgPerfilForm(request.POST, request.FILES)
+        if form.is_valid():
+           user = Usuario.objects.filter(username=request.user.username)[0]
+           user.img_perfil = request.FILES['file']
+           user.save()
+        return redirect("profile")
+    else:
+        form = ImgPerfilForm()
+    return render(request, 'tracker/change_image.html', {
+        'form': form
+    })
+
 

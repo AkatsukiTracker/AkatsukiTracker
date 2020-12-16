@@ -16,13 +16,13 @@
         <div class="card shadow">
           <div class="row no-gutters">
             <div class="col-6 col-sm-4 col-md-2">
-              <img src="{%static img%}" style="width: 100%" class="card-img">
+              <img src="media{%static img%}" style="width: 100%" class="card-img">
             </div>
             <div class="col-6 col-sm-8 col-md-10">
               <div class="card-body">
                 <h5 class="card-title">{{ nombre }}</h5>
                 <p class="card-text">{{ email }}</p>
-                <p class="card-text"><small class="text-muted">Usuario desde x tiempo</small></p>
+                <p class="card-text"><small class="text-muted">Usuario desde {{ fecha }}</small></p>
                 <h1 class="display-4 text-center">  </h1>
               </div>
             </div>
@@ -157,18 +157,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-picture" method="POST" action="/tracker/profile_picture" enctype="multipart/form-data" class="needs-validation" novalidate>
-          {% csrf_token %} <!--
+        <form id="form-picture" method="GET" action="/tracker/profile_picture" enctype="multipart/form-data" class="needs-validation" novalidate>
+          {% csrf_token %}
+          {{ form.as_p }}
           <div class="custom-file">
             <input type="file" class="custom-file-input" name="picture">
             <label class="custom-file-label" for="customFile" accept="image/*" required>Escoger imagen</label>
             <div class="invalid-feedback">
               Sube una imagen valida.           
             </div>
-          -->
-          {{ form.as_p }}
-          <button type="submit">Upload</button> 
-          <!--</div>-->
+          </div>
         </form>
       </div>    
       <div class="modal-footer">

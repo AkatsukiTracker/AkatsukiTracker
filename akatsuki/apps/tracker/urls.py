@@ -9,6 +9,9 @@ urlpatterns = [
     path("trending/", views.trending, name="trending"),
     path("check_product_info", views.check_info, name="check_info"),
     path("delete_product/", views.delete_product, name="delete_product"),
-    path("profile_picture", views.profile_picture, name="profile_picture")
+
+    path("profile_picture", views.profile_picture, name="profile_picture"),
+    path("change_password", views.change_password, name="change_password"),
+    path("change_email", views.change_email, name="change_email"),
 
 ]

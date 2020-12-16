@@ -750,7 +750,7 @@ class JumboScraper(BaseInitialScraper):
     def get_paths(self):
         paths = {"precio_normal": self.path_normal}
         try:
-            precios["precio_oferta"] = self.path_oferta
+            paths["precio_oferta"] = self.path_oferta
         except:
             pass
         return paths
