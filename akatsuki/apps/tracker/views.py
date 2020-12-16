@@ -73,7 +73,7 @@ def profile(request):
 
     img = Usuario.objects.filter(username=request.user.username)
     if img:
-        img = img[0].img_perfil
+        img = img[0].img_perfil.name[7:]
     else:
         img = "img/user.png"
 
@@ -277,7 +277,9 @@ def profile_picture(request):
     if request.method == 'POST':
         form = ImgPerfilForm(request.POST, request.FILES)
         if form.is_valid():
-           form.save()
+           user = Usuario.objects.filter(username=request.user.username)[0]
+           user.img_perfil = request.FILES['file']
+           user.save()
         return redirect("profile")
     else:
         form = ImgPerfilForm()

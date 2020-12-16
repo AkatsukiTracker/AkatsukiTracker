@@ -15,10 +15,9 @@ class ProductosForm(ModelForm):
 		model = Producto
 		fields = '__all__'
 
-class ImgPerfilForm(ModelForm):
-	class Meta:
-		model = Usuario
-		fields = ("img_perfil", )
+class ImgPerfilForm(forms.Form):
+	
+	file = forms.FileField()
 
 class SetEmailForm(forms.Form):
     """
