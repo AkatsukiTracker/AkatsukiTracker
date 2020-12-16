@@ -73,7 +73,7 @@ def profile(request):
 
     img = Usuario.objects.filter(username=request.user.username)
     if img:
-        img = img[0].img_perfil.name[7:]
+        img = img[0].img_perfil
     else:
         img = "img/user.png"
 

@@ -37,9 +37,10 @@ class Command(BaseCommand):
           args[producto.nombre] = {}
           historiales = Historial.objects.filter(producto=producto)
           medias = []   # ( tipo,  x )
+          precios = {}
 
           for historial in historiales:
-            precios = {}
+            
             if historial.tipo not in precios:
               precios[historial.tipo] = []           
              
