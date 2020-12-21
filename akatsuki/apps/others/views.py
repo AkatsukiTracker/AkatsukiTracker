@@ -16,9 +16,10 @@ def about_view(request):
 
 def contacto_view(request):
     return render(request, "home/contacto.html")
-   
 
 
+def error_view(request):
+    return render(request, "errors/500.html")
 
 
 def error_400_view(request, exception):
