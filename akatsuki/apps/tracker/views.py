@@ -72,10 +72,10 @@ def profile(request):
     email = user.email
 
     img = Usuario.objects.filter(username=request.user.username)
-    if img:
+    if img and img[0].img_perfil:
         img = img[0].img_perfil.name[7:]
     else:
-        img = "img/user.png"
+        img = "imgs_perfil/default.png"
 
     fecha = user.date_joined
 
