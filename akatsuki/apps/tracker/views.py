@@ -287,4 +287,42 @@ def profile_picture(request):
         'form': form
     })
 
+@login_required(login_url='login')
+@api_view(['POST'])
+def change_notif_trending(request):
+    if request.method == 'POST':
+        user = Usuario.objects.filter(username=request.user.username)[0]
+        if user.notificaciones:
+            user.notificaciones = False
+        else:
+            user.notificaciones = True
+        user.save()
+        return Response('OK')
+    return Response('NOT OK')
+
+@login_required(login_url='login')
+@api_view(['POST'])
+def change_notif_prod_all(request):
+    if request.method == 'POST':
+        user = Usuario.objects.filter(username=request.user.username)
+        if user.notificaciones:
+            user.notificaciones = False
+        else:
+            user.notificaciones = True
+        user.save()
+        return Response('OK')
+    return Response('NOT OK')
+
+@login_required(login_url='login')
+@api_view(['POST'])
+def change_notif_trending(request):
+    if request.method == 'POST':
+        user = Usuario.objects.filter(username=request.user.username)
+        if user.notificaciones:
+            user.notificaciones = False
+        else:
+            user.notificaciones = True
+        user.save()
+        return Response('OK')
+    return Response('NOT OK')
 
