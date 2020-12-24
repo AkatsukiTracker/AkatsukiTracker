@@ -15,15 +15,15 @@ def evaluar_precio(precio):
     return string_to_number(precio)
 
 def seleccionar_scraper_initial(tienda, link):
-    if tienda == "falabella.com":
+    if tienda == "www.falabella.com":
         scraper = FalabellaInitialScraper(link)
         tienda = "falabella"
 
-    elif tienda == "lider.cl":
+    elif tienda == "www.lider.cl":
         scraper = LiderInitialScraper(link)
         tienda = "lider"
 
-    elif tienda == "abcdin.cl":
+    elif tienda == "www.abcdin.cl":
         scraper = AbcdinInitialScraper(link)
         tienda = "abcdin"
 
@@ -31,47 +31,48 @@ def seleccionar_scraper_initial(tienda, link):
         scraper = RipleyInitialScraper(link)
         tienda = "ripley"
 
-    elif tienda == "paris.cl":
+    elif tienda == "www.paris.cl":
         scraper = ParisInitialScraper(link)
         tienda = "paris"
 
-    elif tienda == "pcfactory.cl":
+    elif tienda == "www.pcfactory.cl":
         scraper = PCFactoryInitialScraper(link)
         tienda = "pcfactory"
 
-    elif tienda == "antartica.cl":
+    elif tienda == "www.antartica.cl":
         scraper = AntarticaInitialScraper(link)
         tienda = "antartica"
 
-    elif tienda == "cruzverde.cl":
+    elif tienda == "www.cruzverde.cl":
         scraper = CruzVerdeInitialScraper(link)
         tienda = "cruzverde"
 
-    elif tienda == "sparta.cl":
+    elif tienda == "www.sparta.cl":
         scraper = SpartaInitialScraper(link)
         tienda = "sparta"
 
-    elif tienda == "jumbo.cl":
+    elif tienda == "www.jumbo.cl":
         scraper = JumboScraper(link)
         tienda = "jumbo"
 
-    elif tienda == "store.steampowered.com":
+    elif "steam" in tienda:
         scraper = SteamInitialScraper(link)
         tienda = "steam"
 
-    elif tienda == "tottus.cl":
+    elif tienda == "www.tottus.cl":
         scraper = TottusInitialScraper(link)
         tienda = "tottus"
 
-    elif tienda == "bold.cl":
+    elif tienda == "www.bold.cl":
         scraper = BoldInitialScraper(link)
         tienda = "bold"
 
-    elif tienda == "contrapunto.cl":
+    elif tienda == "www.contrapunto.cl":
         scraper = ContrapuntoInitialScraper(link)
         tienda = "contrapunto"
 
-    elif tienda == "ford.cl":
+    elif tienda == "www.ford.cl":
+        print("entro")
         scraper = FordInitialScraper(link)
         tienda = "ford"
 
@@ -84,21 +85,21 @@ def seleccionar_scraper(tienda, link, path):
 
 
 def tiendaDisponible(tienda):
-    lista =["falabella.com",
-            "lider.cl",
-            "abcdin.cl",
+    lista =["www.falabella.com",
+            "www.lider.cl",
+            "www.abcdin.cl",
             "simple.ripley.cl",
             "paris.cl",
-            "pcfactory.cl",
-            "antartica.cl",
-            "cruzverde.cl",
-            "sparta.cl",
-            "jumbo.cl",
+            "www.pcfactory.cl",
+            "www.antartica.cl",
+            "www.cruzverde.cl",
+            "www.sparta.cl",
+            "www.jumbo.cl",
             "store.steampowered.com",
-            "tottus.cl",
-            "bold.cl",
-            "contrapunto.cl",
-            "ford.cl"
+            "www.tottus.cl",
+            "www.bold.cl",
+            "www.contrapunto.cl",
+            "www.ford.cl"
     ]
     if tienda in lista:
         return True
@@ -123,7 +124,6 @@ class BaseInitialScraper():
 class FalabellaInitialScraper(BaseInitialScraper):
     tienda = "falabella"
     def __init__(self, link):
-        link = "https://www." + link
         self.link = link
         soup = BeautifulSoup(requests.get(link).content, features="html.parser")
         codigo = link.split('/')[5]
@@ -206,7 +206,7 @@ class FalabellaInitialScraper(BaseInitialScraper):
 class FalabellaScraper():
 
     def __init__(self, link, path):
-        soup = BeautifulSoup(requests.get("https://www." + link).content, features="html.parser")
+        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
         self.status = 0
         try:
             self.precio = string_to_number(soup.select(path)[0].text)
@@ -236,7 +236,7 @@ class LiderInitialScraper(BaseInitialScraper):
     tienda = "lider"
     def __init__(self,link):
         self.link = link
-        soup = BeautifulSoup(requests.get("https://www." + link).content, features="html.parser")
+        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
         if link.split("/")[3] == "catalogo":
             text = soup.find_all("script")[2].string
             self.nombreProducto = text[text.find("name")+4+3:text.find("image")-3]
@@ -261,7 +261,7 @@ class LiderInitialScraper(BaseInitialScraper):
 class AbcdinInitialScraper(BaseInitialScraper):
     tienda = "abcdin"
     def __init__(self,link):
-        self.link = "https://www." + link
+        self.link = link
         fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -313,7 +313,7 @@ class AbcdinInitialScraper(BaseInitialScraper):
 class RipleyInitialScraper(BaseInitialScraper):
     tienda = "ripley"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text
+      fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("section.product-header.visible-xs > h1")[0].text
@@ -384,7 +384,7 @@ class RipleyInitialScraper(BaseInitialScraper):
 class ParisInitialScraper(BaseInitialScraper):
     tienda = "paris"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text
+      fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("h1")[0].text.strip().split('\n')[2]
@@ -494,7 +494,7 @@ class ParisInitialScraper(BaseInitialScraper):
 class PCFactoryInitialScraper(BaseInitialScraper):
     tienda = "pcfactory"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text
+      fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("div.ficha_titulos > h1 > span")[0].text + ' ' + soup.select("div.ficha_titulos > h1 > span")[1].text
@@ -546,7 +546,7 @@ class PCFactoryInitialScraper(BaseInitialScraper):
 class AntarticaInitialScraper(BaseInitialScraper):
     tienda = "antartica"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text
+      fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("span.txtTitulosRutaSeccionLibros")[0].text
@@ -592,7 +592,7 @@ class AntarticaInitialScraper(BaseInitialScraper):
 class CruzVerdeInitialScraper(BaseInitialScraper):
     tienda = "cruzverde"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text
+      fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("h1.product-name")[0].text
@@ -665,7 +665,7 @@ class CruzVerdeInitialScraper(BaseInitialScraper):
 class SpartaInitialScraper(BaseInitialScraper):
     tienda = "sparta"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text.split('div class="block upsell"')[0]
+      fuente = requests.get(link).text.split('div class="block upsell"')[0]
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("h1 > span")[0].text
@@ -713,7 +713,7 @@ class SpartaInitialScraper(BaseInitialScraper):
 class JumboScraper(BaseInitialScraper):
     tienda = "jumbo"
     def __init__(self, link):
-        soup = BeautifulSoup(requests.get("https://www." + link).content, features="html.parser")
+        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
 
         text = soup.select("body > script")[0].string
 
@@ -799,7 +799,7 @@ class SteamInitialScraper(BaseInitialScraper):
 class TottusInitialScraper(BaseInitialScraper):
     tienda = "tottus"
     def __init__(self,link):
-        fuente = requests.get("https://www." + link).text
+        fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
 
         self.nombreProducto = soup.select("h1")[0].text
@@ -874,7 +874,7 @@ class TottusInitialScraper(BaseInitialScraper):
 class BoldInitialScraper(BaseInitialScraper):
     tienda = "bold"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text
+      fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("span.trimName")[0].text
@@ -912,7 +912,7 @@ class BoldInitialScraper(BaseInitialScraper):
 class ContrapuntoInitialScraper(BaseInitialScraper):
     tienda = "contrapunto"
     def __init__(self,link):
-        fuente = requests.get("https://www." + link).text
+        fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
 
         self.nombreProducto = soup.select("h1")[0].text
@@ -945,7 +945,7 @@ class ContrapuntoInitialScraper(BaseInitialScraper):
 class FordInitialScraper(BaseInitialScraper):
     tienda = "ford"
     def __init__(self,link):
-      fuente = requests.get("https://www." + link).text
+      fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("div.desktop.hideForMobile > h2")[0].text

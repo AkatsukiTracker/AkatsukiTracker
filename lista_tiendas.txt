@@ -3,12 +3,12 @@ Lista de tiendas disponibles:
 
 x = Funcional
 
-- [x] Falabella
+- [x] Falabella (tested)
 - [x] Abcdin
 - [x] Ripley
 - [x] Paris
 - [x] PCFactory
-- [x] Antartica
+- [x] Antartica (tested)
 - [x] Sparta
 - [x] Farmacia Cruz Verde
 - [x] Líder
@@ -28,5 +28,5 @@ x = Funcional
 - [x] La Cosa del Vegan
 - [x] Estación Natural
 - [x] Homecenter Sodimac
-- [x] Steam
+- [x] Steam (not working)
 - [x] Ortopedia Online
