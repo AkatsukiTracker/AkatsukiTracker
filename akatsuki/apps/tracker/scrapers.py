@@ -55,7 +55,7 @@ def seleccionar_scraper_initial(tienda, link):
         scraper = JumboScraper(link)
         tienda = "jumbo"
 
-    elif "steam" in tienda:
+    elif tienda == "store.steampowered.com":
         scraper = SteamInitialScraper(link)
         tienda = "steam"
 
@@ -72,7 +72,6 @@ def seleccionar_scraper_initial(tienda, link):
         tienda = "contrapunto"
 
     elif tienda == "ford.cl":
-        print("entro")
         scraper = FordInitialScraper(link)
         tienda = "ford"
 

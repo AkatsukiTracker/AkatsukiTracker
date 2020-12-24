@@ -81,7 +81,7 @@ def profile(request):
 
     args = {"nombre": username, "email": email, "img": img, "fecha": fecha}
     return render(request, 'tracker/profile.html', args)
-    
+
 def trending(request):
     if request.method == 'GET':
         if request.user.username != "":
