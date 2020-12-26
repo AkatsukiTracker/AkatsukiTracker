@@ -15,6 +15,7 @@
                 font-family="Helvetica Neue">Uno de tus objetos deseados bajó de precio!</mj-text>
 <mj-image width="400px" src="https://i.pinimg.com/originals/07/13/e6/0713e620b3933a39e9006fcdfaff6d94.jpg" />
 
+
        <mj-text  align="left"
                 color="#848484"
                 font-size="20px"
@@ -26,7 +27,6 @@
                 color="#FFF"
                 font-size="25px"
                 font-family="Helvetica Neue">$ 10.990</mj-text>
-
 
       <mj-button background-color="#F63A4D"
                  href="#">
