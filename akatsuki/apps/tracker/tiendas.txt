@@ -1,3 +1,2 @@
 1;falabella;www.falabella.com
 2;abcdin;www.abcdin.cl
-3;prueba;www.example.cl
