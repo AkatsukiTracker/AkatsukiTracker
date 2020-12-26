@@ -3,9 +3,9 @@
 3;abcdin;www.abcdin.cl
 4;ripley;simple.ripley.cl
 5;paris;www.paris.cl
-6;pcfactory;www.pcfactory.cl
+6;pCFactory;www.pcfactory.cl
 8;antartica;www.antartica.cl
-9;cruzverde;www.cruzverde.cl
+9;cruz Verde;www.cruzverde.cl
 10;sparta;sparta.cl
 11;jumbo;www.jumbo.cl
 12;steam;store.steampowered.com
@@ -13,3 +13,9 @@
 14;bold;bold.cl
 15;contrapunto;contrapunto.cl
 16;ford;www.ford.cl
+17;mercado Libre;articulo.mercadolibre.cl
+18;subaru;www.subaru.cl
+19;linio;www.linio.cl
+20;homecenter sodimac;www.sodimac.cl
+21;pet happy;www.pethappy.cl
+22;la casa del vegan;www.lacasadelvegan.cl
