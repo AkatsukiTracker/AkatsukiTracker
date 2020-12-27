@@ -291,7 +291,7 @@ def profile_picture(request):
 @api_view(['POST'])
 def change_notif_trending(request):
     if request.method == 'POST':
-        user = Usuario.objects.filter(username=request.user.username)[0]
+        user = Usuario.objects.filter(username=request.user.username)
         if user.notificaciones:
             user.notificaciones = False
         else:
@@ -305,6 +305,7 @@ def change_notif_trending(request):
 def change_notif_prod_all(request):
     if request.method == 'POST':
         user = Usuario.objects.filter(username=request.user.username)
+        user = user[0]
         if user.notificaciones:
             user.notificaciones = False
         else:
