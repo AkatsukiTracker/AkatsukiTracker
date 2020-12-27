@@ -16,7 +16,7 @@
         <div class="card shadow">
           <div class="row no-gutters">
             <div class="col-6 col-sm-4 col-md-2">
-              <img src="media{%static img%}" style="width: 100%" class="card-img">
+              <img src="/media{% static img %}" style="object-fit: cover" class="card-img h-100">
             </div>
             <div class="col-6 col-sm-8 col-md-10">
               <div class="card-body">
@@ -81,7 +81,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-email" method="POST" class="needs-validation" novalidate>
+        <form id="form-email" method="POST" class="needs-validation" novalidate >
           {% csrf_token %}
           <div class="form-group">
             <label >Nueva direccion</label>
@@ -157,18 +157,18 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-picture" method="GET" action="/tracker/profile_picture" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <form id="form-picture" method="POST" action="/tracker/profile_picture" enctype="multipart/form-data" class="needs-validation" novalidate>
           {% csrf_token %}
           {{ form.as_p }}
           <div class="custom-file">
-            <input type="file" class="custom-file-input" name="picture">
-            <label class="custom-file-label" for="customFile" accept="image/*" required>Escoger imagen</label>
+            <input type="file" class="custom-file-input" name="file" required>
+            <label class="custom-file-label" accept="image/*" >Escoger imagen</label>
             <div class="invalid-feedback">
-              Sube una imagen valida.           
+              Sube una imagen valida.
             </div>
           </div>
         </form>
-      </div>    
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="submit" form="form-picture" class="btn btn-primary">Cambiar imagen</button>

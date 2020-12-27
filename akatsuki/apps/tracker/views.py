@@ -72,16 +72,16 @@ def profile(request):
     email = user.email
 
     img = Usuario.objects.filter(username=request.user.username)
-    if img:
+    if img and img[0].img_perfil:
         img = img[0].img_perfil.name[7:]
     else:
-        img = "img/user.png"
+        img = "imgs_perfil/default.png"
 
     fecha = user.date_joined
 
     args = {"nombre": username, "email": email, "img": img, "fecha": fecha}
     return render(request, 'tracker/profile.html', args)
-    
+
 def trending(request):
     if request.method == 'GET':
         if request.user.username != "":
@@ -126,7 +126,7 @@ def check_url(request):
         try:
             tienda = link.split('/')[2]
         except:
-            pass
+            return Response({"message": "NOT OK", "error": "Invalid method"})
         if len(link) != 0 and tiendaDisponible(tienda):
             tienda, scraper = seleccionar_scraper_initial(tienda, link)
 
@@ -140,7 +140,7 @@ def check_url(request):
             img = scraper.get_img()
 
             return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link, "img": img}})
-    return Response({"message": "NOT OK"})
+    return Response({"message": "NOT OK", "error": "Invalid method"})
 
 @login_required(login_url='login')
 def add_product(request):
@@ -250,10 +250,7 @@ def change_password(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'tracker/change_password.html', {
-        'form': form
-    })
+        return HttpResponse(status=404)
 
 @login_required(login_url='login')
 def change_email(request):
@@ -267,10 +264,7 @@ def change_email(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = EmailChangeForm(request.user)
-    return render(request, 'tracker/change_email.html', {
-        'form': form
-    })
+        return HttpResponse(status=404)
 
 @login_required(login_url='login')
 def profile_picture(request):
@@ -282,10 +276,7 @@ def profile_picture(request):
            user.save()
         return redirect("profile")
     else:
-        form = ImgPerfilForm()
-    return render(request, 'tracker/change_image.html', {
-        'form': form
-    })
+        return HttpResponse(status=404)
 
 @login_required(login_url='login')
 @api_view(['POST'])
