@@ -240,7 +240,8 @@ class LiderInitialScraper(BaseInitialScraper):
         if link.split("/")[3] == "catalogo":
             text = soup.find_all("script")[2].string
             self.nombreProducto = text[text.find("name")+4+3:text.find("image")-3]
-            self.img_link = text[text.find("image")+5+3:text.find("description")-3]
+            img_link = text[text.find("image")+5+3:text.find("description")-3]
+            self.img_link = img_link.split(",")[0]
             precio = text[text.rfind("price")+5+2:len(text)-2]
             self.path = "script-2-[price]"
         elif link.split("/")[3] == "supermercado":

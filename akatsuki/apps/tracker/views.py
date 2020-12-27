@@ -100,7 +100,20 @@ def trending(request):
 
             productosUsuarios = ProductoUsuario.objects.filter(producto = producto)
 
-            ultimo_historial = Historial.objects.filter(producto = producto)[::-1][0]
+            tipos = []
+            for historial in Historial.objects.filter(producto = producto):
+                if historial.tipo not in tipos:
+                    tipos.append(historial.tipo)
+
+            historiales = []
+            for i in range(len(tipos)):
+                historiales.append(Historial.objects.filter(producto = producto, tipo = tipos[i])[::-1][0])
+
+            precio = float("inf")
+            for historial in historiales:
+                if historial.precio < precio:
+                    precio = historial.precio
+                    ultimo_historial = historial
 
             d_producto = {
                 "id": producto.id,
@@ -282,7 +295,7 @@ def profile_picture(request):
 @api_view(['POST'])
 def change_notif_trending(request):
     if request.method == 'POST':
-        user = Usuario.objects.filter(username=request.user.username)
+        user = Usuario.objects.filter(username=request.user.username)[0]
         if user.notificaciones:
             user.notificaciones = False
         else:
@@ -295,26 +308,27 @@ def change_notif_trending(request):
 @api_view(['POST'])
 def change_notif_prod_all(request):
     if request.method == 'POST':
-        user = Usuario.objects.filter(username=request.user.username)
-        user = user[0]
-        if user.notificaciones:
-            user.notificaciones = False
+        user = Usuario.objects.filter(username=request.user.username)[0]
+        if user.notificaciones_prod:
+            user.notificaciones_prod = False
         else:
-            user.notificaciones = True
+            user.notificaciones_prod = True
         user.save()
         return Response('OK')
     return Response('NOT OK')
 
 @login_required(login_url='login')
 @api_view(['POST'])
-def change_notif_trending(request):
+def change_notif_prod(request):
     if request.method == 'POST':
-        user = Usuario.objects.filter(username=request.user.username)
-        if user.notificaciones:
-            user.notificaciones = False
+        user = Usuario.objects.filter(username=request.user.username)[0]
+        producto = Producto.objects.filter(nombre=request.POST['producto'])[0]
+        prod_user = ProductoUsuario.objects.filter(user=user, producto=producto)[0]
+        if prod_user.notificaciones:
+            prod_user.notificaciones = False
         else:
-            user.notificaciones = True
-        user.save()
+            prod_user.notificaciones = True
+        prod_user.save()
         return Response('OK')
     return Response('NOT OK')
 
