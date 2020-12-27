@@ -429,13 +429,13 @@ class AbcdinScraper():
         self.path = path
 
         try: #precio oferta
-            self.precio = string_to_number(soup.select(path)[1])
+            self.precio = string_to_number(soup.select(path)[1].text.strip())
         except:
             try: #precio normal
-                self.precio = string_to_number(soup.select(path)[0])
+                self.precio = string_to_number(soup.select(path)[0].text.strip())
             except:
               try: #precio tarjeta
-                  self.precio = string_to_number(soup.select(path)[5])
+                  self.precio = string_to_number(soup.select(path)[5].text.strip())
               except: #producto ya no disponible
                 self.status = 2
 
