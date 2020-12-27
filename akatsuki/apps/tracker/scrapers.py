@@ -133,51 +133,50 @@ def seleccionar_scraper_initial(tienda, link):
 def seleccionar_scraper(tienda, link, path):
 
   if tienda == "falabella":
-    scraper = FalabellaScraper(link, path)
+    scraper = FalabellaScraper(link,path)
 
   elif tienda == "abcdin":
     scraper = AbcdinScraper(link,path)
 
-  '''
-  elif tienda == "www.lider.cl":
-    scraper = LiderInitialScraper(link)
+  elif tienda == "lider":
+    scraper = LiderScraper(link,path)
 
-  elif tienda == "simple.ripley.cl":
-    scraper = RipleyInitialScraper(link)
+  elif tienda == "ripley":
+    scraper = RipleyScraper(link,path)
 
-  elif tienda == "www.paris.cl":
-    scraper = ParisInitialScraper(link)
+  elif tienda == "paris":
+    scraper = ParisScraper(link,path)
 
-  elif tienda == "www.pcfactory.cl":
-    scraper = PCFactoryInitialScraper(link)
+  elif tienda == "pcfactory":
+    scraper = PCFactoryScraper(link,path)
 
-  elif tienda == "www.antartica.cl":
-    scraper = AntarticaInitialScraper(link)
+  elif tienda == "antartica.cl":
+    scraper = AntarticaScraper(link,path)
 
-  elif tienda == "www.cruzverde.cl":
-    scraper = CruzVerdeInitialScraper(link)
+  elif tienda == "cruz verde":
+    scraper = CruzVerdeScraper(link,path)
 
-  elif tienda == "sparta.cl":
-    scraper = SpartaInitialScraper(link)
+  elif tienda == "sparta":
+    scraper = SpartaScraper(link,path)
 
-  elif tienda == "www.jumbo.cl":
-    scraper = JumboScraper(link)
+  elif tienda == "jumbo":
+    scraper = JumboScraper(link,path)
 
-  elif tienda == "store.steampowered.com":
-    scraper = SteamInitialScraper(link)
+  elif tienda == "steam":
+    scraper = SteamScraper(link,path)
 
-  elif tienda == "www.tottus.cl":
-    scraper = TottusInitialScraper(link)
+  elif tienda == "tottus":
+    scraper = TottusScraper(link,path)
 
-  elif tienda == "bold.cl":
-    scraper = BoldInitialScraper(link)
+  elif tienda == "bold":
+    scraper = BoldScraper(link,path)
 
-  elif tienda == "contrapunto.cl":
-    scraper = ContrapuntoInitialScraper(link)
+  elif tienda == "contrapunto":
+    scraper = ContrapuntoScraper(link,path)
 
-  elif tienda == "www.ford.cl":
-    scraper = FordInitialScraper(link)
-  '''
+  elif tienda == "chevrolet":
+    scraper = ChevroletScraper(link,path)
+
   return scraper
 
 def tiendaDisponible(tienda):
@@ -193,10 +192,9 @@ def tiendaDisponible(tienda):
             "www.jumbo.cl",
             "store.steampowered.com",
             "www.tottus.cl",
-            "www.chevrolet.cl",
             "bold.cl",
             "contrapunto.cl",
-            "www.ford.cl",
+            "www.chevrolet.cl",
             "articulo.mercadolibre.cl",
             "www.subaru.cl",
             "www.linio.cl",
@@ -230,6 +228,18 @@ class BaseInitialScraper():
 
     def get_img(self):
         return self.img_link
+
+class BaseScraper():
+    #getters
+    def check_status(self):
+        return self.status
+        #Status: 0 = OK, 1 = CHANGED PATH, 2 = NO DISPONIBLE
+
+    def get_precio(self):
+        return self.precio
+
+    def get_path(self):
+        return self.path
 
 class FalabellaInitialScraper(BaseInitialScraper):
     tienda = "falabella"
@@ -313,8 +323,7 @@ class FalabellaInitialScraper(BaseInitialScraper):
             pass
         return paths
 
-class FalabellaScraper():
-
+class FalabellaScraper(BaseScraper):
     def __init__(self, link, path):
         soup = BeautifulSoup(requests.get(link).content, features="html.parser")
         self.status = 0
@@ -331,16 +340,6 @@ class FalabellaScraper():
                 self.status = 1
             except:
                 self.status = 2
-
-    def check_status(self):
-        return self.status
-        #Status: 0 = OK, 1 = CHANGED PATH, 2 = NO DISPONIBLE
-
-    def get_precio(self):
-        return self.precio
-
-    def get_path(self):
-        return self.path
 
 class LiderInitialScraper(BaseInitialScraper):
     tienda = "lider"
@@ -421,7 +420,7 @@ class AbcdinInitialScraper(BaseInitialScraper):
             paths["precio_oferta_tarjeta"] = self.path_tarjeta
         return paths
 
-class AbcdinScraper():
+class AbcdinScraper(BaseScraper):
     def __init__(self, link, path):
         fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
@@ -438,16 +437,6 @@ class AbcdinScraper():
                   self.precio = string_to_number(soup.select(path)[5].text.strip())
               except: #producto ya no disponible
                 self.status = 2
-
-    def check_status(self):
-        return self.status
-        #Status: 0 = OK, 1 = CHANGED PATH, 2 = NO DISPONIBLE
-
-    def get_precio(self):
-        return self.precio
-
-    def get_path(self):
-        return self.path
 
 class RipleyInitialScraper(BaseInitialScraper):
     tienda = "ripley"
@@ -520,6 +509,23 @@ class RipleyInitialScraper(BaseInitialScraper):
       if self.p_tarjeta != 'Oferta no disponible':
         paths["precio_oferta_tarjeta"] = self.path_tarjeta
       return paths
+
+class RipleyScraper(BaseScraper):
+    def __init__(self,link,path):
+        fuente = requests.get(link).text
+        soup = BeautifulSoup(fuente,features="html.parser")
+        print(type(path))
+        ruta = path[0]
+        indice = path[1]
+        self.path = ruta
+        self.status = 0
+
+        try:
+            #print(ruta)
+            #print(indice)
+            self.precio = string_to_number(soup.select(ruta)[indice].text.strip())
+        except:
+            self.status = 2
 
 class ParisInitialScraper(BaseInitialScraper):
     tienda = "paris"
@@ -631,6 +637,18 @@ class ParisInitialScraper(BaseInitialScraper):
            paths["precio_normal"] = self.path_normal
 
         return paths
+
+class ParisScraper(BaseScraper):
+    def __init__(self,link,path):
+        fuente = requests.get(link).text
+        soup = BeautifulSoup(fuente,features="html.parser")
+        self.status = 0
+        self.path = path
+
+        try:
+            self.precio = string_to_number(soup.select(path)[0].text.strip().split('\n')[0])
+        except:
+            self.status = 2
 
 class PCFactoryInitialScraper(BaseInitialScraper):
     tienda = "pcfactory"
