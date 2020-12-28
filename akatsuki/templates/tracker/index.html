@@ -3,14 +3,16 @@
 {% block title %}Mis productos{% endblock %}
 {% block script %}
 <script type="text/javascript">
+
   {% autoescape off %}
     const productos = {{ productos_json }}
     const links = {{ links }}
     const historiales = {{ historiales }}
-
   {% endautoescape %}
 
 </script>
+
+<script defer type="text/javascript" src="{% static 'js/tracker.js' %}"></script>
 {% endblock %}
 {% block content %}
 
@@ -106,10 +108,24 @@
             </div>
           </div>
           <small class="form-text text-muted">Recuerda que debe ser una tienda soportada</small>
+
           <div class="mt-5">
             <h1 class="text-center display-4 mb-5" id="producto-nombre"></h1>
           </div>
         </form>
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Como agregar productos</h5>
+                Debes hacer doble click en el link que aparece en la parte superior de la pantalla, copiarlo, y pegarlo aca.
+                <img class="img-responsive d-flex mx-auto mt-2 border rounded" src="{% static 'img/tutorial-pc.png' %}">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
@@ -135,12 +151,19 @@
             <canvas id="canvas-chart" width="400" height="200"></canvas>
           </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-4">
           <div class="col">
-            <a id="modalDetails-shop" class="btn btn-light btn-block btn-lg border mdi mdi-cart">Ver en tienda</a>
+            <div class="card">
+              <div class="card-body">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="check-destacados">
+                  <label class="custom-control-label">Notificaciones</label>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
       <div class="modal-footer">
         <button id="modalDetails-delete" class="btn btn-outline-secondary mdi-trash">Eliminar producto</button>

@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 from urllib.parse import urlencode
 from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 from django.contrib.auth import authenticate, login, logout
 
@@ -26,6 +27,8 @@ from .scrapers import *
 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+
+import hashlib
 
 
 @login_required(login_url='login')
@@ -68,14 +71,15 @@ def profile(request):
     username = user.username
     email = user.email
 
-    try:
-        img = Usuario.objects.filter(username=request.user.username)[0].img_perfil
-        len(img)
-    except:
-        img = "img/user.png"
+    img = Usuario.objects.filter(username=request.user.username)
+    if img and img[0].img_perfil:
+        img = img[0].img_perfil.name[7:]
     else:
-        img = img.name[7:]
-    args = {"nombre": username, "email": email, "img": img}
+        img = "imgs_perfil/default.png"
+
+    fecha = user.date_joined
+
+    args = {"nombre": username, "email": email, "img": img, "fecha": fecha}
     return render(request, 'tracker/profile.html', args)
 
 def trending(request):
@@ -96,7 +100,20 @@ def trending(request):
 
             productosUsuarios = ProductoUsuario.objects.filter(producto = producto)
 
-            ultimo_historial = Historial.objects.filter(producto = producto)[::-1][0]
+            tipos = []
+            for historial in Historial.objects.filter(producto = producto):
+                if historial.tipo not in tipos:
+                    tipos.append(historial.tipo)
+
+            historiales = []
+            for i in range(len(tipos)):
+                historiales.append(Historial.objects.filter(producto = producto, tipo = tipos[i])[::-1][0])
+
+            precio = float("inf")
+            for historial in historiales:
+                if historial.precio < precio:
+                    precio = historial.precio
+                    ultimo_historial = historial
 
             d_producto = {
                 "id": producto.id,
@@ -105,8 +122,12 @@ def trending(request):
                 "img": producto.img_link,
                 "link": producto.link,
                 "precio": ultimo_historial.precio,
-                "subscripciones": len(productosUsuarios)
+                "subscripciones": len(productosUsuarios),
+                "agregado": False
             }
+            if user:
+                d_producto['agregado'] = ProductoUsuario.objects.filter(producto = producto, user = user).exists()
+
 
             args["productos"].append(d_producto)
 
@@ -122,7 +143,7 @@ def check_url(request):
         try:
             tienda = link.split('/')[2]
         except:
-            pass
+            return Response({"message": "NOT OK", "error": "Invalid method"})
         if len(link) != 0 and tiendaDisponible(tienda):
             tienda, scraper = seleccionar_scraper_initial(tienda, link)
 
@@ -136,7 +157,7 @@ def check_url(request):
             img = scraper.get_img()
 
             return Response({"message": "OK", "data": {"tienda": tienda, "precios": precios, "paths": paths, "nombre": nombre, "link": link, "img": img}})
-    return Response({"message": "NOT OK"})
+    return Response({"message": "NOT OK", "error": "Invalid method"})
 
 @login_required(login_url='login')
 def add_product(request):
@@ -150,6 +171,10 @@ def add_product(request):
         #producto
         nombre_producto = datos['nombre']
         link = datos['link']
+            #hash del link
+        result = hashlib.md5(link.encode())
+        link_hash = result.hexdigest()
+
         img = datos['img']
 
         producto = Producto.objects.filter(link = link)
@@ -178,7 +203,7 @@ def add_product(request):
             #Crear Instancias de los Modelos
 
             #Producto
-            producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img)
+            producto = Producto(nombre = nombre_producto, link = link, tienda = tienda, img_link = img, link_hash= link_hash)
             producto.save()
 
             #Historiales
@@ -187,7 +212,7 @@ def add_product(request):
                 historial.save()
 
             #ProductoUsuario
-            productoUsuario = ProductoUsuario(producto = producto, user = user)
+            productoUsuario = ProductoUsuario(producto = producto, user = user, notificaciones= 1)
             productoUsuario.save()
 
         return redirect('dashboard')
@@ -196,12 +221,9 @@ def add_product(request):
 
 @login_required(login_url='login')
 def delete_product(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         user = User.objects.filter(username=request.user.username)[0]
-        datos = request.POST
-        datos = json.loads(datos['datos'])
-        link = datos['link'] #Producto
-        producto = Producto.objects.filter(link=link)
+        producto = Producto.objects.filter(id=json.loads(request.GET['id']))[0]
         producto_usuario = ProductoUsuario.objects.filter(producto = producto, user = user)[0]
         producto_usuario.delete()
         return redirect('dashboard')
@@ -232,4 +254,85 @@ def check_info(request):
 
         return Response( args )
     return redirect('dashboard')
+
+@login_required(login_url='login')
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        return HttpResponse(status=404)
+
+@login_required(login_url='login')
+def change_email(request):
+    if request.method == 'POST':
+        form = EmailChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your email was successfully updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        return HttpResponse(status=404)
+
+@login_required(login_url='login')
+def profile_picture(request):
+    if request.method == 'POST':
+        form = ImgPerfilForm(request.POST, request.FILES)
+        if form.is_valid():
+           user = Usuario.objects.filter(username=request.user.username)[0]
+           user.img_perfil = request.FILES['file']
+           user.save()
+        return redirect("profile")
+    else:
+        return HttpResponse(status=404)
+
+@login_required(login_url='login')
+@api_view(['POST'])
+def change_notif_trending(request):
+    if request.method == 'POST':
+        user = Usuario.objects.filter(username=request.user.username)[0]
+        if user.notificaciones:
+            user.notificaciones = False
+        else:
+            user.notificaciones = True
+        user.save()
+        return Response('OK')
+    return Response('NOT OK')
+
+@login_required(login_url='login')
+@api_view(['POST'])
+def change_notif_prod_all(request):
+    if request.method == 'POST':
+        user = Usuario.objects.filter(username=request.user.username)[0]
+        if user.notificaciones_prod:
+            user.notificaciones_prod = False
+        else:
+            user.notificaciones_prod = True
+        user.save()
+        return Response('OK')
+    return Response('NOT OK')
+
+@login_required(login_url='login')
+@api_view(['POST'])
+def change_notif_prod(request):
+    if request.method == 'POST':
+        user = Usuario.objects.filter(username=request.user.username)[0]
+        producto = Producto.objects.filter(nombre=request.POST['producto'])[0]
+        prod_user = ProductoUsuario.objects.filter(user=user, producto=producto)[0]
+        if prod_user.notificaciones:
+            prod_user.notificaciones = False
+        else:
+            prod_user.notificaciones = True
+        prod_user.save()
+        return Response('OK')
+    return Response('NOT OK')
 

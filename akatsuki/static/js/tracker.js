@@ -1,6 +1,5 @@
 function check_url(){
-  var url = document.querySelector("#input-url").value
-  url = 'https://www.' + url.replace('https://','').replace('http://','').replace('www.','')
+  let url = document.querySelector("#input-url").value
   url_escaped = encodeURIComponent(url)
   console.log("URL: " + url_escaped)
 
@@ -78,11 +77,28 @@ function details(data){
   not.classList.remove('btn-outline-secondary')
 
   document.getElementById("modalDetails-title").textContent = productos[data].nombre
-  document.getElementById("modalDetails-shop").href = productos[data].link
   document.getElementById("modalDetails-delete").onclick = function(){deleteProduct(productos[data].id)}
   document.getElementById("modalDetails-deleteConfirm").hidden = true
 
+  load_graph();
 
+}
+
+function deleteProduct(id){
+  console.log("DELETE: ", id)
+
+  document.getElementById("modalDetails-delete").hidden = true
+  confirm = document.getElementById("modalDetails-deleteConfirm")
+  confirm.hidden = false
+  confirm.href = `/tracker/delete_product/?id=${id}`
+  var not = document.getElementById("modalDetails-deleteNotConfirm")
+  not.textContent = "Conservar"
+  not.classList.remove('bg-akatsuki')
+  not.classList.remove('text-white')
+  not.classList.add('btn-outline-secondary')
+}
+
+function load_graph(data){
   var myLineChart = new Chart(document.getElementById('canvas-chart').getContext('2d'), {
       type: 'line',
        data: {
@@ -93,16 +109,4 @@ function details(data){
       },
       options: {}
   });
-}
-
-function deleteProduct(id){
-  console.log("DELETE: ", id)
-
-  document.getElementById("modalDetails-delete").hidden = true
-  document.getElementById("modalDetails-deleteConfirm").hidden = false
-  var not = document.getElementById("modalDetails-deleteNotConfirm")
-  not.textContent = "Conservar"
-  not.classList.remove('bg-akatsuki')
-  not.classList.remove('text-white')
-  not.classList.add('btn-outline-secondary')
 }

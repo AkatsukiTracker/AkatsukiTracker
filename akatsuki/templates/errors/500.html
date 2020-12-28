@@ -1,0 +1,25 @@
+{% extends "errors/template.html" %}
+{% load static %}
+{% block content %}
+
+<div class="fluid-container">
+  <div class="container-xl">
+    <div class="row justify-content-center mt-5">
+      <div class="col-12 col-sm-10  col-md-7" >
+        <img src="{% static 'img/dev.png' %}" class="img-fluid">
+      </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+      <div class="col-12 col-sm-10  col-md-7">
+        <div class="card shadow">
+          <div class="card-body text-center">
+            <p class="card-text">Ups... Algo salio muy mal. Estamos trabajando en esto.</p>
+            <p class="card-text"><small class="text-muted">Error 500</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

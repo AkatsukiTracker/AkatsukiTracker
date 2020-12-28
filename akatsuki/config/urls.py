@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,3 +24,16 @@ urlpatterns = [
     path('', include('apps.others.urls') ),
     path('', include('apps.users.urls')  ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+
+
+                          
+handler400 = 'apps.others.views.error_400_view'
+handler403 = 'apps.others.views.error_403_view'
+handler404 = 'apps.others.views.error_404_view'
+
+handler500 = 'apps.others.views.error_500_view'
+

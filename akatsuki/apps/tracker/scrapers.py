@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 def string_to_number(string): #no la mejor funcion, pero weno
     n = ""
@@ -27,7 +28,7 @@ def seleccionar_scraper_initial(tienda, link):
         scraper = AbcdinInitialScraper(link)
         tienda = "abcdin"
 
-    elif tienda == "www.simple.ripley.cl":
+    elif tienda == "simple.ripley.cl":
         scraper = RipleyInitialScraper(link)
         tienda = "ripley"
 
@@ -47,7 +48,7 @@ def seleccionar_scraper_initial(tienda, link):
         scraper = CruzVerdeInitialScraper(link)
         tienda = "cruzverde"
 
-    elif tienda == "www.sparta.cl":
+    elif tienda == "sparta.cl":
         scraper = SpartaInitialScraper(link)
         tienda = "sparta"
 
@@ -55,7 +56,7 @@ def seleccionar_scraper_initial(tienda, link):
         scraper = JumboScraper(link)
         tienda = "jumbo"
 
-    elif "steam" in tienda:
+    elif tienda == "store.steampowered.com":
         scraper = SteamInitialScraper(link)
         tienda = "steam"
 
@@ -63,43 +64,150 @@ def seleccionar_scraper_initial(tienda, link):
         scraper = TottusInitialScraper(link)
         tienda = "tottus"
 
-    elif tienda == "www.bold.cl":
+    elif tienda == "bold.cl":
         scraper = BoldInitialScraper(link)
         tienda = "bold"
 
-    elif tienda == "www.contrapunto.cl":
+    elif tienda == "contrapunto.cl":
         scraper = ContrapuntoInitialScraper(link)
         tienda = "contrapunto"
 
-    elif tienda == "www.ford.cl":
-        print("entro")
-        scraper = FordInitialScraper(link)
-        tienda = "ford"
+    elif tienda == "www.chevrolet.cl":
+        scraper = ChevroletInitialScraper(link)
+        tienda = "chevrolet"
+
+    elif tienda == "articulo.mercadolibre.cl":
+        scraper = MercadoLibreScraper(link)
+        tienda = "mercado libre"
+
+    elif tienda == "www.subaru.cl":
+        scraper = SubaruInitialScraper(link)
+        tienda = "subaru"
+
+    elif tienda == "www.linio.cl":
+        scraper = LinioInitialScraper(link)
+        tienda = "linio"
+
+    elif tienda == "www.sodimac.cl":
+        scraper = HomecenterSodimacInitialScraper(link)
+        tienda = "homecenter sodimac"
+
+    elif tienda == "www.pethappy.cl":
+        scraper = PetHappyInitialScraper(link)
+        tienda = "pet happy"
+
+    elif tienda == "www.lacasadelvegan.cl":
+        scraper = LaCasaDelVeganInitialScraper(link)
+        tienda = "la casa del vegan"
+
+    elif tienda == "www.decathlon.cl":
+        scraper = DecathlonInitialScaper(link)
+        tienda = "decathlon"
+
+    elif tienda == "www.casamarilla.cl":
+        scraper = CasaAmarillaInitialScraper(link)
+        tienda = "casa amarilla"
+
+    elif tienda == "www.casaroyal.cl":
+        tienda = "casa royal"
+        scraper = CasaRoyalInitialScraper(link)
+
+    elif tienda == "feriachilenadellibro.cl":
+        tienda = "feria chilena del libro"
+        scraper = FeriaChilenaDelLibro(link)
+
+    elif tienda == "www.estacionnatural.cl":
+        tienda = "estacion natural"
+        scraper = EstacionNaturalInitialScraper(link)
+
+    elif tienda == "www.ortopediaonline.cl":
+        tienda = "ortopedia online"
+        scraper = OrtopediaOnlineInitialScraper(link)
+
+    elif tienda == "www.suzuki.cl":
+        tienda = "suzuki"
+        scraper = SuzukiInitialScraper(link)
 
     return (tienda, scraper)
 
 def seleccionar_scraper(tienda, link, path):
-  if tienda == "falabella":
-    scraper = FalabellaScraper(link, path)
-  return scraper
 
+  if tienda == "falabella":
+    scraper = FalabellaScraper(link,path)
+
+  elif tienda == "abcdin":
+    scraper = AbcdinScraper(link,path)
+
+  elif tienda == "lider":
+    scraper = LiderScraper(link,path)
+
+  elif tienda == "ripley":
+    scraper = RipleyScraper(link,path)
+
+  elif tienda == "paris":
+    scraper = ParisScraper(link,path)
+
+  elif tienda == "pcfactory":
+    scraper = PCFactoryScraper(link,path)
+
+  elif tienda == "antartica.cl":
+    scraper = AntarticaScraper(link,path)
+
+  elif tienda == "cruz verde":
+    scraper = CruzVerdeScraper(link,path)
+
+  elif tienda == "sparta":
+    scraper = SpartaScraper(link,path)
+
+  elif tienda == "jumbo":
+    scraper = JumboScraper(link,path)
+
+  elif tienda == "steam":
+    scraper = SteamScraper(link,path)
+
+  elif tienda == "tottus":
+    scraper = TottusScraper(link,path)
+
+  elif tienda == "bold":
+    scraper = BoldScraper(link,path)
+
+  elif tienda == "contrapunto":
+    scraper = ContrapuntoScraper(link,path)
+
+  elif tienda == "chevrolet":
+    scraper = ChevroletScraper(link,path)
+
+  return scraper
 
 def tiendaDisponible(tienda):
     lista =["www.falabella.com",
             "www.lider.cl",
             "www.abcdin.cl",
-            "www.simple.ripley.cl",
+            "simple.ripley.cl",
             "www.paris.cl",
             "www.pcfactory.cl",
             "www.antartica.cl",
             "www.cruzverde.cl",
-            "www.sparta.cl",
+            "sparta.cl",
             "www.jumbo.cl",
-            "www.store.steampowered.com",
+            "store.steampowered.com",
             "www.tottus.cl",
-            "www.bold.cl",
-            "www.contrapunto.cl",
-            "www.ford.cl"
+            "bold.cl",
+            "contrapunto.cl",
+            "www.chevrolet.cl",
+            "articulo.mercadolibre.cl",
+            "www.subaru.cl",
+            "www.linio.cl",
+            "www.sodimac.cl",
+            "www.pethappy.cl",
+            "www.lacasadelvegan.cl",
+            "www.decathlon.cl",
+            "www.casamarilla.cl",
+            "www.casaroyal.cl",
+            "feriachilenadellibro.cl",
+            "www.estacionnatural.cl",
+            "www.ortopediaonline.cl",
+            "www.suzuki.cl"
     ]
     if tienda in lista:
         return True
@@ -121,6 +229,18 @@ class BaseInitialScraper():
     def get_img(self):
         return self.img_link
 
+class BaseScraper():
+    #getters
+    def check_status(self):
+        return self.status
+        #Status: 0 = OK, 1 = CHANGED PATH, 2 = NO DISPONIBLE
+
+    def get_precio(self):
+        return self.precio
+
+    def get_path(self):
+        return self.path
+
 class FalabellaInitialScraper(BaseInitialScraper):
     tienda = "falabella"
     def __init__(self, link):
@@ -130,7 +250,6 @@ class FalabellaInitialScraper(BaseInitialScraper):
         self.nombreProducto = link.split('/')[6].replace('-',' ')
         selectText = ("#testId-pod-prices-{} > ol > li").format(codigo)
         data = soup.select(selectText)
-
         jsx = soup.select(selectText)[0].attrs["class"][0]
 
         if len(data) == 1:
@@ -204,8 +323,7 @@ class FalabellaInitialScraper(BaseInitialScraper):
             pass
         return paths
 
-class FalabellaScraper():
-
+class FalabellaScraper(BaseScraper):
     def __init__(self, link, path):
         soup = BeautifulSoup(requests.get(link).content, features="html.parser")
         self.status = 0
@@ -223,16 +341,6 @@ class FalabellaScraper():
             except:
                 self.status = 2
 
-    def check_status(self):
-        return self.status
-        #Status: 0 = OK, 1 = CHANGED PATH, 2 = NO DISPONIBLE
-
-    def get_precio(self):
-        return self.precio
-
-    def get_path(self):
-        return self.path
-
 class LiderInitialScraper(BaseInitialScraper):
     tienda = "lider"
     def __init__(self,link):
@@ -241,7 +349,8 @@ class LiderInitialScraper(BaseInitialScraper):
         if link.split("/")[3] == "catalogo":
             text = soup.find_all("script")[2].string
             self.nombreProducto = text[text.find("name")+4+3:text.find("image")-3]
-            self.img_link = text[text.find("image")+5+3:text.find("description")-3]
+            img_link = text[text.find("image")+5+3:text.find("description")-3]
+            self.img_link = img_link.split(",")[0]
             precio = text[text.rfind("price")+5+2:len(text)-2]
             self.path = "script-2-[price]"
         elif link.split("/")[3] == "supermercado":
@@ -311,9 +420,28 @@ class AbcdinInitialScraper(BaseInitialScraper):
             paths["precio_oferta_tarjeta"] = self.path_tarjeta
         return paths
 
+class AbcdinScraper(BaseScraper):
+    def __init__(self, link, path):
+        fuente = requests.get(link).text
+        soup = BeautifulSoup(fuente,features="html.parser")
+        self.status = 0
+        self.path = path
+
+        try: #precio oferta
+            self.precio = string_to_number(soup.select(path)[1].text.strip())
+        except:
+            try: #precio normal
+                self.precio = string_to_number(soup.select(path)[0].text.strip())
+            except:
+              try: #precio tarjeta
+                  self.precio = string_to_number(soup.select(path)[5].text.strip())
+              except: #producto ya no disponible
+                self.status = 2
+
 class RipleyInitialScraper(BaseInitialScraper):
     tienda = "ripley"
     def __init__(self,link):
+      self.link = link
       fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -382,9 +510,27 @@ class RipleyInitialScraper(BaseInitialScraper):
         paths["precio_oferta_tarjeta"] = self.path_tarjeta
       return paths
 
+class RipleyScraper(BaseScraper):
+    def __init__(self,link,path):
+        fuente = requests.get(link).text
+        soup = BeautifulSoup(fuente,features="html.parser")
+        print(type(path))
+        ruta = path[0]
+        indice = path[1]
+        self.path = ruta
+        self.status = 0
+
+        try:
+            #print(ruta)
+            #print(indice)
+            self.precio = string_to_number(soup.select(ruta)[indice].text.strip())
+        except:
+            self.status = 2
+
 class ParisInitialScraper(BaseInitialScraper):
     tienda = "paris"
     def __init__(self,link):
+      self.link = link
       fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -492,9 +638,22 @@ class ParisInitialScraper(BaseInitialScraper):
 
         return paths
 
+class ParisScraper(BaseScraper):
+    def __init__(self,link,path):
+        fuente = requests.get(link).text
+        soup = BeautifulSoup(fuente,features="html.parser")
+        self.status = 0
+        self.path = path
+
+        try:
+            self.precio = string_to_number(soup.select(path)[0].text.strip().split('\n')[0])
+        except:
+            self.status = 2
+
 class PCFactoryInitialScraper(BaseInitialScraper):
     tienda = "pcfactory"
     def __init__(self,link):
+      self.link = link
       fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -547,6 +706,7 @@ class PCFactoryInitialScraper(BaseInitialScraper):
 class AntarticaInitialScraper(BaseInitialScraper):
     tienda = "antartica"
     def __init__(self,link):
+      self.link = link
       fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -593,6 +753,7 @@ class AntarticaInitialScraper(BaseInitialScraper):
 class CruzVerdeInitialScraper(BaseInitialScraper):
     tienda = "cruzverde"
     def __init__(self,link):
+      self.link = link
       fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -666,6 +827,7 @@ class CruzVerdeInitialScraper(BaseInitialScraper):
 class SpartaInitialScraper(BaseInitialScraper):
     tienda = "sparta"
     def __init__(self,link):
+      self.link = link
       fuente = requests.get(link).text.split('div class="block upsell"')[0]
       soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -714,6 +876,7 @@ class SpartaInitialScraper(BaseInitialScraper):
 class JumboScraper(BaseInitialScraper):
     tienda = "jumbo"
     def __init__(self, link):
+        self.link = link
         soup = BeautifulSoup(requests.get(link).content, features="html.parser")
 
         text = soup.select("body > script")[0].string
@@ -750,7 +913,7 @@ class JumboScraper(BaseInitialScraper):
     def get_paths(self):
         paths = {"precio_normal": self.path_normal}
         try:
-            precios["precio_oferta"] = self.path_oferta
+            paths["precio_oferta"] = self.path_oferta
         except:
             pass
         return paths
@@ -758,6 +921,7 @@ class JumboScraper(BaseInitialScraper):
 class SteamInitialScraper(BaseInitialScraper):
     tienda = "steam"
     def __init__(self,link):
+        self.link = link
         fuente = requests.get(link).text
         soup = BeautifulSoup(fuente, features="html.parser")
 
@@ -794,12 +958,13 @@ class SteamInitialScraper(BaseInitialScraper):
         paths = dict()
         paths["precio_normal"] = self.path_normal
         if self.p_oferta != "Oferta no disponible":
-          paths["precio_oferta_internet"] = self.path_oferta
+          paths["precio_oferta"] = self.path_oferta
         return paths
 
 class TottusInitialScraper(BaseInitialScraper):
     tienda = "tottus"
     def __init__(self,link):
+        self.link = link
         fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -875,6 +1040,7 @@ class TottusInitialScraper(BaseInitialScraper):
 class BoldInitialScraper(BaseInitialScraper):
     tienda = "bold"
     def __init__(self,link):
+      self.link = link
       fuente = requests.get(link).text
       soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -913,6 +1079,7 @@ class BoldInitialScraper(BaseInitialScraper):
 class ContrapuntoInitialScraper(BaseInitialScraper):
     tienda = "contrapunto"
     def __init__(self,link):
+        self.link = link
         fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
 
@@ -943,24 +1110,587 @@ class ContrapuntoInitialScraper(BaseInitialScraper):
         paths["precio_oferta_internet"] = self.path_oferta
         return paths
 
-class FordInitialScraper(BaseInitialScraper):
-    tienda = "ford"
+class ChevroletInitialScraper(BaseInitialScraper):
+    tienda = "chevrolet"
     def __init__(self,link):
-      fuente = requests.get(link).text
-      soup = BeautifulSoup(fuente,features="html.parser")
+        self.link = link
+        fuente = requests.get(link).text
+        soup = BeautifulSoup(fuente,features="html.parser")
 
-      self.nombreProducto = soup.select("div.desktop.hideForMobile > h2")[0].text
-      self.img_link = "www.ford.cl" + soup.select("div.component-content > div > picture > img")[0].attrs["data-src"]
+        self.nombreProducto = soup.select("#nav_anchor > span.q-js-button-text.hide-for-large-down")[0].text
+        try:
+            img_link = "https://www.chevrolet.cl" + soup.select('div.q-responsive-image.q-responsive-image-container.stat-image-link[data-dtm="masthead"] > picture > source')[0].attrs["data-srcset"].split(',')[0][:-4] + '1500'
+        except:
+            img_link = "https://www.chevrolet.cl" + soup.select('div.q-responsive-image.q-responsive-image-container.stat-image-link[data-dtm="responsive image"] > picture > source')[0].attrs["data-srcset"].split(',')[0][:-4] + '1500'
 
-      self.path = "span.gux-variable > span > span"
-      self.precio = soup.select(path)[0].text
+        self.img_link = img_link
+        self.precio = string_to_number(soup.select("span.q-descriptive1")[0].text)
+        self.path = "span.q-descriptive1"
 
     def get_precios(self):
-      precios = dict()
-      precios["precio_normal"] = self.precio
-      return precios
+        precios = dict()
+        precios["precio_normal"] = self.precio
+        return precios
 
     def get_paths(self):
         paths = dict()
         paths["precio_normal"] = self.path
+        return paths
+
+class MercadoLibreScraper(BaseInitialScraper):
+    tienda = "mercado libre"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text
+      self.img_link = soup.select("figure > img")[0].attrs["data-zoom"]
+
+      precio_oferta = "Oferta no disponible"
+      path = "span.price-tag-fraction"
+      cant_precios = len(soup.select(path)[:-1])
+
+      precio_normal = soup.select(path)[0].text
+
+      if cant_precios == 2:
+        precio_oferta = soup.select(path)[1].text
+
+      self.path = path
+      self.p_normal = string_to_number(precio_normal)
+      self.p_oferta = evaluar_precio(precio_oferta)
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = (self.path,0)
+        if self.p_oferta != "Oferta no disponible":
+          paths["precio_oferta"] = (self.path,1)
+        return paths
+
+class SubaruInitialScraper(BaseInitialScraper):
+    tienda = "subaru"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.path = "div.cont > p.price"
+      self.nombreProducto = soup.select("h1")[0].text
+      self.img_link = "https://www.subaru.cl" + soup.select("div#descubre_foto")[0].attrs["data-desktop"]
+      self.precio = string_to_number(soup.select(self.path)[0].text)
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.precio
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path
+        return paths
+
+class LinioInitialScraper(BaseInitialScraper):
+    tienda = "linio"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text.strip()
+      self.img_link = soup.select("img.image-modal")[0].attrs["data-lazy"]
+
+      precio_oferta = "Oferta no disponible"
+      precio_tarjeta = "Oferta no disponible"
+
+      path_ofertas = "div.lowest-price > span"
+      path_normal = "span.original-price"
+      cant_precios = len(soup.select(path_ofertas))
+
+      #por alguna razón, si un producto tiene 3 precios, cant_precios = 8, o bien si tiene 2 precios: Tarjeta/Normal
+      if cant_precios == 8:
+        try: #tres precios: Tarjeta/Oferta/Normal
+          precio_normal = soup.select(path_normal)[0].text
+          precio_oferta = soup.select(path_ofertas)[0].text.strip()
+          precio_tarjeta = soup.select(path_ofertas)[1].text
+
+        except: #dos precios: Tarjeta/Normal
+          path_normal = path_ofertas
+          precio_normal = soup.select(path_normal)[0].text.strip()
+          precio_tarjeta = soup.select(path_ofertas)[1].text.strip()
+
+      else:
+        try: #dos precios: Oferta/Normal
+          precio_normal = soup.select(path_normal)[0].text
+          precio_oferta = soup.select(path_ofertas)[0].text.strip()
+
+        except: #un único precio
+          path_normal = path_ofertas
+          precio_normal = soup.select(path_normal)[0].text.strip()
+
+      self.path_normal = path_normal
+      self.path_oferta = path_ofertas
+      self.path_tarjeta = path_ofertas
+
+      self.p_normal = string_to_number(precio_normal)
+      self.p_oferta = evaluar_precio(precio_oferta)
+      self.p_tarjeta = evaluar_precio(precio_tarjeta)
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta_internet"] = self.p_oferta
+        if self.p_tarjeta != "Oferta no disponible":
+          precios["precio_oferta_tarjeta"] = self.p_tarjeta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path_normal
+        if self.p_oferta != "Oferta no disponible":
+          paths["precio_oferta_internet"] = self.path_oferta
+        if self.p_tarjeta != "Oferta no disponible":
+          paths["precio_oferta_tarjeta"] = self.path_tarjeta
+        return paths
+
+class HomecenterSodimacInitialScraper(BaseInitialScraper):
+    tienda = "homecenter sodimac"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text
+      data = str(soup.select("script")[1]).replace('<script type="application/ld+json">','').replace('</script>','')
+      bug_fix = data.index("description") - len('description') + 4
+      data = json.loads(data[:bug_fix] + '}')
+      self.img_link = data['image']
+
+      clase = '.'
+      identicador = soup.select("div.product-price-and-logo > div > div > div")[0].attrs["class"]
+      for x in identicador:
+        if x != identicador[-1]:
+          clase += x + '.'
+        else:
+          clase += x
+
+      path = "div" + clase
+      precio_tarjeta = soup.select(path)[0].text
+      precio_normal = soup.select(path)[1].text
+
+      if precio_tarjeta == precio_normal:
+        precio_tarjeta = "Oferta no disponible"
+
+      self.path = path
+      self.p_normal = string_to_number(precio_normal)
+      self.p_tarjeta = evaluar_precio(precio_tarjeta)
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_tarjeta != "Oferta no disponible":
+          precios["precio_oferta_tarjeta"] = self.p_tarjeta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = (self.path,1)
+        if self.p_tarjeta != "Oferta no disponible":
+          paths["precio_oferta_tarjeta"] = (self.path,0)
+        return paths
+
+class PetHappyInitialScraper(BaseInitialScraper):
+    tienda = "pet happy"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text
+      self.img_link = soup.select("img")[1].attrs["src"]
+      self.precio_size = False
+
+      precio_normal = "Oferta no disponible"
+      precio_oferta = "Oferta no disponible"
+      precio_chico = "Oferta no disponible"
+      precio_grande = "Oferta no disponible"
+
+      try: #hay oferta
+        path_oferta = "strong.desc > span"
+        path_normal = "span#product-page-price-before"
+
+        precio_oferta = soup.select(path_oferta)[0].text
+        precio_normal = soup.select(path_normal)[0].text
+
+        self.path_oferta = path_oferta
+        self.path_normal = path_normal
+
+      except: #no hay oferta, o bien, hay dos precios: Product Tamaño Chico/Grande
+        cant_precios = len(soup.select('span[itemprop="price"]'))
+
+        if cant_precios == 1: #no hay oferta
+          path_normal = "h2 > span"
+          self.path_normal = path_normal
+
+          precio_oferta = "Oferta no disponible"
+          precio_normal = soup.select(path_normal)[0].text
+
+        else: #dos precios: Product Tamaño Chico/Grande
+          self.precio_size = True
+          path_size = 'span[itemprop="price"]'
+          self.path_size = path_size
+
+          precio_chico = soup.select(path_size)[0].text
+          precio_grande = soup.select(path_size)[1].text
+
+      self.p_normal = evaluar_precio(precio_normal)
+      self.p_oferta = evaluar_precio(precio_oferta)
+      self.p_chico = evaluar_precio(precio_chico)
+      self.p_grande = evaluar_precio(precio_grande)
+
+    def get_precios(self):
+        precios = dict()
+        if self.precio_size:
+          precios["precio_chico"] = self.p_chico
+          precios["precio_grande"] = self.p_grande
+        else:
+          precios["precio_normal"] = self.p_normal
+          if self.p_oferta != "Oferta no disponible":
+            precios["precio_oferta"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        if self.precio_size:
+          paths["precio_chico"] = (self.path_size,0)
+          paths["precio_grande"] = (self.path_size,1)
+        else:
+          paths["precio_normal"] = self.path_normal
+          if self.p_oferta != "Oferta no disponible":
+            paths["precio_oferta"] = self.path_oferta
+        return paths
+
+class LaCasaDelVeganInitialScraper(BaseInitialScraper):
+    tienda = "la casa del vegan"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text
+
+      try:
+        self.img_link = soup.select("img#first-image")[0].attrs["src"]
+      except:
+        self.img_link = soup.select("img.img-fluid")[1].attrs["src"]
+
+
+      precio_oferta = "Oferta no disponible"
+      cant_precios = len(soup.select("div.form-price_desktop > span"))
+
+      if cant_precios == 2:
+        path_oferta = "span#product-form-price"
+        path_normal = "span#product-form-discount"
+
+        precio_oferta = soup.select(path_oferta)[0].text
+        precio_normal = soup.select(path_normal)[0].text
+
+      else:
+        path_normal = "span#product-form-price"
+        path_oferta = ''
+        precio_normal = soup.select(path_normal)[0].text
+
+      self.p_normal = string_to_number(precio_normal)
+      self.p_oferta = evaluar_precio(precio_oferta)
+
+      self.path_normal = path_normal
+      self.path_oferta = path_oferta
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta_internet"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path_normal
+        if self.path_oferta != '':
+          paths["precio_oferta_internet"] = self.path_oferta
+        return paths
+
+class DecathlonInitialScaper(BaseInitialScraper):
+    tienda = "decathlon"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text
+      self.img_link = soup.select("div.product-cover > img")[0].attrs["src"]
+
+      if soup.select("strike.strikprice") != []:
+        precio_oferta = soup.select("span.price-tag")[0].text
+        precio_normal = soup.select("strike.strikprice")[0].text.strip()
+
+        path_oferta = "span.price-tag"
+        path_normal = "strike.strikprice"
+
+      else:
+        precio_oferta = "Oferta no disponible"
+        precio_normal = soup.select("span.price-tag")[0].text
+
+        path_oferta = ''
+        path_normal = "span.price-tag"
+
+      self.p_oferta = evaluar_precio(precio_oferta)
+      self.p_normal = string_to_number(precio_normal)
+      self.path_oferta = path_oferta
+      self.path_normal = path_normal
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta_internet"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path_normal
+        if self.path_oferta != '':
+          paths["precio_oferta_internet"] = self.path_oferta
+        return paths
+
+class CasaAmarillaInitialScraper(BaseInitialScraper):
+    tienda = "casa amarilla"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text.split('div class="box-collateral box-related"')[0]
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select('h1[itemprop="name"]')[0].text.strip()
+      self.img_link = soup.select("div.product-image > img")[0].attrs["src"]
+
+      path = "span.price"
+      cant_precios = len(soup.select(path))
+
+      if cant_precios == 2:
+        precio_oferta = soup.select(path)[0].text.strip()
+        precio_normal = soup.select(path)[1].text.strip()
+
+        self.path_oferta = (path,0)
+        self.path_normal = (path,1)
+
+      else:
+        precio_oferta = "Oferta no disponible"
+        precio_normal = soup.select(path)[0].text.strip()
+        self.path_oferta = ''
+        self.path_normal = (path,0)
+
+      self.p_oferta = evaluar_precio(precio_oferta)
+      self.p_normal = string_to_number(precio_normal)
+
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta_internet"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path_normal
+        if self.path_oferta != '':
+          paths["precio_oferta_internet"] = self.path_oferta
+        return paths
+
+class CasaRoyalInitialScraper(BaseInitialScraper):
+    tienda = "casa royal"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text.split('div class="box-collateral box-related"')[0]
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select('h1[itemprop="name"]')[0].text
+      self.img_link = soup.select("div.product-image > img")[0].attrs["src"]
+
+      path = "span.price"
+      cant_precios = len(soup.select(path))
+
+      if cant_precios == 2:
+        precio_oferta = soup.select(path)[0].text.strip()
+        precio_normal = soup.select(path)[1].text.strip()
+
+        self.path_oferta = (path,0)
+        self.path_normal = (path,1)
+
+      else:
+        precio_oferta = "Oferta no disponible"
+        precio_normal = soup.select(path)[0].text.strip()
+        self.path_oferta = ''
+        self.path_normal = (path,0)
+
+      self.p_oferta = evaluar_precio(precio_oferta)
+      self.p_normal = string_to_number(precio_normal)
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta_internet"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path_normal
+        if self.path_oferta != '':
+          paths["precio_oferta_internet"] = self.path_oferta
+        return paths
+
+class FeriaChilenaDelLibro(BaseInitialScraper):
+    tienda = "feria chilena del libro"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text.split('section class="related products"')[0]
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text.strip()
+      self.img_link = soup.select("div.woocommerce-product-gallery__image > a")[0].attrs["href"]
+
+      path = "span.woocommerce-Price-amount.amount"
+      cant_precios = len(soup.select(path))
+
+      if cant_precios == 1:
+        precio_normal = soup.select(path)[0].text.strip()
+        precio_oferta = "Oferta no disponible"
+
+      else:
+        precio_normal = soup.select(path)[0].text
+        precio_oferta = soup.select(path)[1].text
+
+      self.p_normal = string_to_number(precio_normal)
+      self.p_oferta = evaluar_precio(precio_oferta)
+      self.path = path
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta_internet"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = (self.path,0)
+        if self.p_oferta != "Oferta no disponible":
+          paths["precio_oferta_internet"] = (self.path,1)
+        return paths
+
+class EstacionNaturalInitialScraper(BaseInitialScraper):
+    tienda = "estacion natural"
+    def __init__(self,link):
+      self.link = link
+      fuente = requests.get(link).text.split('<div class="related-products__title "> <h4 class="title center">Artículos relacionados</h4> <div class="feature_divider"></div></div>')[0]
+      soup = BeautifulSoup(fuente,features="html.parser")
+
+      self.nombreProducto = soup.select("h1")[0].text
+      self.img_link = "//" + str(soup.select("div.image__container")[0]).split('//')[-1].replace("/></div>",'').replace('"','')
+
+      path = "span.money"
+      precio_oferta = "Oferta no disponible"
+      cant_precios = len(soup.select(path)[1:])
+
+      #dos precios
+      if cant_precios == 3:
+        precio_oferta = soup.select(path)[1].text
+        precio_normal = soup.select(path)[2].text
+
+        self.path_oferta = (path,1)
+        self.path_normal = (path,2)
+
+      #un único precio
+      else:
+        precio_normal = soup.select(path)[1].text
+
+        self.path_oferta = ''
+        self.path_normal = (path,1)
+
+
+      self.p_normal = string_to_number(precio_normal)
+      self.p_oferta = evaluar_precio(precio_oferta)
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        if self.p_oferta != "Oferta no disponible":
+          precios["precio_oferta_internet"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path_normal
+        if self.path_oferta != '':
+          paths["precio_oferta_internet"] = self.path_oferta
+        return paths
+
+class OrtopediaOnlineInitialScraper(BaseInitialScraper):
+    tienda = "ortopedia online"
+    def __init__(self,link):
+        self.link = link
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
+        fuente = requests.get(link,headers=headers).text
+        soup = BeautifulSoup(fuente,features="html.parser")
+
+        self.nombreProducto = soup.select("h1")[0].text.strip()
+        self.img_link = soup.select("img.img-thumbnail")[0].attrs["src"]
+
+        self.precio = string_to_number(soup.select("h2")[0].text)
+        self.path = "h2"
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.precio
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path
+        return paths
+
+class SuzukiInitialScraper(BaseInitialScraper):
+    tienda = "suzuki"
+    def __init__(self,link):
+        self.link = link
+        fuente = requests.get(link).text
+        soup = BeautifulSoup(fuente,features="html.parser")
+
+        self.nombreProducto = soup.select("h1")[0].text
+        self.img_link = soup.select("div.container.position-relative > img")[0].attrs["src"]
+
+        self.p_normal = string_to_number(soup.select("span.full-price")[0].text)
+        self.p_oferta = string_to_number(soup.select("span.discount-applied-price")[0].text)
+
+        self.path_normal = "span.full-price"
+        self.path_oferta = "span.discount-applied-price"
+
+    def get_precios(self):
+        precios = dict()
+        precios["precio_normal"] = self.p_normal
+        precios["precio_oferta_internet"] = self.p_oferta
+        return precios
+
+    def get_paths(self):
+        paths = dict()
+        paths["precio_normal"] = self.path_normal
+        paths["precio_oferta_internet"] = self.path_oferta
         return paths

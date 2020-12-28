@@ -1,0 +1,32 @@
+
+Lista de tiendas disponibles:
+
+x = Funcional
+
+- [x] Falabella (tested)
+- [x] Abcdin
+- [x] Ripley
+- [x] Paris
+- [x] PCFactory
+- [x] Antartica (tested)
+- [x] Sparta
+- [x] Farmacia Cruz Verde
+- [x] Líder
+- [x] Jumbo
+- [x] Pet Happy
+- [x] Contrapunto
+- [x] Tottus
+- [x] Bold
+- [x] Decathlon
+- [x] Casa Amarilla
+- [x] Casa Royal
+- [x] Feria Chilena del Libro
+- [x] Ford
+- [x] Subaru
+- [x] Mercado Libre
+- [x] Linio
+- [x] La Cosa del Vegan
+- [x] Estación Natural
+- [x] Homecenter Sodimac
+- [x] Steam (not working)
+- [x] Ortopedia Online
