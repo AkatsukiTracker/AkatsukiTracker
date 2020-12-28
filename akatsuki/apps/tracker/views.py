@@ -122,8 +122,12 @@ def trending(request):
                 "img": producto.img_link,
                 "link": producto.link,
                 "precio": ultimo_historial.precio,
-                "subscripciones": len(productosUsuarios)
+                "subscripciones": len(productosUsuarios),
+                "agregado": False
             }
+            if user:
+                d_producto['agregado'] = ProductoUsuario.objects.filter(producto = producto, user = user).exists()
+
 
             args["productos"].append(d_producto)
 
