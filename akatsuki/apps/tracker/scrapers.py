@@ -514,10 +514,9 @@ class RipleyScraper(BaseScraper):
     def __init__(self,link,path):
         fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
-        print(type(path))
         ruta = path[0]
         indice = path[1]
-        self.path = ruta
+        self.path = path
         self.status = 0
 
         try:
