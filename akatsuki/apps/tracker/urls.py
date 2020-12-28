@@ -13,5 +13,8 @@ urlpatterns = [
     path("profile_picture", views.profile_picture, name="profile_picture"),
     path("change_password", views.change_password, name="change_password"),
     path("change_email", views.change_email, name="change_email"),
+    path("notif_trending", views.change_notif_trending, name="notif_trending"),
+    path("notif_product_all", views.change_notif_prod_all, name="notif_product_all"),
+    path("notif_product", views.change_notif_prod, name="notif_product"),
 
 ]
