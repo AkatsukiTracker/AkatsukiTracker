@@ -1,0 +1,11 @@
+# django migrations 
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+__pycache__/
+
+venv/
+.env
+
+imgs_perfil/

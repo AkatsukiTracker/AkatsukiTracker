@@ -1,0 +1,28 @@
+1;falabella;www.falabella.com
+2;lider;www.lider.cl
+3;abcdin;www.abcdin.cl
+4;ripley;simple.ripley.cl
+5;paris;www.paris.cl
+6;pCFactory;www.pcfactory.cl
+7;antartica;www.antartica.cl
+8;cruz Verde;www.cruzverde.cl
+9;sparta;sparta.cl
+10;jumbo;www.jumbo.cl
+11;steam;store.steampowered.com
+12;tottus;www.tottus.cl
+13;bold;bold.cl
+14;contrapunto;contrapunto.cl
+15;chevrolet;www.chevrolet.cl
+16;mercado Libre;articulo.mercadolibre.cl
+17;subaru;www.subaru.cl
+18;linio;www.linio.cl
+19;homecenter sodimac;www.sodimac.cl
+20;pet happy;www.pethappy.cl
+21;la casa del vegan;www.lacasadelvegan.cl
+22;decathlon;www.decathlon.cl
+23;casa amarilla;www.casamarilla.cl
+24;casa royal;www.casaroyal.cl
+25;feria chilena del libro;feriachilenadellibro.cl
+26;estacion natural;www.estacionnatural.cl
+27;ortopedia online;www.ortopediaonline.cl
+28;suzuki;www.suzuki.cl
