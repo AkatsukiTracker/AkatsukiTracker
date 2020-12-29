@@ -460,9 +460,9 @@ class RipleyInitialScraper(BaseInitialScraper):
         precio_internet = soup.select(path)[1].text
         precio_normal = soup.select(path)[2].text.strip()
 
-        self.path_tarjeta = (path,0)
-        self.path_oferta = (path,1)
-        self.path_normal = (path,2)
+        self.path_tarjeta = path + '/' + '0'
+        self.path_oferta = path + '/' + '1'
+        self.path_normal = path + '/' + '2'
 
       elif cant_precios == 2:
         #Pueden ser 2 combinaciones: Normal/Internet o Internet/Tarjeta (en ese orden)
@@ -472,19 +472,19 @@ class RipleyInitialScraper(BaseInitialScraper):
           precio_internet = soup.select(path)[0].text.strip()
           precio_normal = soup.select(path)[1].text.strip()
 
-          self.path_oferta = (path,0)
-          self.path_normal = (path,1)
+          self.path_oferta = path + '/' + '0'
+          self.path_normal = path + '/' + '1'
 
         else:
           precio_internet = soup.select(path)[0].text
           precio_ripley = soup.select(path)[1].text.strip()
 
-          self.path_oferta = (path,0)
-          self.path_tarjeta = (path,1)
+          self.path_oferta = path + '/' + '0'
+          self.path_tarjeta = path + '/' + '1'
       #Solo está el precio normal
       else:
         precio_normal = soup.select(path)[0].text
-        self.path_normal = (path,0)
+        self.path_normal = path + '/' + '0'
 
       self.p_normal = evaluar_precio(precio_normal)
       self.p_oferta = evaluar_precio(precio_internet)
@@ -514,15 +514,12 @@ class RipleyScraper(BaseScraper):
     def __init__(self,link,path):
         fuente = requests.get(link).text
         soup = BeautifulSoup(fuente,features="html.parser")
-        ruta = path[0]
-        indice = path[1]
+        ruta,indice = path.split('/')
         self.path = path
         self.status = 0
 
         try:
-            #print(ruta)
-            #print(indice)
-            self.precio = string_to_number(soup.select(ruta)[indice].text.strip())
+            self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip())
         except:
             self.status = 2
 
@@ -666,8 +663,8 @@ class PCFactoryInitialScraper(BaseInitialScraper):
         precio_efectivo = soup.select(path)[0].text.strip().replace(' ','')
         precio_normal = soup.select(path)[1].text.strip().replace(' ','')
 
-        self.path_efectivo = (path,0)
-        self.path_normal = (path,1)
+        self.path_efectivo = path + '/' + '0'
+        self.path_normal = path + '/' + '1'
 
       else:
         precio_efectivo = soup.select(path)[0].text.strip().replace(' ','')
@@ -675,9 +672,9 @@ class PCFactoryInitialScraper(BaseInitialScraper):
         precio_normal = soup.select(path)[2].text.strip().replace(' ','')
         self.p_internet = string_to_number(precio_internet)
 
-        self.path_efectivo = (path,0)
-        self.path_internet = (path,1)
-        self.path_normal = (path,2)
+        self.path_efectivo = path + '/' + '0'
+        self.path_internet = path + '/' + '1'
+        self.path_normal = path + '/' + '2'
 
       self.p_efectivo = string_to_number(precio_efectivo)
       self.p_normal = string_to_number(precio_normal)
@@ -729,9 +726,9 @@ class AntarticaInitialScraper(BaseInitialScraper):
       self.p_normal = string_to_number(precio_normal)
       self.p_club = evaluar_precio(precio_club)
 
-      self.path_club = path_club
-      self.path_oferta = path_internet
-      self.path_normal = path_normal
+      self.path_club = path_club + '/' + '0'
+      self.path_oferta = path_internet + '/' + '1'
+      self.path_normal = path_normal + '/' + '1'
 
     def get_precios(self):
         precios = dict()
@@ -846,14 +843,14 @@ class SpartaInitialScraper(BaseInitialScraper):
         precio_normal = soup.select(path)[1].text
 
         #Nota: (path,num) = path e índice
-        self.path_oferta = (path,0)
-        self.path_normal = (path,1)
+        self.path_oferta = path + '/' + '0'
+        self.path_normal = path + '/' + '1'
 
       else:
         precio_normal = soup.select(path)[0].text
         precio_oferta = "Oferta no disponible"
 
-        self.path_normal = (path,0)
+        self.path_normal = path + '/' + '0'
 
       self.p_normal = string_to_number(precio_normal)
       self.p_oferta = evaluar_precio(precio_oferta)
@@ -983,9 +980,9 @@ class TottusInitialScraper(BaseInitialScraper):
           precio_internet = soup.select(path)[1].text
           precio_normal = soup.select(path)[2].text
 
-          path_tarjeta = (path,0)
-          path_oferta = (path,1)
-          path_normal = (path,2)
+          path_tarjeta = path + '/' + '0'
+          path_oferta = path + '/' + '1'
+          path_normal = path + '/' + '2'
 
         #pueden ser dos combinaciones: Tarjeta/Normal y Internet/Normal
         elif cant_precios == 2:
@@ -995,20 +992,20 @@ class TottusInitialScraper(BaseInitialScraper):
             precio_tarjeta = soup.select(path)[0].text
             precio_normal = soup.select(path)[1].text
 
-            path_tarjeta = (path,0)
-            path_normal = (path,1)
+            path_tarjeta = path + '/' + '0'
+            path_normal = path + '/' + '1'
 
           else: #Internet/Normal
             precio_internet = soup.select(path)[0].text
             precio_normal = soup.select(path)[1].text
 
-            path_oferta = (path,0)
-            path_normal = (path,1)
+            path_oferta = path + '/' + '0'
+            path_normal = path + '/' + '1'
 
         #un solo precio
         else:
           precio_normal = soup.select(path)[0].text
-          path_normal = (path,0)
+          path_normal = path + '/' + '0'
 
         self.p_tarjeta = evaluar_precio(precio_tarjeta)
         self.p_oferta = evaluar_precio(precio_internet)
@@ -1058,8 +1055,8 @@ class BoldInitialScraper(BaseInitialScraper):
       self.p_oferta = evaluar_precio(precio_oferta)
       self.p_normal = string_to_number(precio_normal)
 
-      self.path_normal = (path,0)
-      self.path_oferta = (path,1)
+      self.path_normal = path + '/' + '0'
+      self.path_oferta = path + '/' + '1'
 
     def get_precios(self):
         precios = dict()
@@ -1159,6 +1156,9 @@ class MercadoLibreScraper(BaseInitialScraper):
       self.p_normal = string_to_number(precio_normal)
       self.p_oferta = evaluar_precio(precio_oferta)
 
+      self.path_normal = self.path + '/' + '0'
+      self.path_oferta = self.path + '/' + '1'
+
     def get_precios(self):
         precios = dict()
         precios["precio_normal"] = self.p_normal
@@ -1168,9 +1168,9 @@ class MercadoLibreScraper(BaseInitialScraper):
 
     def get_paths(self):
         paths = dict()
-        paths["precio_normal"] = (self.path,0)
+        paths["precio_normal"] = self.path_normal
         if self.p_oferta != "Oferta no disponible":
-          paths["precio_oferta"] = (self.path,1)
+          paths["precio_oferta"] = self.path_oferta
         return paths
 
 class SubaruInitialScraper(BaseInitialScraper):
@@ -1291,6 +1291,9 @@ class HomecenterSodimacInitialScraper(BaseInitialScraper):
       self.p_normal = string_to_number(precio_normal)
       self.p_tarjeta = evaluar_precio(precio_tarjeta)
 
+      self.path_normal = path + '/' + '1'
+      self.path_tarjeta = path + '/' + '0'
+
     def get_precios(self):
         precios = dict()
         precios["precio_normal"] = self.p_normal
@@ -1300,9 +1303,9 @@ class HomecenterSodimacInitialScraper(BaseInitialScraper):
 
     def get_paths(self):
         paths = dict()
-        paths["precio_normal"] = (self.path,1)
+        paths["precio_normal"] = self.path_normal
         if self.p_tarjeta != "Oferta no disponible":
-          paths["precio_oferta_tarjeta"] = (self.path,0)
+          paths["precio_oferta_tarjeta"] = self.path_tarjeta
         return paths
 
 class PetHappyInitialScraper(BaseInitialScraper):
@@ -1486,14 +1489,14 @@ class CasaAmarillaInitialScraper(BaseInitialScraper):
         precio_oferta = soup.select(path)[0].text.strip()
         precio_normal = soup.select(path)[1].text.strip()
 
-        self.path_oferta = (path,0)
-        self.path_normal = (path,1)
+        self.path_oferta = path + '/' + '0'
+        self.path_normal = path + '/' + '1'
 
       else:
         precio_oferta = "Oferta no disponible"
         precio_normal = soup.select(path)[0].text.strip()
         self.path_oferta = ''
-        self.path_normal = (path,0)
+        self.path_normal = path + '/' + '0'
 
       self.p_oferta = evaluar_precio(precio_oferta)
       self.p_normal = string_to_number(precio_normal)
@@ -1530,14 +1533,14 @@ class CasaRoyalInitialScraper(BaseInitialScraper):
         precio_oferta = soup.select(path)[0].text.strip()
         precio_normal = soup.select(path)[1].text.strip()
 
-        self.path_oferta = (path,0)
-        self.path_normal = (path,1)
+        self.path_oferta = path + '/' + '0'
+        self.path_normal = path + '/' + '1'
 
       else:
         precio_oferta = "Oferta no disponible"
         precio_normal = soup.select(path)[0].text.strip()
         self.path_oferta = ''
-        self.path_normal = (path,0)
+        self.path_normal = path + '/' + '0'
 
       self.p_oferta = evaluar_precio(precio_oferta)
       self.p_normal = string_to_number(precio_normal)
@@ -1614,15 +1617,15 @@ class EstacionNaturalInitialScraper(BaseInitialScraper):
         precio_oferta = soup.select(path)[1].text
         precio_normal = soup.select(path)[2].text
 
-        self.path_oferta = (path,1)
-        self.path_normal = (path,2)
+        self.path_oferta = path + '/' + '1'
+        self.path_normal = path + '/' + '2'
 
       #un único precio
       else:
         precio_normal = soup.select(path)[1].text
 
         self.path_oferta = ''
-        self.path_normal = (path,1)
+        self.path_normal = path + '/' + '1'
 
 
       self.p_normal = string_to_number(precio_normal)
