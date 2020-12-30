@@ -18,8 +18,8 @@ def first(n):
 class Command(BaseCommand):
     def handle(self, **options):
 
-        producto_a_mandar = {}
-        # nombre : tienda, link, img, precio más bajo, tipo precio
+        producto_a_mandar = []
+        # nombre : nombre, tienda, link, img, precio más bajo
         lista_productos = []  # (len(producto_usuario),producto )
 
         for producto in Producto.objects.all():
@@ -27,11 +27,10 @@ class Command(BaseCommand):
 
         lista_productos.sort(key=first, reverse=True)
 
-        if len(lista_productos) >= 10:
-            lista_productos[10:]
-      
-        print(lista_productos)
+        if len(lista_productos) >= 5:
+            lista_productos = lista_productos[:5]
 
+        contador = 1
         for _, producto in lista_productos:
             nombre = producto.nombre
             tienda = producto.tienda.nombre
@@ -48,16 +47,21 @@ class Command(BaseCommand):
                 historiales.append(Historial.objects.filter(producto = producto, tipo=tipo)[::-1][0])
             for hist in historiales:
                 if hist.precio < precio_bajo:
-                    precio_bajo = hist.precio_bajo
+                    precio_bajo = hist.precio
                     tipo_precio = hist.tipo
 
-            producto_a_mandar[nombre] = (tienda, link, img, precio_bajo, tipo_precio)
+            producto_a_mandar.append((contador, {'nombre': nombre,
+                                        'tienda': tienda,
+                                        'link': link,
+                                        'img': img,
+                                        'precio': precio_bajo}))
+            contador += 1
 
         for user in Usuario.objects.all():
             if user.notificaciones:
                 
                 msg_html = render_to_string('mails/trending.html', {'user': user.username, 
-                                                                    'productos': producto_a_mandar}
+                                                                    'productos': producto_a_mandar})
 
                 send_mail(
                 '¡Estos son los productos más populares de esta semana!', #Titulo  
@@ -66,4 +70,3 @@ class Command(BaseCommand):
                 [user.email], #Destinatario
                 html_message=msg_html, #Template
                 )
-
