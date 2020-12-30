@@ -5,7 +5,7 @@
 5;paris;www.paris.cl
 6;pCFactory;www.pcfactory.cl
 7;antartica;www.antartica.cl
-8;cruz Verde;www.cruzverde.cl
+8;cruz verde;www.cruzverde.cl
 9;sparta;sparta.cl
 10;jumbo;www.jumbo.cl
 11;steam;store.steampowered.com
