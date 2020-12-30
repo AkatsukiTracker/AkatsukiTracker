@@ -244,7 +244,8 @@ class BaseScraper():
 
 class GeneralScraper(BaseScraper):
      def __init__(self,link,path):
-        fuente = requests.get(link).text
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
+        fuente = requests.get(link,headers=headers).text
         soup = BeautifulSoup(fuente,features="html.parser")
         self.status = 0
         self.path = path
