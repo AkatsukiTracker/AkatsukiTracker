@@ -53,7 +53,7 @@ def seleccionar_scraper_initial(tienda, link):
         tienda = "sparta"
 
     elif tienda == "www.jumbo.cl":
-        scraper = JumboScraper(link)
+        scraper = JumboInitialScraper(link)
         tienda = "jumbo"
 
     elif tienda == "store.steampowered.com":
@@ -131,17 +131,23 @@ def seleccionar_scraper_initial(tienda, link):
     return (tienda, scraper)
 
 def seleccionar_scraper(tienda, link, path):
-    scraper = GeneralScraper(link,path)
-    '''
+    
     if tienda == "falabella":
         scraper = FalabellaScraper(link,path)
-
-    elif tienda == "abcdin":
-        scraper = AbcdinScraper(link,path)
 
     elif tienda == "lider":
         scraper = LiderScraper(link,path)
 
+    elif tienda == "jumbo":
+        scraper = JumboScraper(link,path)
+
+    else:
+        scraper = GeneralScraper(link,path)
+        
+    '''
+    elif tienda == "abcdin":
+        scraper = AbcdinScraper(link,path)
+    
     elif tienda == "ripley":
         scraper = RipleyScraper(link,path)
 
@@ -160,9 +166,6 @@ def seleccionar_scraper(tienda, link, path):
     elif tienda == "sparta":
         scraper = SpartaScraper(link,path)
 
-    elif tienda == "jumbo":
-        scraper = JumboScraper(link,path)
-
     elif tienda == "steam":
         scraper = SteamScraper(link,path)
 
@@ -178,6 +181,7 @@ def seleccionar_scraper(tienda, link, path):
     elif tienda == "chevrolet":
         scraper = ChevroletScraper(link,path)
     '''
+    
     return scraper
 
 def tiendaDisponible(tienda):
@@ -382,6 +386,21 @@ class LiderInitialScraper(BaseInitialScraper):
 
     def get_paths(self):
         return {"precio_más_bajo":self.path}
+
+class LiderScraper(BaseScraper):
+    def __init__(self,link,path):
+        self.status = 0
+        self.path = path
+        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
+        try:
+            if link.split("/")[3] == "catalogo":
+                text = soup.find_all("script")[2].string
+                precio = text[text.rfind("price")+5+2:len(text)-2]
+            elif link.split("/")[3] == "supermercado":
+                precio = soup.select("#productPrice > p.price")[0].text
+            self.precio = string_to_number(precio)
+        except:
+            self.status = 2
 
 class AbcdinInitialScraper(BaseInitialScraper):
     tienda = "abcdin"
@@ -841,7 +860,7 @@ class SpartaInitialScraper(BaseInitialScraper):
         paths["precio_oferta_internet"] = self.path_oferta
       return paths
 
-class JumboScraper(BaseInitialScraper):
+class JumboInitialScraper(BaseInitialScraper):
     tienda = "jumbo"
     def __init__(self, link):
         self.link = link
@@ -885,6 +904,21 @@ class JumboScraper(BaseInitialScraper):
         except:
             pass
         return paths
+
+class JumboScraper(BaseScraper):
+    def __init__(self,link,path):
+        self.status = 0
+        self.path = path
+        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
+        text = soup.select("body > script")[0].string
+        try:
+            if path == "path_normal":
+                precio = text[text.find("Price")+5+3:text.find("ListPrice")-3]
+            elif path == "path_oferta":
+                precio = text[text.find("ListPrice")+9+3:text.find("PriceWith")-3]
+            self.precio = string_to_number(precio)
+        except:
+            self.status = 2
 
 class SteamInitialScraper(BaseInitialScraper):
     tienda = "steam"
