@@ -6,6 +6,9 @@
 
 <script defer type="text/javascript" src="{% static 'js/profile.js' %}"></script>
 
+<script>
+  const csrf = "{{ csrf_token }}"
+</script>
 {% endblock %}
 
 {% block content %}
@@ -53,13 +56,13 @@
         <div class="card shadow h-100">
           <div class="card-body">
             <h5 class="card-title">Ajustes de cuenta</h5>
-            <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#modal-password">
+            <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-password">
               Cambiar contraseña
             </button>
-            <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#modal-email">
+            <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-email">
               Cambiar mail
             </button>
-             <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#modal-picture">
+             <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modal-picture">
               Cambiar imagen
             </button>
           </div>
@@ -69,19 +72,16 @@
         <div class="card shadow">
           <div class="card-body">
             <h5 class="card-title">Ajustes de notificaciones</h5>
-            <form>
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="check-oferta">
-                <label class="custom-control-label" for="check-oferta">Productos en oferta</label>
-              </div>
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="check-destacados">
-                <label class="custom-control-label" for="check-destacados">Productos destacados</label>
-              </div>
-            </form>
-            <button type="button" class="btn btn-primary btn-block mt-2" disabled>
-              Confirmar
-            </button>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="check-oferta" {% if notificaciones %} checked {% endif %}>
+              <label class="custom-control-label" for="check-oferta" >Productos en oferta</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="check-trending" {% if trending %} checked {% endif %}>
+              <label class="custom-control-label" for="check-trending" >Productos destacados</label>
+            </div>
+            <span class="badge badge-primary" id="badge-notificaciones-OK" hidden>Actualizado!</span>
+            <span class="badge badge-danger" id="badge-notificaciones-NOTOK" hidden>Error!</span>
           </div>
         </div>
       </div>

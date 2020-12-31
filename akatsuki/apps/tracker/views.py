@@ -73,15 +73,15 @@ def profile(request):
     username = user.username
     email = user.email
 
-    img = Usuario.objects.filter(username=request.user.username)
-    if img and img[0].img_perfil:
-        img = img[0].img_perfil.name[7:]
+    usuario = Usuario.objects.filter(username=request.user.username)[0]
+    if usuario and usuario.img_perfil:
+        img = usuario.img_perfil.name[7:]
     else:
         img = "imgs_perfil/default.png"
 
     fecha = user.date_joined
 
-    args = {"nombre": username, "email": email, "img": img, "fecha": fecha}
+    args = {"nombre": username, "email": email, "img": img, "fecha": fecha, "notificaciones": usuario.notificaciones_prod, "trending" : usuario.notificaciones}
     return render(request, 'tracker/profile.html', args)
 
 def trending(request):
