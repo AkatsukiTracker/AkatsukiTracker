@@ -16,7 +16,7 @@ class ProductosForm(ModelForm):
 		fields = '__all__'
 
 class ImgPerfilForm(forms.Form):
-	
+
 	file = forms.FileField()
 
 class SetEmailForm(forms.Form):
@@ -70,7 +70,7 @@ class EmailChangeForm(SetEmailForm):
         Validates that the old_email field is correct.
         """
         old_email = self.cleaned_data["old_email"]
-        if old_email == self.user.email:
+        if old_email != self.user.email:
             raise forms.ValidationError(
                 self.error_messages['email_incorrect'],
                 code='email_incorrect',

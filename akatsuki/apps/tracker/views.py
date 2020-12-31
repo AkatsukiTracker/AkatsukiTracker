@@ -263,10 +263,10 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('dashboard')
+            messages.success(request, 'Contraseña actualizada correctamente')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, str(form.errors))
+        return redirect('profile')
     else:
         return HttpResponse(status=404)
 
@@ -277,11 +277,10 @@ def change_email(request):
         if form.is_valid():
             user = form.save()
             #update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your email was successfully updated!')
-            return redirect('profile')
+            messages.success(request, 'Correo actualizado correctamente')
         else:
-            messages.error(request, 'Please correct the error below.')
-            return redirect('profile')
+            messages.error(request, str(form.errors))
+        return redirect('profile')
     else:
         return HttpResponse(status=404)
 
@@ -293,6 +292,9 @@ def profile_picture(request):
            user = Usuario.objects.filter(username=request.user.username)[0]
            user.img_perfil = request.FILES['file']
            user.save()
+           messages.success(request, 'Imagen actualizada correctamente')
+        else:
+            messages.error(request, str(form.errors))
         return redirect("profile")
     else:
         return HttpResponse(status=404)

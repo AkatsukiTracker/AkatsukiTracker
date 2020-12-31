@@ -31,6 +31,24 @@
       </div>
     </div>
     <div class="row mt-4">
+      <div class="col">
+        {% for message in messages %}
+          {% if message.tags == "success" %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Perfecto!</strong> {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% else %}
+            <div class="alert alert-warning" role="alert">
+               <strong>Error!</strong>{{message}}
+            </div>
+          {% endif%}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row mt-4">
       <div class="col-12 col-sm-6">
         <div class="card shadow h-100">
           <div class="card-body">
@@ -70,18 +88,11 @@
     </div>
   </div>
 </div>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<div class="modal fade" id="modal-email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-email" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cambiar mail</h5>
+        <h5 class="modal-title">Cambiar mail</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -125,11 +136,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-password" method="POST" class="needs-validation" novalidate>
+        <form id="form-password" action="/tracker/change_password" method="POST" class="needs-validation" novalidate>
           {% csrf_token %}
           <div class="form-group">
             <label>Contraseña actual</label>
-            <input type="password" class="form-control" id="input-oldPassword" required>
+            <input type="password" class="form-control" id="input-oldPassword" name="old_password" required>
             <div class="invalid-feedback">
               Ingresa una contraseña valida.
             </div>
@@ -137,7 +148,7 @@
           </div>
           <div class="form-group mt-4">
             <label>Nueva contraseña</label>
-            <input type="password" class="form-control" id="input-newPassword1" name="password1" required>
+            <input type="password" class="form-control" id="input-newPassword1" name="new_password1" required>
             <div class="invalid-feedback">
               Ingresa una contraseña valida.
             </div>
@@ -145,7 +156,7 @@
           </div>
           <div class="form-group">
             <label>Repite tu nueva contraseña</label>
-            <input type="password" class="form-control" id="input-newPassword2" name="password2" required>
+            <input type="password" class="form-control" id="input-newPassword2" name="new_password2" required>
             <div class="invalid-feedback">
               Ingresa una contraseña valida.
             </div>
