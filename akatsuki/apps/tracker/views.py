@@ -67,6 +67,7 @@ def dashboard(request):
 
 @login_required(login_url='login')
 def profile(request):
+
     user = User.objects.filter(username=request.user.username)[0]
     username = user.username
     email = user.email
@@ -275,11 +276,12 @@ def change_email(request):
         form = EmailChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
+            #update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your email was successfully updated!')
             return redirect('profile')
         else:
             messages.error(request, 'Please correct the error below.')
+            return redirect('profile')
     else:
         return HttpResponse(status=404)
 

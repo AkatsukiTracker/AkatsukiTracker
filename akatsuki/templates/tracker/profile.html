@@ -70,7 +70,13 @@
     </div>
   </div>
 </div>
-
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="modal fade" id="modal-email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -81,15 +87,19 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form-email" method="POST" class="needs-validation" novalidate >
+        <form id="form-email" action="/tracker/change_email" method="POST" class="needs-validation" novalidate >
           {% csrf_token %}
           <div class="form-group">
-            <label >Nueva direccion</label>
-            <input type="new_email1" class="form-control" required>
+            <label>Direccion actual</label>
+            <input type="email" name="old_email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Nueva direccion</label>
+            <input type="email" name="new_email1" class="form-control" required>
           </div>
           <div class="form-group">
             <label>Confirma la direccion</label>
-            <input type="new_email2" class="form-control" required>
+            <input type="email" name="new_email2" class="form-control" required>
             <div class="invalid-feedback">
               Ingresa un correo valido.
             </div>
