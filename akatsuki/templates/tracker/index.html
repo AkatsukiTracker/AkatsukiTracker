@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Mis productos{% endblock %}
 {% block script %}
+
 <script type="text/javascript">
 
   {% autoescape off %}
@@ -9,6 +10,8 @@
     const links = {{ links }}
     const historiales = {{ historiales }}
   {% endautoescape %}
+
+  const csrf = "{{ csrf_token }}"
 
 </script>
 
@@ -156,10 +159,11 @@
             <div class="card">
               <div class="card-body">
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="check-destacados">
-                  <label class="custom-control-label">Notificaciones</label>
+                  <input type="checkbox" class="custom-control-input" id="check-notificaciones" data-product="" >
+                  <label class="custom-control-label" for="check-notificaciones" >Notificaciones</label>
+                  <span class="badge badge-primary" id="badge-notificaciones-OK" hidden>Actualizado!</span>
+                  <span class="badge badge-danger" id="badge-notificaciones-NOTOK" hidden>Error!</span>
                 </div>
-
               </div>
             </div>
           </div>

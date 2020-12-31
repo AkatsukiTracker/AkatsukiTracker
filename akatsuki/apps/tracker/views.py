@@ -55,6 +55,7 @@ def dashboard(request):
                 "img": producto.img_link,
                 "link": producto.link,
                 "precio": historial[::-1][0].precio,
+                "notificaciones": p.notificaciones
             }
             args["productos"].append(d_producto)
             args["productos_json"][producto.id] = d_producto
@@ -330,7 +331,7 @@ def change_notif_prod_all(request):
 def change_notif_prod(request):
     if request.method == 'POST':
         user = Usuario.objects.filter(username=request.user.username)[0]
-        producto = Producto.objects.filter(nombre=request.POST['producto'])[0]
+        producto = Producto.objects.filter(id=request.POST['producto'])[0]
         prod_user = ProductoUsuario.objects.filter(user=user, producto=producto)[0]
         if prod_user.notificaciones:
             prod_user.notificaciones = False

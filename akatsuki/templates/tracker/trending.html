@@ -2,10 +2,9 @@
 {% load static %}
 {% block title %}Mis productos{% endblock %}
 {% block script %}
-{% csrf_token %}
 <script defer type="text/javascript" src="{% static 'js/trending.js' %}"></script>
 <script>
-  const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  const csrf = "{{ csrf_token }}"
 </script>
 {% endblock %}
 
@@ -26,7 +25,7 @@
           <img src="{{  producto.img  }}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{ producto.nombre }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ producto.tienda }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ producto.tienda|title }}</h6>
             <p class="card-text">${{ producto.precio }} <br>
             {{ producto.subscripciones }} Suscritos</p>
             {% if producto.agregado %}

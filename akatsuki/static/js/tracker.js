@@ -76,9 +76,21 @@ function details(data){
   not.classList.add('text-white')
   not.classList.remove('btn-outline-secondary')
 
+  document.getElementById("badge-notificaciones-OK").hidden = true
+  document.getElementById("badge-notificaciones-NOTOK").hidden = true
+
   document.getElementById("modalDetails-title").textContent = productos[data].nombre
   document.getElementById("modalDetails-delete").onclick = function(){deleteProduct(productos[data].id)}
   document.getElementById("modalDetails-deleteConfirm").hidden = true
+  let check_notificaciones = document.getElementById("check-notificaciones")
+
+  check_notificaciones.setAttribute("onClick", `toggleProductNotification(${productos[data].id})`)
+
+  if (productos[data].notificaciones){
+    check_notificaciones.checked = true
+  }else{
+    check_notificaciones.checked = false
+  }
 
   load_graph();
 
@@ -109,4 +121,33 @@ function load_graph(data){
       },
       options: {}
   });
+}
+
+function toggleProductNotification(id){
+  console.log(id)
+
+  let formData = new FormData();
+  let form = {
+    producto: id,
+    csrfmiddlewaretoken: csrf
+  }
+
+  for (var k in form) formData.append(k, form[k])
+
+  fetch(`/tracker/notif_product`, {method: "POST", body: formData})
+  .then( function(response) {
+    if (response.status !== 200)  return console.error('error');
+    response.json().then(function(data) {
+      document.getElementById("badge-notificaciones-OK").hidden = false
+      document.getElementById("badge-notificaciones-NOTOK").hidden = true
+
+      productos[id].notificaciones = !productos[id].notificaciones
+      })
+    }
+  ).catch( function(err) {
+    console.error(err)
+    document.getElementById("badge-notificaciones-OK").hidden = true
+    document.getElementById("badge-notificaciones-NOTOK").hidden = false
+  });
+
 }
