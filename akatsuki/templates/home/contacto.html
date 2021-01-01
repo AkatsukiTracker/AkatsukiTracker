@@ -4,39 +4,36 @@
 
 <div class="container-fluid">
   <div class="container-xl">
-    <div class="row justify-content-center mt-3">
-      <div class="col-12 col-sm-12 ">
-        <div class="card text-center ml-5 mr-5">
-          <div class="container-fluid">
-            <div class="container-xl">
-              <div class="row justify-content-center mt-5">
-                <div class="col-5 col-sm-8 col-sm-5 ">
-                  <img src="{% static 'opensource.jpg' %}" height = "230" class="card-img-top" alt="...">
-                </div>
-              </div>
-            </div>
-          </div>
-            <div class="card-body">
-            <h5 class="card-title">Aporte constructivo</h5>
-            <p class="card-text">Contamos con un desarrollo de código abierto, para aprovechar la posibilidad de compartir, modificar, y trabajar de manera colaborativa con otros usuarios, ya que somos fieles creyentes de que la ayuda mutua puede solucionar los problemas y acercarnos cada vez más a la perfección de nuestro tracker, por esto si tienes alguna acotación tanto positiva como negativa, siempre de manera constructiva, te invitamos a que la registres en nuestra sección de anotaciones.</p>
-            <a href="#" class="btn btn-primary bg-akatsuki shadow-akatsuki btn-lg border #FFFFFF">Escribir...</a>
-          </div>
+    <div class="row mt-4">
+      <div class="col">
+        <h1 class="display-4 text-center">Ayudanos!</h1>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+      <div class="col-12 col-md-6 ">
+        <div class="card">
+          <img src="{% static 'opensource.jpg' %}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Aporte monetario</h5>
-            <p class="card-text">Mientras que, si deseas colaborar con un aporte monetario nos sería de mucha ayuda, ya que este será invertido en mejorar las capacidades de AkatsukiTracker, las cuales se transformarán única y exclusivamente en beneficios, para ti, y todos ustedes; nuestros usuarios.</p>
-            <a href="#" class="btn btn-primary bg-akatsuki shadow-akatsuki btn-lg border #FFFFFF">Donar...</a>
+            <h5 class="card-title"></h5>
+            <p class="card-text">Somos fieles creyentes de que la colaboracion puede solucionar los problemas y acercarnos cada vez más util nuestro tracker. El codigo de AkatsukiTracker es publico, y puedes sugerir cambios, proponear ideas, desarrollar nuevas funcionalidades, todo a traves de GitHub. </p>
+            <a href="#" class="btn btn-outline-primary btn-block mdi mdi-github"> Nuestro GitHub</a>
           </div>
-          <div class="card-footer text-muted">
+        </div>
 
+      </div>
+      <div class="col-12 col-md-6 mt-3 mt-sm-0">
+        <div class="card">
+          <img src="{% static 'opensource.jpg' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text">AkatsukiTracker es gratis y siempre lo será, pero en un comienzo, todo salio de nuestro bolsillo. Desde los servidores a los dominios, y trabajamos durante semanas por amor al arte. Si quieres, puedes regalarnos un cafe.</p>
+            <a href="#" class="btn btn-outline-primary btn-block mdi mdi-coffee"> Un cafesito</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
 
 
 {% endblock %}

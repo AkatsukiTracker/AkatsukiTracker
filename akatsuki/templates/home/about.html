@@ -1,131 +1,133 @@
 {% extends "home/template.html" %}
 {% load static %}
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col mt-4">
-      <div class="card shadow" >
+<div class="container-fluid">
+  <div class="container-xl">
+    <div class="row">
+      <div class="col mt-4">
+        <div class="card shadow" >
+          <div class="row">
+            <div class="col-md-4">
+              <img src="{% static 'nube.png' %}" class="card-img mt-4" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h2 class="card-title">¿Quienes somos?</h2>
+                <p class="card-text">Somos un grupo de 4 estudiantes de la Universidad Tecnica Federico Santa Maria, que realizamos este proyecto motivados por la necesidad de aprobar el ramo.
+                En nuestro proyecto, queriamos lograr hacer una especie de tracker para que la gente, en el contexto en el que estamos viviendo, no tenga la necesidad de salir excesivas veces a la tienda unicamente para ir a revisar si su producto deseado sufrio algun cambio. Asi como tambien intentar ayudar a la gente a obtener el mejor precio posible en los objetos de las tiendas compatibles con nuestra pagina web.</p>
+                <p class="card-text"><small class="text-muted">AkatsukiTracker</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center">
+      <div class="col-12 col-md-6">
         <div class="row">
-          <div class="col-md-4">
-            <img src="{% static 'nube.png' %}" class="card-img mt-4" alt="...">
+          <div class="col">
+            <h1 class="display-4 text-center my-4">Team Back</h1>
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h2 class="card-title">¿Quienes somos?</h2>
-              <p class="card-text">Somos un grupo de 4 estudiantes de la Universidad Tecnica Federico Santa Maria, que realizamos este proyecto motivados por la necesidad de aprobar el ramo.
-              En nuestro proyecto, queriamos lograr hacer una especie de tracker para que la gente, en el contexto en el que estamos viviendo, no tenga la necesidad de salir excesivas veces a la tienda unicamente para ir a revisar si su producto deseado sufrio algun cambio. Asi como tambien intentar ayudar a la gente a obtener el mejor precio posible en los objetos de las tiendas compatibles con nuestra pagina web.</p>
-              <p class="card-text"><small class="text-muted">AkatsukiTracker</small></p>
+        </div>
+        <div class="row">
+          <div class="col-6 col-md-6 mt-6">
+            <div class="card shadow h-100">
+              <img src="{% static 'img/figura.jpeg' %}" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Vicente Figueroa 🐢</h5>
+                <p class="card-text">18 años, experiencia con Scraping y Django.</p>
+              </div>
+              <div class="card-footer text-center">
+                <a href="https://github.com/LaTortugaR"><small class="text-muted mdi mdi-github"> LaTortugaR</small></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-6 mt-6">
+            <div class="card shadow h-100">
+              <img src="{% static 'rythm.png' %}" class="card-img-top" >
+              <div class="card-body">
+                <h5 class="card-title">Jose Gonzalez</h5>
+                <p class="card-text">18 años de edad, experiencia en Python.</p>
+              </div>
+              <div class="card-footer text-center">
+                <a href="https://github.com/VoidRayXX"><small class="text-muted mdi mdi-github"> VoidRayXX</small></a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row mt-3 justify-content-center">
-    <div class="col-12 col-md-6">
-      <div class="row">
-        <div class="col">
-          <h1 class="display-4 text-center my-4">Team Back</h1>
-        </div>
       </div>
-      <div class="row">
-        <div class="col-6 col-md-6 mt-6">
-          <div class="card shadow h-100">
-            <img src="{% static 'img/figura.jpeg' %}" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Vicente Figueroa 🐢</h5>
-              <p class="card-text">18 años, experiencia con Scraping y Django.</p>
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="col">
+            <h1 class="display-4 text-center my-4">Team Front</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-md-6 mt-6">
+            <div class="card shadow h-100">
+              <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Vicente Lineros</h5>
+                <p class="card-text">19 años, Full Stack.</p>
+              </div>
+              <div class="card-footer text-center">
+                <a href="https://github.com/vicholp"><small class="text-muted mdi mdi-github"> vicholp</small></a>
+              </div>
             </div>
-            <div class="card-footer text-center">
-              <a href="https://github.com/LaTortugaR"><small class="text-muted mdi mdi-github"> LaTortugaR</small></a>
+          </div>
+          <div class="col-6 col-md-6 mt-6">
+            <div class="card shadow h-100">
+              <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Juanfra Baquedano</h5>
+                <p class="card-text">19 años, experiencia en Python y C++.</p>
+              </div>
+              <div class="card-footer text-center">
+                <a href="https://github.com/juanfraaa2"><small class="text-muted mdi mdi-github "> juanfraaa2</small></a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-6 col-md-6 mt-6">
-          <div class="card shadow h-100">
-            <img src="{% static 'rythm.png' %}" class="card-img-top" >
-            <div class="card-body">
-              <h5 class="card-title">Jose Gonzalez</h5>
-              <p class="card-text">18 años de edad, experiencia en Python.</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="https://github.com/VoidRayXX"><small class="text-muted mdi mdi-github"> VoidRayXX</small></a>
-            </div>
-          </div>
-        </div>
       </div>
+    </div>
 
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="row">
-        <div class="col">
-          <h1 class="display-4 text-center my-4">Team Front</h1>
-        </div>
+    <div class="row mt-10">
+      <div class="col">
+        <h1 class="display-4 text-center ">Contactanos</h1>
       </div>
-      <div class="row">
-        <div class="col-6 col-md-6 mt-6">
-          <div class="card shadow h-100">
-            <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Vicente Lineros</h5>
-              <p class="card-text">19 años, Full Stack.</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="https://github.com/vicholp"><small class="text-muted mdi mdi-github"> vicholp</small></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-6 mt-6">
-          <div class="card shadow h-100">
-            <img src="{% static 'rythm.png' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Juanfra Baquedano</h5>
-              <p class="card-text">19 años, experiencia en Python y C++.</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="https://github.com/juanfraaa2"><small class="text-muted mdi mdi-github "> juanfraaa2</small></a>
-            </div>
+    </div>
+    <div class="row mt-4 mb-4">
+      <div class="col mb-4">
+        <div class="card shadow">
+          <img src="{% static 'correorojo.jpg' %}" height="200" class="card-img-top" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title mdi mdi-email-alert">Correo Electronico</h5>
+            <p class="card-text mdi mdi-label">  a.tracker@gmail.com</p>
+            <p class="card-text mdi mdi-label">  ak.tracker@outlook.com</p>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row mt-10">
-    <div class="col">
-      <h1 class="display-4 text-center ">Contactanos</h1>
-    </div>
-  </div>
-  <div class="row mt-4 mb-4">
-    <div class="col mb-4">
-      <div class="card">
-        <img src="{% static 'correorojo.jpg' %}" height="200" class="card-img-top" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title mdi mdi-email-alert">Correo Electronico</h5>
-          <p class="card-text mdi mdi-label">  a.tracker@gmail.com</p>
-          <p class="card-text mdi mdi-label">  ak.tracker@outlook.com</p>
+      <div class="col mb-4">
+        <div class="card shadow">
+          <img src="{% static 'telefonorojo.jpg' %}" height = "200" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title mdi mdi-phone-forward">Llamada telefonica / SMS</h5>
+            <p class="card-text mdi mdi-label" >  +56967879800</p>
+            <p class="card-text mdi mdi-label" >   (2) 2303 7000</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card">
-        <img src="{% static 'telefonorojo.jpg' %}" height = "200" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title mdi mdi-phone-forward">Llamada telefonica / SMS</h5>
-          <p class="card-text mdi mdi-label" >  +56967879800</p>
-          <p class="card-text mdi mdi-label" >   (2) 2303 7000</p>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card">
-        <img src="{% static 'socialmedia.jpg' %}" height = "200" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title mdi mdi-camera-front-variant">Redes Sociales</h5>
-          <p class="card-text mdi mdi-facebook">   Akatsuki Tracker</p>
-          <p class="card-text mdi mdi-instagram">  @atracker</p>
+      <div class="col mb-4">
+        <div class="card shadow">
+          <img src="{% static 'socialmedia.jpg' %}" height = "200" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title mdi mdi-camera-front-variant">Redes Sociales</h5>
+            <p class="card-text mdi mdi-facebook">   Akatsuki Tracker</p>
+            <p class="card-text mdi mdi-instagram">  @atracker</p>
 
+          </div>
         </div>
       </div>
     </div>
