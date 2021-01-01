@@ -1,0 +1,10 @@
+{% extends "home/template.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Tiendas Disponibles:</h1>
+{% for nombre in tiendas%}
+	<li>{{nombre}}</li>
+{% endfor %}
+
+{% endblock %}

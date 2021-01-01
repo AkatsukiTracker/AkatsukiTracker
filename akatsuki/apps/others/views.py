@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from apps.tracker.models import Tienda
 
 def home_view(request):
     if request.method == 'GET':
@@ -17,6 +18,12 @@ def about_view(request):
 def contacto_view(request):
     return render(request, "home/contacto.html")
 
+def tiendas_view(request):
+    args = {'tiendas':[]}
+    tiendas = Tienda.objects.all()
+    for tienda in tiendas:
+        args['tiendas'].append(tienda.nombre)
+    return render(request, "home/tiendas.html", args)
 
 def error_400_view(request, exception):
     data = {}
