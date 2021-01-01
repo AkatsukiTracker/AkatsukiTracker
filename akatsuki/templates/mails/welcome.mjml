@@ -58,15 +58,8 @@
           </h3>
         </mj-text>
       </mj-column>
-
       <mj-column vertical-align="middle">
         <mj-social font-size="15px" icon-size="30px" mode="horizontal" color="#FFF">
-          <mj-social-element name="facebook" href="https://mjml.io/">
-            Facebook
-          </mj-social-element>
-          <mj-social-element name="google" href="https://mjml.io/">
-            Google
-          </mj-social-element>
           <mj-social-element name="instagram" href="https://mjml.io/">
             Instragram
           </mj-social-element>
