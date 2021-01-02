@@ -251,8 +251,13 @@ def check_info(request):
 
         args = {"historiales": {},}
 
-        link = request.GET['url']
-        producto = Producto.objects.filter(link = link)[0]
+        p_id = request.GET['id']
+        producto = Producto.objects.filter(id = p_id)
+
+        if not producto:
+          return Response ({'error': "el producto no existe"})
+
+        producto = producto[0]
 
         args["producto"] = producto.nombre
 

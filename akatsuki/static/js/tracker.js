@@ -92,7 +92,7 @@ function details(data){
     check_notificaciones.checked = false
   }
 
-  load_graph();
+  load_graph(productos[data].id);
 
 }
 
@@ -111,18 +111,81 @@ function deleteProduct(id){
 }
 
 function load_graph(data){
-  var myLineChart = new Chart(document.getElementById('canvas-chart').getContext('2d'), {
-      type: 'line',
-       data: {
-          datasets: [{
-              data: [10, 20, 30, 40, 50, 60]
-          }],
-          labels: ['January', 'February', 'March', 'April', 'May', 'June']
-      },
-      options: {}
-  });
-}
 
+  historiales = {}
+  fetch(`/tracker/check_product_info?id=${data}`, {method: "GET"})
+  .then( function(response) {
+    if (response.status !== 200)  return console.error('error');
+    response.json().then(function(data) {
+        render_graph(data['historiales'])
+      })
+    }
+  ).catch( function(err) {
+    console.error(err)
+  });
+
+
+}
+function render_graph(data){
+  console.log(data)
+
+  lineChartData = {}; //declare an object
+  lineChartData.labels = []; //add 'labels' element to object (X axis)
+  lineChartData.datasets = []; //add 'datasets' array element to object
+  console.log(Object.keys(data).length)
+  for (line = 0; line < Object.keys(data).length; line++) {
+      y = [];
+      lineChartData.datasets.push({}); //create a new line dataset
+      dataset = lineChartData.datasets[line]
+      dataset.fillColor = "rgba(0,0,0,0)";
+      dataset.strokeColor = "rgba(200,200,200,1)";
+      dataset.data = []; //contains the 'Y; axis data
+
+      for (x = 0; x < 11; x++) {
+          y.push(line + x); //push some data aka generate 4 distinct separate lines
+          if (line === 0)
+              lineChartData.labels.push(x); //adds x axis labels
+      } //for x
+
+      lineChartData.datasets[line].data = y; //send new line data to dataset
+  } //for line
+
+  chart = {}
+  chart.labels = [];
+  chart.datasets = [];
+
+  //Suciedad maxima
+  let flag = true
+  for (precio_tipo in data){
+    precios = []
+
+    dataset = chart.datasets[chart.datasets.push({})-1]
+    dataset.label = precio_tipo
+    dataset.backgroundColor = 'rgba(100,0,0,0.1)'
+    console.log(data[precio_tipo])
+    for (precio of data[precio_tipo]){
+      precios.push(precio[0]);3
+      if (flag) chart.labels.push(precio[1].split('T')[0])
+    }
+    flag = false
+
+    dataset.data = precios
+  }
+  if (chart.labels.length >= 2){
+    myLineChart = new Chart(document.getElementById('canvas-chart').getContext('2d'), {
+      type: 'line',
+      data: chart,
+    });
+    document.querySelector("#row-sinDatos").hidden = true
+    document.querySelector("#row-chart").hidden = false
+  }else{
+    document.querySelector("#row-sinDatos").hidden = false
+    document.querySelector("#row-chart").hidden = true
+  }
+
+
+
+}
 function toggleProductNotification(id){
   console.log(id)
 
