@@ -2,24 +2,31 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from apps.tracker.models import Tienda
 
+def get_user(request):
+    if request.user.username != "":
+        user = User.objects.filter(username=request.user.username)[0]
+    else:
+        user = False
+    return user
+
 def home_view(request):
-    if request.method == 'GET':
-        if request.user.username != "":
-          user = User.objects.filter(username=request.user.username)[0]
-        else:
-            user = False
-        args = {"user": user}
-        return render(request, "home/index.html", args)
-    return render(request, "home/index.html")
+    user = get_user(request)
+    args = {'user':user}
+    return render(request, "home/index.html", args)
 
 def about_view(request):
-    return render(request, "home/about.html")
+    user = get_user(request)
+    args = {'user':user}
+    return render(request, "home/about.html", args)
 
 def contacto_view(request):
-    return render(request, "home/contacto.html")
+    user = get_user(request)
+    args = {'user':user}
+    return render(request, "home/contacto.html", args)
 
 def tiendas_view(request):
-    args = {'tiendas':[]}
+    user = get_user(request)
+    args = {'tiendas':[], 'user':user}
     tiendas = Tienda.objects.all()
     for tienda in tiendas:
         args['tiendas'].append(tienda.nombre)
