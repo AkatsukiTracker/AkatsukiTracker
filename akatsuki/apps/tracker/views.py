@@ -97,19 +97,35 @@ def profile(request):
     args = {"nombre": username, "email": email, "img": img, "fecha": fecha, "notificaciones": usuario.notificaciones_prod, "trending" : usuario.notificaciones}
     return render(request, 'tracker/profile.html', args)
 
-def trending(request):
+def prod_sort(n):
+    return n[0]
+
+def trending(request, num=1, fecha='False'):
     if request.method == 'GET':
         if request.user.username != "":
           user = User.objects.filter(username=request.user.username)[0]
         else:
           user = False
-
         args = {
                 "productos": [],
                 "user": user
                 }
 
-        productos = Producto.objects.all()[::-1]
+        n = num*15
+
+        if fecha == 'True':
+            productos = Producto.objects.all()[::-1][n-15:n]
+
+        else:
+            productosList = list()
+            productosTotales = Producto.objects.all()
+            for producto in productosTotales:
+                productosUsuarios = ProductoUsuario.objects.filter(producto = producto)
+                productosList.append([len(productosUsuarios), producto])
+            productosList.sort(key=prod_sort, reverse=True)
+            productos = list()
+            for i in productosList[n-15:n]:
+                productos.append(i[1])
 
         for producto in productos:
 
