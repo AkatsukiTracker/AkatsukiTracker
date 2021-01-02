@@ -369,7 +369,7 @@ class LiderInitialScraper(BaseInitialScraper):
             text = soup.find_all("script")[2].string
             self.nombreProducto = text[text.find("name")+4+3:text.find("image")-3]
             img_link = text[text.find("image")+5+3:text.find("description")-3]
-            self.img_link = img_link.split(",")[0]
+            self.img_link = img_link.split(",")[0].replace('http', 'https')
             precio = text[text.rfind("price")+5+2:len(text)-2]
             self.path = "script-2-[price]"
         elif link.split("/")[3] == "supermercado":
@@ -1615,7 +1615,9 @@ class EstacionNaturalInitialScraper(BaseInitialScraper):
       soup = BeautifulSoup(fuente,features="html.parser")
 
       self.nombreProducto = soup.select("h1")[0].text
-      self.img_link = "//" + str(soup.select("div.image__container")[0]).split('//')[-1].replace("/></div>",'').replace('"','')
+      img = str(soup.select("div.image__container")[0])
+      self.img_link = 'https://' + img[img.find('data-src')+12:img.find('data-srcset')-2]
+      #self.img_link = "//" + str(soup.select("div.image__container")[0]).split('//')[-1].replace("/></div>",'').replace('"','')
 
       path = "span.money"
       precio_oferta = "Oferta no disponible"
