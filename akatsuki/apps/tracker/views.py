@@ -47,13 +47,27 @@ def dashboard(request):
             producto = p.producto
             historial = Historial.objects.filter(producto = producto)
 
+            tipos = []
+            for hist in historial:
+                if hist.tipo not in tipos:
+                    tipos.append(hist.tipo)
+
+            hists = []
+            for i in range(len(tipos)):
+                hists.append(Historial.objects.filter(producto = producto, tipo = tipos[i])[::-1][0])
+
+            precio = float("inf")
+            for hist in hists:
+                if hist.precio < precio:
+                    precio = hist.precio
+
             d_producto = {
                 "id": producto.id,
                 "nombre": producto.nombre,
                 "tienda": (producto.tienda).nombre.capitalize(),
                 "img": producto.img_link,
                 "link": producto.link,
-                "precio": historial[::-1][0].precio,
+                "precio": precio,
                 "notificaciones": p.notificaciones
             }
             args["productos"].append(d_producto)
