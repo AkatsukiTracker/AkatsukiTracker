@@ -8,7 +8,6 @@
   {% autoescape off %}
     const productos = {{ productos_json }}
     const links = {{ links }}
-    const historiales = {{ historiales }}
   {% endautoescape %}
 
   const csrf = "{{ csrf_token }}"
@@ -149,9 +148,18 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="row">
+        <div class="row" id="row-chart">
           <div class="col">
             <canvas id="canvas-chart" width="400" height="200"></canvas>
+          </div>
+        </div>
+        <div class="row" id="row-sinDatos">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                No hay suficientes datos todavia.
+              </div>
+            </div>
           </div>
         </div>
         <div class="row mt-4">

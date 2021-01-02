@@ -1,49 +1,39 @@
 {% extends "home/template.html" %}
 {% load static %}
 {% block content %}
-<div class="row row-cols-1 row-cols-md-2 ml-3 mr-3 mt-4 mb-4">
-  <div class="col mb-4">
-    <div class="card">
-      <img src="{% static 'redes.jpg' %}" height="370" class="card-img-top" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title mdi mdi-email-alert">Correo Electronico</h5>
-        <p class="card-text mdi mdi-label">  a.tracker@gmail.com</p>
-        <p class="card-text mdi mdi-label">  ak.tracker@outlook.com</p>
+
+<div class="container-fluid">
+  <div class="container-xl">
+    <div class="row mt-4">
+      <div class="col">
+        <h1 class="display-4 text-center">Ayudanos!</h1>
       </div>
     </div>
-  </div>
-  <div class="col mb-4">
-    <div class="card">
-      <img src="{% static 'redes2.jpg' %}" height = "370" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title mdi mdi-phone-forward">Llamada telefonica / SMS</h5>
-        <p class="card-text mdi mdi-label" >  +56967879800</p>
-        <p class="card-text mdi mdi-label" >   (2) 2303 7000</p>
-      </div>
-    </div>
-  </div>
-  <div class="col mb-4">
-    <div class="card">
-      <img src="{% static 'redes3.jpg' %}" height = "370" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title mdi mdi-camera-front-variant">Redes Sociales</h5>
-        <p class="card-text mdi mdi-facebook">   Akatsuki Tracker</p>
-        <p class="card-text mdi mdi-instagram">  @atracker</p>
+    <div class="row justify-content-center mt-4">
+      <div class="col-12 col-md-6 ">
+        <div class="card">
+          <img src="{% static 'opensource.jpg' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text">Somos fieles creyentes de que la colaboracion puede solucionar los problemas y acercarnos cada vez más util nuestro tracker. El codigo de AkatsukiTracker es publico, y puedes sugerir cambios, proponear ideas, desarrollar nuevas funcionalidades, todo a traves de GitHub. </p>
+            <a href="#" class="btn btn-outline-primary btn-block mdi mdi-github"> Nuestro GitHub</a>
+          </div>
+        </div>
 
       </div>
-    </div>
-  </div>
-  <div class="col mb-4">
-    <div class="card">
-      <img src="{% static 'redes4.jpg' %}" height="370" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title mdi mdi-draw">Libro de comentarios</h5>
-        <p class="card-text">
-          <button>Ir...</button>
-        </p>
+      <div class="col-12 col-md-6 mt-3 mt-sm-0">
+        <div class="card">
+          <img src="{% static 'opensource.jpg' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text">AkatsukiTracker es gratis y siempre lo será, pero en un comienzo, todo salio de nuestro bolsillo. Desde los servidores a los dominios, y trabajamos durante semanas por amor al arte. Si quieres, puedes regalarnos un cafe.</p>
+            <a href="#" class="btn btn-outline-primary btn-block mdi mdi-coffee"> Un cafesito</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 {% endblock %}
