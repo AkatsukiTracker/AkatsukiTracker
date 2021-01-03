@@ -145,19 +145,21 @@ def trending(request, num=1, fecha='False'):
 
             precio = float("inf")
             for historial in historiales:
+                print(historial.precio)
                 if historial.precio < precio and -1 < historial.precio:
                     precio = historial.precio
                     ultimo_historial = historial
 
             if precio == float("inf"):
                 precio = "No Disponible"
+
             d_producto = {
                 "id": producto.id,
                 "nombre": producto.nombre,
                 "tienda": (producto.tienda).nombre.capitalize(),
                 "img": producto.img_link,
                 "link": producto.link,
-                "precio": ultimo_historial.precio,
+                "precio": precio,
                 "subscripciones": len(productosUsuarios),
                 "agregado": False
             }
