@@ -131,7 +131,7 @@ def seleccionar_scraper_initial(tienda, link):
     return (tienda, scraper)
 
 def seleccionar_scraper(tienda, link, path):
-    
+
     if tienda == "falabella":
         scraper = FalabellaScraper(link,path)
 
@@ -143,45 +143,7 @@ def seleccionar_scraper(tienda, link, path):
 
     else:
         scraper = GeneralScraper(link,path)
-        
-    '''
-    elif tienda == "abcdin":
-        scraper = AbcdinScraper(link,path)
-    
-    elif tienda == "ripley":
-        scraper = RipleyScraper(link,path)
 
-    elif tienda == "paris":
-        scraper = ParisScraper(link,path)
-
-    elif tienda == "pcfactory":
-        scraper = PCFactoryScraper(link,path)
-
-    elif tienda == "antartica":
-        scraper = AntarticaScraper(link,path)
-
-    elif tienda == "cruz verde":
-        scraper = CruzVerdeScraper(link,path)
-
-    elif tienda == "sparta":
-        scraper = SpartaScraper(link,path)
-
-    elif tienda == "steam":
-        scraper = SteamScraper(link,path)
-
-    elif tienda == "tottus":
-        scraper = TottusScraper(link,path)
-
-    elif tienda == "bold":
-        scraper = BoldScraper(link,path)
-
-    elif tienda == "contrapunto":
-        scraper = ContrapuntoScraper(link,path)
-
-    elif tienda == "chevrolet":
-        scraper = ChevroletScraper(link,path)
-    '''
-    
     return scraper
 
 def tiendaDisponible(tienda):
@@ -248,6 +210,7 @@ class BaseScraper():
 
 class GeneralScraper(BaseScraper):
      def __init__(self,link,path):
+        #los headers son necesarios ya que Ortopedia Online los requiere
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
         fuente = requests.get(link,headers=headers).text
         soup = BeautifulSoup(fuente,features="html.parser")
@@ -256,6 +219,7 @@ class GeneralScraper(BaseScraper):
         ruta,indice = path.split('/')
 
         try:
+            #el .strip().split('\n')[0] es necesario por Paris, ya que a veces se incluyen los descuentos tipo  '17%', lo cual arruina el resultado esperado de string_to_number()
             self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
         except:
             self.status = 2
