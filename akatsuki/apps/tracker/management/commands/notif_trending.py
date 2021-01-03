@@ -46,7 +46,7 @@ class Command(BaseCommand):
             for tipo in tipos:
                 historiales.append(Historial.objects.filter(producto = producto, tipo=tipo)[::-1][0])
             for hist in historiales:
-                if hist.precio < precio_bajo:
+                if hist.precio < precio_bajo and -1 < hist.precio:
                     precio_bajo = hist.precio
                     tipo_precio = hist.tipo
 

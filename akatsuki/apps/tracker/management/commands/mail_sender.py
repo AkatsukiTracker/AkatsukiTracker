@@ -29,8 +29,8 @@ class Command(BaseCommand):
               
               if historial.tipo not in precios:
                 precios[historial.tipo] = []           
-               
-              precios[historial.tipo].append(historial.precio)
+              if historial.precio > -1:
+                precios[historial.tipo].append(historial.precio)
 
             ultimo_precio = float("inf")
             precio_anterior = float("inf") #Precio justo anterior

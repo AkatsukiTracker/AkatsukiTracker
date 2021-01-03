@@ -29,6 +29,6 @@ class Command(BaseCommand):
           path = scraper.get_path()
           historial = Historial(producto = prod, tipo = hist.tipo, precio = precio, bs4path = path, disponible=1)
         elif status == 2: # No Disponible?¿
-          historial = Historial(producto = prod, tipo = hist.tipo, precio = 0, bs4path = hist.bs4path, disponible=0)
+          historial = Historial(producto = prod, tipo = hist.tipo, precio = -1, bs4path = hist.bs4path, disponible=0)
         historial.save()
 

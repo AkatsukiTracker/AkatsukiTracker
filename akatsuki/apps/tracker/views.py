@@ -58,8 +58,11 @@ def dashboard(request):
 
             precio = float("inf")
             for hist in hists:
-                if hist.precio < precio:
+                if hist.precio < precio and -1 < hist.precio:
                     precio = hist.precio
+
+            if precio == float("inf"):
+                precio = "No Disponible"
 
             d_producto = {
                 "id": producto.id,
@@ -142,10 +145,12 @@ def trending(request, num=1, fecha='False'):
 
             precio = float("inf")
             for historial in historiales:
-                if historial.precio < precio:
+                if historial.precio < precio and -1 < historial.precio:
                     precio = historial.precio
                     ultimo_historial = historial
 
+            if precio == float("inf"):
+                precio = "No Disponible"
             d_producto = {
                 "id": producto.id,
                 "nombre": producto.nombre,
