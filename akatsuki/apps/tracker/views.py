@@ -57,12 +57,14 @@ def dashboard(request):
                 hists.append(Historial.objects.filter(producto = producto, tipo = tipos[i])[::-1][0])
 
             precio = float("inf")
+            disponibilidad = True
             for hist in hists:
                 if hist.precio < precio and -1 < hist.precio:
                     precio = hist.precio
 
             if precio == float("inf"):
                 precio = "No Disponible"
+                disponibilidad = False
 
             d_producto = {
                 "id": producto.id,
@@ -71,6 +73,7 @@ def dashboard(request):
                 "img": producto.img_link,
                 "link": producto.link,
                 "precio": precio,
+                "disponibilidad": disponibilidad,
                 "notificaciones": p.notificaciones
             }
             args["productos"].append(d_producto)
@@ -144,14 +147,15 @@ def trending(request, num=1, fecha='False'):
                 historiales.append(Historial.objects.filter(producto = producto, tipo = tipos[i])[::-1][0])
 
             precio = float("inf")
+            disponibilidad = True
             for historial in historiales:
-                print(historial.precio)
                 if historial.precio < precio and -1 < historial.precio:
                     precio = historial.precio
                     ultimo_historial = historial
 
             if precio == float("inf"):
                 precio = "No Disponible"
+                disponibilidad = False
 
             d_producto = {
                 "id": producto.id,
@@ -160,6 +164,7 @@ def trending(request, num=1, fecha='False'):
                 "img": producto.img_link,
                 "link": producto.link,
                 "precio": precio,
+                "disponibilidad": disponibilidad,
                 "subscripciones": len(productosUsuarios),
                 "agregado": False
             }
