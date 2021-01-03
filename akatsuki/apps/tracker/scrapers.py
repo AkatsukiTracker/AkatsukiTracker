@@ -222,7 +222,8 @@ class GeneralScraper(BaseScraper):
 
         try:
             #el .strip().split('\n')[0] es necesario por Paris, ya que a veces se incluyen los descuentos tipo  '17%', lo cual arruina el resultado esperado de string_to_number()
-            self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
+            #similarmente, el .split('-')[0] es para que funcione para Bold
+            self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0].split('-')[0])
         except:
             self.status = 2
 
@@ -1014,19 +1015,20 @@ class BoldInitialScraper(BaseInitialScraper):
         self.nombreProducto = soup.select("span.trimName")[0].text
         self.img_link = "https://bold.cl/" + soup.select("div.item > div > img")[0].attrs["data-src"]
 
-        path = "div.item--price"
-        precio_normal = soup.select(path)[0].text.strip()
-        precio_oferta = "Oferta no disponible"
+        path_normal = "div.item--price"
+        precio_normal = soup.select(path_normal)[0].text.split('-')[0].strip()
 
-        if '-' in precio_normal:
-            precio_oferta = precio_normal.split('-')[1].strip()
-            precio_normal = precio_normal.split('-')[0].strip()
+        try:
+            path_oferta = "div.price-with-discount"
+            precio_oferta = soup.select(path_oferta)[0].text
+        except:
+            precio_oferta = "Oferta no disponible"
 
-        self.p_oferta = evaluar_precio(precio_oferta)
         self.p_normal = string_to_number(precio_normal)
+        self.p_oferta = evaluar_precio(precio_oferta)
 
-        self.path_normal = path + '/' + '0'
-        self.path_oferta = path + '/' + '1'
+        self.path_normal = path_normal + '/' + '0'
+        self.path_oferta = path_oferta + '/' + '0'
 
     def get_precios(self):
         precios = dict()
