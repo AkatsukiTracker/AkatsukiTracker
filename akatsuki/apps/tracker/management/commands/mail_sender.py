@@ -18,34 +18,30 @@ class Command(BaseCommand):
         prod_usuario = ProductoUsuario.objects.filter(user=user)
         productos = []
         for prod_user in prod_usuario:
-          productos.append(prod_user.producto)
-        
-        for producto in productos:
-          if ProductoUsuario.objects.filter(user=user, producto=producto)[0].notificaciones:
-             
+          productos.append(prod_user.producto)     
+        for producto in productos:  
+          if ProductoUsuario.objects.filter(user=user, producto=producto)[0].notificaciones:           
             historiales = Historial.objects.filter(producto=producto)
             precios = {}
             for historial in historiales:
-              
               if historial.tipo not in precios:
                 precios[historial.tipo] = []           
               if historial.precio > -1:
                 precios[historial.tipo].append(historial.precio)
-
             ultimo_precio = float("inf")
             precio_anterior = float("inf") #Precio justo anterior
 
             mandar = False
 
             for i in precios:
-              precio_anterior = precios[i][::-1][1]
-              ultimo_precio = precios[i][::-1][0]
-              media = sum(precios[i])/len(precios[i])
-
-              if ultimo_precio < media:
-                precio_bajo = ultimo_precio
-                precio_alto = precio_anterior
-                mandar = True
+              if len(precios[i]) != 1:
+                precio_anterior = precios[i][::-1][1]
+                ultimo_precio = precios[i][::-1][0]
+                media = sum(precios[i])/len(precios[i])
+                if ultimo_precio < media:
+                  precio_bajo = ultimo_precio
+                  precio_alto = precio_anterior
+                  mandar = True
 
             if mandar:
 

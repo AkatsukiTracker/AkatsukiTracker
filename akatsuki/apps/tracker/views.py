@@ -180,7 +180,7 @@ def trending(request, num=1, fecha='False'):
 @login_required(login_url='login')
 @api_view(['GET'])
 def check_url(request):
-
+    
     if request.method == 'GET':
         link = request.GET['url']
         try:
