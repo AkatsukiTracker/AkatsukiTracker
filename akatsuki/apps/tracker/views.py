@@ -277,7 +277,7 @@ def check_info(request):
 
         args["producto"] = producto.nombre
 
-        historiales = Historial.objects.filter(producto = producto)
+        historiales = Historial.objects.order_by('fecha').filter(producto = producto)
         for i in historiales:
             nombre_historial = i.tipo
             precio = i.precio

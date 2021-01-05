@@ -30,6 +30,7 @@ function errorMode(error){
   document.querySelector("#producto-nombre").textContent = "Ocurrio un error, intenta nuevamente"
 }
 
+
 function editMode(){
   console.log('edit')
   btn_checkUrl = document.querySelector("#btn-checkUrl")
@@ -129,42 +130,25 @@ function load_graph(data){
 function render_graph(data){
   console.log(data)
 
-  lineChartData = {}; //declare an object
-  lineChartData.labels = []; //add 'labels' element to object (X axis)
-  lineChartData.datasets = []; //add 'datasets' array element to object
-  console.log(Object.keys(data).length)
-  for (line = 0; line < Object.keys(data).length; line++) {
-      y = [];
-      lineChartData.datasets.push({}); //create a new line dataset
-      dataset = lineChartData.datasets[line]
-      dataset.fillColor = "rgba(0,0,0,0)";
-      dataset.strokeColor = "rgba(200,200,200,1)";
-      dataset.data = []; //contains the 'Y; axis data
-
-      for (x = 0; x < 11; x++) {
-          y.push(line + x); //push some data aka generate 4 distinct separate lines
-          if (line === 0)
-              lineChartData.labels.push(x); //adds x axis labels
-      } //for x
-
-      lineChartData.datasets[line].data = y; //send new line data to dataset
-  } //for line
-
   chart = {}
   chart.labels = [];
   chart.datasets = [];
 
   //Suciedad maxima
   let flag = true
+
+  colores = ['rgba(250,0,0,0.1)', 'rgba(0,0,250,0.1)', 'rgba(0,250,0,0.1)', 'rgba(250,250,0,0.1)']
+
   for (precio_tipo in data){
     precios = []
-
-    dataset = chart.datasets[chart.datasets.push({})-1]
-    dataset.label = precio_tipo
-    dataset.backgroundColor = 'rgba(100,0,0,0.1)'
+    console.log(precio_tipo.replace('_', ' '))
+    i = chart.datasets.push({})-1
+    dataset = chart.datasets[i]
+    dataset.label = capitalizeFirstLetter(precio_tipo.replace('_', ' '))
+    dataset.backgroundColor = colores[i]
     console.log(data[precio_tipo])
     for (precio of data[precio_tipo]){
-      precios.push(precio[0]);3
+      precios.push(precio[0]);
       if (flag) chart.labels.push(precio[1].split('T')[0])
     }
     flag = false
@@ -183,8 +167,9 @@ function render_graph(data){
     document.querySelector("#row-chart").hidden = true
   }
 
-
-
+}
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 function toggleProductNotification(id){
   console.log(id)
