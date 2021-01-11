@@ -16,17 +16,6 @@
       <div class="col-12 col-sm-6 col-lg-8">
          <h1 class="display-4">Trending</h1>
       </div>
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" checked> Tendencia
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2"> Ultimos
-          </label>
-        </div>
-
-      </div>
     </div>
     <div class="row">
       <div class="col">
@@ -60,6 +49,21 @@
           </div>
           {% endfor %}
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <ul class="pagination justify-content-center">
+          {% for i in n_productos %}
+            {% if forloop.counter == pagina %}
+              <li class="page-item active"><a class="page-link" disabled>{{forloop.counter}}</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="/tracker/trending/pagina={{forloop.counter}}">{{forloop.counter}}</a></li>
+            {% endif %}
+
+          {% endfor %}
+        </ul>
+
       </div>
     </div>
   </div>

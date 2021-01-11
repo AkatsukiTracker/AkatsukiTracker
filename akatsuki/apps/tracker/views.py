@@ -25,6 +25,7 @@ from rest_framework.response import Response
 from .scrapers import *
 
 import json
+from math import ceil
 from django.core.serializers.json import DjangoJSONEncoder
 
 import hashlib
@@ -114,7 +115,9 @@ def trending(request, num=1, fecha='False'):
           user = False
         args = {
                 "productos": [],
-                "user": user
+                "user": user,
+                "n_productos": range(ceil (Producto.objects.all().count() / 15) ),
+                "pagina": num
                 }
 
         n = num*15
@@ -180,7 +183,7 @@ def trending(request, num=1, fecha='False'):
 @login_required(login_url='login')
 @api_view(['GET'])
 def check_url(request):
-    
+
     if request.method == 'GET':
         link = request.GET['url']
         try:
