@@ -209,7 +209,7 @@ class BaseScraper():
         return self.path
 
 class GeneralScraper(BaseScraper):
-     def __init__(self,link,path):
+    def __init__(self,link,path):
         #los headers son necesarios ya que Ortopedia Online los requiere
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
         try:
@@ -939,6 +939,34 @@ class SteamInitialScraper(BaseInitialScraper):
         if self.p_oferta != "Oferta no disponible":
           paths["precio_oferta"] = self.path_oferta
         return paths
+
+class SteamScraper(BaseScraper):
+    def __init__(self, link, path):
+        #los headers son necesarios ya que Ortopedia Online los requiere
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
+        try:
+            fuente = requests.get(link,headers=headers).text
+            soup = BeautifulSoup(fuente,features="html.parser")
+            self.status = 0
+            self.path = path
+            ruta,indice = path.split('/')
+        except:
+            self.status = 2
+        else:
+            try:
+                soup.select("div.discount_final_price")               
+            except:
+                if ruta == "div.discount_final_price":
+                    self.status = 2
+                elif ruta == "div.game_purchase_price.price":
+                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
+                elif ruta == "div.discount_original_price":
+                    self.status == 1
+                    self.path = "div.game_purchase_price.price" + "/0"
+                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
+
+            
+
 
 class TottusInitialScraper(BaseInitialScraper):
     tienda = "tottus"
