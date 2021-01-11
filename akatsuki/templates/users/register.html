@@ -16,12 +16,21 @@
     <div class="col-12 col-md-6 col-lg-4">
       <div class="card border-akatsuki shadow-akatsuki">
         <div class="card-body">
-          <h3 class="display-4 mb-3 text-center">Regístrate</h3>
-            {% for message in messages %}
-              <div class="alert alert-warning" role="alert">
-                {{message}}
-              </div>
-            {% endfor %}
+          <h3 class="display-4 mb-3 text-center">Registrate</h3>
+            {% if form.errors %}
+              {% for field in form %}
+                {% for error in field.errors %}
+                  <div class="alert alert-danger">
+                      <strong>{{ error|escape }}</strong>
+                  </div>
+                {% endfor %}
+              {% endfor %}
+              {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+              {% endfor %}
+            {% endif %}
             <form method="POST" action="">
               {% csrf_token %}
               <div class="input-group mb-2">
@@ -61,7 +70,7 @@
       <div class="card shadow-akatsuki border-akatsuki">
         <div class="card-body">
           <h3 class="text-center mb-2">Ya tienes una cuenta?</h3>
-          <a href="{% url 'login' %}" class="btn bg-akatsuki btn-block text-white shadow-akatsuki"> Inicia sesión</a>
+          <a href="{% url 'login' %}" class="btn bg-akatsuki btn-block text-white shadow-akatsuki"> Inicia sesion</a>
         </div>
       </div>
     </div>
