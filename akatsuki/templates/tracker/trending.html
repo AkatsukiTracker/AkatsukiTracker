@@ -37,8 +37,13 @@
               <div class="card-body">
                 <h5 class="card-title">{{ producto.nombre }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ producto.tienda|title }}</h6>
-                <p class="card-text">${{ producto.precio }} <br>
-                {{ producto.subscripciones }} Suscritos</p>
+                {% if disponibilidad %}
+                  <p class="card-text">${{ producto.precio }} <br>
+                  {{ producto.subscripciones }} Suscritos</p>
+                {% else %}
+                  <p class="card-text">{{ producto.precio }} <br>
+                  {{ producto.subscripciones }} Suscritos</p>
+                {% endif %}
                 {% if user %}
                   {% if producto.agregado %}
                     <button id="btn-product-{{producto.id}}-disabled" class="btn btn-outline-primary btn-block mdi mdi-check" disabled>Añadido</button>
