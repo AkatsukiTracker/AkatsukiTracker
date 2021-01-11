@@ -81,6 +81,7 @@ function details(data){
   document.getElementById("badge-notificaciones-NOTOK").hidden = true
 
   document.getElementById("modalDetails-title").textContent = productos[data].nombre
+  document.getElementById("modalDetails-link").href = productos[data].link
   document.getElementById("modalDetails-delete").onclick = function(){deleteProduct(productos[data].id)}
   document.getElementById("modalDetails-deleteConfirm").hidden = true
   let check_notificaciones = document.getElementById("check-notificaciones")
