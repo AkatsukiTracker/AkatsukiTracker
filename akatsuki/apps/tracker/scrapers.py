@@ -141,6 +141,9 @@ def seleccionar_scraper(tienda, link, path):
     elif tienda == "jumbo":
         scraper = JumboScraper(link,path)
 
+    elif tienda == "steam":
+        scraper = SteamScraper(link,path)
+
     else:
         scraper = GeneralScraper(link,path)
 
