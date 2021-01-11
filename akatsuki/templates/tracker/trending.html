@@ -26,25 +26,28 @@
               <div class="card-body">
                 <h5 class="card-title">{{ producto.nombre }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ producto.tienda|title }}</h6>
-                {% if disponibilidad %}
+                {% if producto.disponibilidad %}
                   <p class="card-text">${{ producto.precio }} <br>
                   {{ producto.subscripciones }} Suscritos</p>
                 {% else %}
                   <p class="card-text">{{ producto.precio }} <br>
                   {{ producto.subscripciones }} Suscritos</p>
                 {% endif %}
-                {% if user %}
-                  {% if producto.agregado %}
-                    <button id="btn-product-{{producto.id}}-disabled" class="btn btn-outline-primary btn-block mdi mdi-check" disabled>Añadido</button>
-                    <button id="btn-product-{{producto.id}}-enabled" class="btn btn-primary btn-block mdi mdi-plus" onclick="add_product({{producto.id}},'{{ producto.link }}')" hidden>Añadir</button>
+                {% if producto.disponibilidad %}
+                  {% if user %}
+                    {% if producto.agregado %}
+                      <button id="btn-product-{{producto.id}}-disabled" class="btn btn-outline-primary btn-block mdi mdi-check" disabled>Añadido</button>
+                      <button id="btn-product-{{producto.id}}-enabled" class="btn btn-primary btn-block mdi mdi-plus" onclick="add_product({{producto.id}},'{{ producto.link }}')" hidden>Añadir</button>
+                    {% else %}
+                      <button id="btn-product-{{producto.id}}-disabled" class="btn btn-outline-primary btn-block mdi mdi-check" disabled hidden>Añadido</button>
+                      <button id="btn-product-{{producto.id}}-enabled" class="btn btn-primary btn-block mdi mdi-plus" onclick="add_product({{producto.id}},'{{ producto.link }}')">Añadir</button>
+                    {% endif %}
                   {% else %}
-                    <button id="btn-product-{{producto.id}}-disabled" class="btn btn-outline-primary btn-block mdi mdi-check" disabled hidden>Añadido</button>
-                    <button id="btn-product-{{producto.id}}-enabled" class="btn btn-primary btn-block mdi mdi-plus" onclick="add_product({{producto.id}},'{{ producto.link }}')">Añadir</button>
+                    <button id="btn-product-{{producto.id}}-enabled" class="btn btn-primary btn-block mdi mdi-plus" onclick="location.href='/register'">Añadir</button>
                   {% endif %}
-                {% else %}
-                  <button id="btn-product-{{producto.id}}-enabled" class="btn btn-primary btn-block mdi mdi-plus" onclick="location.href='/register'">Añadir</button>
+                     <button id="btn-product-{{producto.id}}-loading" class="btn btn-primary btn-block" hidden><span class="spinner-border spinner-border-sm"></span> Añadiendo</button>
                 {% endif %}
-                   <button id="btn-product-{{producto.id}}-loading" class="btn btn-primary btn-block" hidden><span class="spinner-border spinner-border-sm"></span> Añadiendo</button>
+
               </div>
           </div>
           {% endfor %}
