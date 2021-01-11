@@ -212,17 +212,21 @@ class GeneralScraper(BaseScraper):
      def __init__(self,link,path):
         #los headers son necesarios ya que Ortopedia Online los requiere
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
-        fuente = requests.get(link,headers=headers).text
-        soup = BeautifulSoup(fuente,features="html.parser")
-        self.status = 0
-        self.path = path
-        ruta,indice = path.split('/')
-
         try:
-            #el .strip().split('\n')[0] es necesario por Paris, ya que a veces se incluyen los descuentos tipo  '17%', lo cual arruina el resultado esperado de string_to_number()
-            self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
+            fuente = requests.get(link,headers=headers).text
+            soup = BeautifulSoup(fuente,features="html.parser")
+            self.status = 0
+            self.path = path
+            ruta,indice = path.split('/')
         except:
             self.status = 2
+        else:
+            try:
+                #el .strip().split('\n')[0] es necesario por Paris, ya que a veces se incluyen los descuentos tipo  '17%', lo cual arruina el resultado esperado de string_to_number()
+                self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
+            except:
+                self.status = 2
+
 
 class FalabellaInitialScraper(BaseInitialScraper):
     tienda = "falabella"
@@ -308,21 +312,24 @@ class FalabellaInitialScraper(BaseInitialScraper):
 
 class FalabellaScraper(BaseScraper):
     def __init__(self, link, path):
-        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
-        self.status = 0
         try:
-            self.precio = string_to_number(soup.select(path)[0].text)
-        except:
-            codigo = link.split('/')[5]
-            selectText = ("#testId-pod-prices-{} > ol > li").format(codigo)
-            jsx = soup.select(selectText)[0].attrs["class"][0]
-
-            self.path = selectText + "." + jsx + path[-21:]
+            soup = BeautifulSoup(requests.get(link).content, features="html.parser")
+            self.status = 0
             try:
-                self.precio = string_to_number(soup.select(self.path)[0].text)
-                self.status = 1
+                self.precio = string_to_number(soup.select(path)[0].text)
             except:
-                self.status = 2
+                codigo = link.split('/')[5]
+                selectText = ("#testId-pod-prices-{} > ol > li").format(codigo)
+                jsx = soup.select(selectText)[0].attrs["class"][0]
+
+                self.path = selectText + "." + jsx + path[-21:]
+                try:
+                    self.precio = string_to_number(soup.select(self.path)[0].text)
+                    self.status = 1
+                except:
+                    self.status = 2
+        except:
+            self.status = 2
 
 class LiderInitialScraper(BaseInitialScraper):
     tienda = "lider"
@@ -353,16 +360,19 @@ class LiderInitialScraper(BaseInitialScraper):
 
 class LiderScraper(BaseScraper):
     def __init__(self,link,path):
-        self.status = 0
-        self.path = path
-        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
         try:
-            if link.split("/")[3] == "catalogo":
-                text = soup.find_all("script")[2].string
-                precio = text[text.rfind("price")+5+2:len(text)-2]
-            elif link.split("/")[3] == "supermercado":
-                precio = soup.select("#productPrice > p.price")[0].text
-            self.precio = string_to_number(precio)
+            self.status = 0
+            self.path = path
+            soup = BeautifulSoup(requests.get(link).content, features="html.parser")
+            try:
+                if link.split("/")[3] == "catalogo":
+                    text = soup.find_all("script")[2].string
+                    precio = text[text.rfind("price")+5+2:len(text)-2]
+                elif link.split("/")[3] == "supermercado":
+                    precio = soup.select("#productPrice > p.price")[0].text
+                self.precio = string_to_number(precio)
+            except:
+                self.status = 2
         except:
             self.status = 2
 
@@ -871,16 +881,19 @@ class JumboInitialScraper(BaseInitialScraper):
 
 class JumboScraper(BaseScraper):
     def __init__(self,link,path):
-        self.status = 0
-        self.path = path
-        soup = BeautifulSoup(requests.get(link).content, features="html.parser")
-        text = soup.select("body > script")[0].string
         try:
-            if path == "path_normal":
-                precio = text[text.find("Price")+5+3:text.find("ListPrice")-3]
-            elif path == "path_oferta":
-                precio = text[text.find("ListPrice")+9+3:text.find("PriceWith")-3]
-            self.precio = string_to_number(precio)
+            self.status = 0
+            self.path = path
+            soup = BeautifulSoup(requests.get(link).content, features="html.parser")
+            text = soup.select("body > script")[0].string
+            try:
+                if path == "path_normal":
+                    precio = text[text.find("Price")+5+3:text.find("ListPrice")-3]
+                elif path == "path_oferta":
+                    precio = text[text.find("ListPrice")+9+3:text.find("PriceWith")-3]
+                self.precio = string_to_number(precio)
+            except:
+                self.status = 2
         except:
             self.status = 2
 
