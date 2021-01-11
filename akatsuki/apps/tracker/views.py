@@ -58,14 +58,14 @@ def dashboard(request):
                 hists.append(Historial.objects.filter(producto = producto, tipo = tipos[i])[::-1][0])
 
             precio = float("inf")
-            disponibilidad = True
+            disponibilidad = "True"
             for hist in hists:
                 if hist.precio < precio and -1 < hist.precio:
                     precio = hist.precio
 
             if precio == float("inf"):
                 precio = "No Disponible"
-                disponibilidad = False
+                disponibilidad = "False"
 
             d_producto = {
                 "id": producto.id,
