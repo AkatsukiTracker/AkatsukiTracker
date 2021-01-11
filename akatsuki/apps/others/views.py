@@ -11,7 +11,12 @@ def get_user(request):
 
 def home_view(request):
     user = get_user(request)
-    args = {'user':user}
+    args = {'tiendas':[], 'user':user}
+
+    tiendas = Tienda.objects.all()
+    for tienda in tiendas:
+        args['tiendas'].append(tienda.nombre)
+
     return render(request, "home/index.html", args)
 
 def about_view(request):
@@ -23,14 +28,6 @@ def contacto_view(request):
     user = get_user(request)
     args = {'user':user}
     return render(request, "home/contacto.html", args)
-
-def tiendas_view(request):
-    user = get_user(request)
-    args = {'tiendas':[], 'user':user}
-    tiendas = Tienda.objects.all()
-    for tienda in tiendas:
-        args['tiendas'].append(tienda.nombre)
-    return render(request, "home/tiendas.html", args)
 
 def error_400_view(request, exception):
     data = {}

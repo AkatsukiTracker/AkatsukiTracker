@@ -1,5 +1,5 @@
-from django.conf import settings 
-from django.core.mail import send_mail 
+from django.conf import settings
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 from django.contrib.auth.models import User
@@ -19,23 +19,24 @@ class Command(BaseCommand):
         productos = []
         for prod_user in prod_usuario:
           productos.append(prod_user.producto)
-        
+
         for producto in productos:
           if ProductoUsuario.objects.filter(user=user, producto=producto)[0].notificaciones:
-             
-            historiales = Historial.objects.filter(producto=producto)
+
+            historiales = Historial.objects.order_by('fecha').filter(producto=producto)
             precios = {}
             for historial in historiales:
-              
+
               if historial.tipo not in precios:
-                precios[historial.tipo] = []           
-               
+                precios[historial.tipo] = []
+
               precios[historial.tipo].append(historial.precio)
 
             ultimo_precio = float("inf")
             precio_anterior = float("inf") #Precio justo anterior
 
             mandar = False
+
 
             for i in precios:
               precio_anterior = precios[i][::-1][1]
@@ -48,20 +49,18 @@ class Command(BaseCommand):
                 mandar = True
 
             if mandar:
-
               link_img = producto.img_link
 
               link_producto = producto.link
 
-
-              msg_html = render_to_string('mails/offer.html', {'user': user.username, 
-                                                              'precio_bajo': precio_bajo, 
+              msg_html = render_to_string('mails/html/offer.html', {'user': user.username,
+                                                              'precio_bajo': precio_bajo,
                                                               'precio_alto': precio_alto,
                                                               'img': link_img,
                                                               'link': link_producto})
 
               send_mail(
-                '¡Uno de tus productos bajó de precio!', #Titulo  
+                '¡Uno de tus productos bajó de precio!', #Titulo
                 "", #Mensaje
                 settings.EMAIL_HOST_USER , #Emisor
                 [user.email], #Destinatario

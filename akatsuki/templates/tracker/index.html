@@ -53,7 +53,11 @@
                 <tr>
                   <th class="align-middle">{{producto.nombre}}</th>
                   <td class="align-middle d-none d-sm-table-cell">{{producto.tienda}}</td>
-                  <td class="align-middle">${{producto.precio}}</td>
+                  {% if disponibilidad %}
+                    <td class="align-middle">${{producto.precio}}</td>
+                  {% else %}
+                    <td class="align-middle">{{producto.precio}}</td>
+                  {% endif %}
                   <td>
                     <div class="btn-group">
                       <button type="button" class="btn bg-akatsuki text-white mdi mdi-dots-vertical" data-toggle="modal" data-target="#modal-details" onclick="details({{producto.id}})">Info</button>
@@ -139,7 +143,7 @@
 
 <!-- Modal Info -->
 <div class="modal fade" id="modal-details" tabindex="-1" >
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 id="modalDetails-title" class="modal-title">Nombre del producto</h5>

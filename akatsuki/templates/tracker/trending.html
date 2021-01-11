@@ -1,6 +1,6 @@
 {% extends "tracker/template.html" %}
 {% load static %}
-{% block title %}Mis productos{% endblock %}
+{% block title %}Trending{% endblock %}
 {% block script %}
 <script defer type="text/javascript" src="{% static 'js/trending.js' %}"></script>
 <script>
@@ -12,8 +12,8 @@
 
 <div class="container-fluid">
   <div class="container-lg">
-    <div class="row my-5 justify-content-between">
-      <div class="col-7">
+    <div class="row my-5 justify-content-between align-items-center">
+      <div class="col-12 col-sm-6 col-lg-8">
          <h1 class="display-4">Trending</h1>
       </div>
     </div>
@@ -26,8 +26,13 @@
               <div class="card-body">
                 <h5 class="card-title">{{ producto.nombre }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ producto.tienda|title }}</h6>
-                <p class="card-text">${{ producto.precio }} <br>
-                {{ producto.subscripciones }} Suscritos</p>
+                {% if disponibilidad %}
+                  <p class="card-text">${{ producto.precio }} <br>
+                  {{ producto.subscripciones }} Suscritos</p>
+                {% else %}
+                  <p class="card-text">{{ producto.precio }} <br>
+                  {{ producto.subscripciones }} Suscritos</p>
+                {% endif %}
                 {% if user %}
                   {% if producto.agregado %}
                     <button id="btn-product-{{producto.id}}-disabled" class="btn btn-outline-primary btn-block mdi mdi-check" disabled>Añadido</button>
@@ -44,6 +49,21 @@
           </div>
           {% endfor %}
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <ul class="pagination justify-content-center">
+          {% for i in n_productos %}
+            {% if forloop.counter == pagina %}
+              <li class="page-item active"><a class="page-link" disabled>{{forloop.counter}}</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="/tracker/trending/pagina={{forloop.counter}}">{{forloop.counter}}</a></li>
+            {% endif %}
+
+          {% endfor %}
+        </ul>
+
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.conf import settings 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -27,17 +27,17 @@ def registerPage(request):
                 username = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password1')
                 messages.success(request, 'La cuenta fue creada para ' + username)
-                
-                msg_html = render_to_string('mails/welcome.html', {'user': username})
+
+                msg_html = render_to_string('mails/html/welcome.html', {'user': username})
 
                 send_mail(
-                    'Cuenta Creada en AkatsukiTracker', #Titulo  
+                    'Cuenta Creada en AkatsukiTracker', #Titulo
                     "", #Mensaje
                     settings.EMAIL_HOST_USER , #Emisor
                     [form.cleaned_data.get('email')], #Destinatario
                     html_message=msg_html, #Template
                 )
-                
+
                 user = authenticate(request, username=username, password=password)
                 login(request, user)
                 return redirect('dashboard')

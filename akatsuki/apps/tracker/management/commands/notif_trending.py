@@ -1,5 +1,5 @@
-from django.conf import settings 
-from django.core.mail import send_mail 
+from django.conf import settings
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 from django.contrib.auth.models import User
@@ -46,7 +46,7 @@ class Command(BaseCommand):
             for tipo in tipos:
                 historiales.append(Historial.objects.filter(producto = producto, tipo=tipo)[::-1][0])
             for hist in historiales:
-                if hist.precio < precio_bajo:
+                if hist.precio < precio_bajo and -1 < hist.precio:
                     precio_bajo = hist.precio
                     tipo_precio = hist.tipo
 
@@ -59,12 +59,12 @@ class Command(BaseCommand):
 
         for user in Usuario.objects.all():
             if user.notificaciones:
-                
-                msg_html = render_to_string('mails/trending.html', {'user': user.username, 
+
+                msg_html = render_to_string('mails/html/trending.html', {'user': user.username,
                                                                     'productos': producto_a_mandar})
 
                 send_mail(
-                '¡Estos son los productos más populares de esta semana!', #Titulo  
+                '¡Estos son los productos más populares de esta semana!', #Titulo
                 "", #Mensaje
                 settings.EMAIL_HOST_USER , #Emisor
                 [user.email], #Destinatario
