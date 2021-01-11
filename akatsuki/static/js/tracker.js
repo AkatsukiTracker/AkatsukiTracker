@@ -156,6 +156,12 @@ function render_graph(data){
 
     dataset.data = precios
   }
+
+  var elem =  document.getElementById('canvas-chart')
+  elem.parentNode.removeChild(elem);
+
+  document.getElementById("col-chart").innerHTML = `<canvas id="canvas-chart" width="400" height="200"></canvas>`
+
   if (chart.labels.length >= 2){
     myLineChart = new Chart(document.getElementById('canvas-chart').getContext('2d'), {
       type: 'line',
