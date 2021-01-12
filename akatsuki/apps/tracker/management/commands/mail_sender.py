@@ -23,7 +23,7 @@ class Command(BaseCommand):
         for producto in productos:
           if ProductoUsuario.objects.filter(user=user, producto=producto)[0].notificaciones:
 
-            historiales = Historial.objects.filter(producto=producto)
+            historiales = Historial.objects.order_by('fecha').filter(producto=producto)
             precios = {}
             for historial in historiales:
 
@@ -37,6 +37,7 @@ class Command(BaseCommand):
 
             mandar = False
 
+
             for i in precios:
               precio_anterior = precios[i][::-1][1]
               ultimo_precio = precios[i][::-1][0]
@@ -48,13 +49,11 @@ class Command(BaseCommand):
                 mandar = True
 
             if mandar:
-
               link_img = producto.img_link
 
               link_producto = producto.link
 
-
-              msg_html = render_to_string('mails/offer.html', {'user': user.username,
+              msg_html = render_to_string('mails/html/offer.html', {'user': user.username,
                                                               'precio_bajo': precio_bajo,
                                                               'precio_alto': precio_alto,
                                                               'img': link_img,

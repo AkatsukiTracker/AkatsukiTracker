@@ -43,7 +43,7 @@
               <tr>
                 <th class="align-middle">Producto</th>
                 <th class="align-middle d-none d-sm-table-cell">Tienda</th>
-                <th class="align-middle" >Ultimo precio</th>
+                <th class="align-middle" >Último precio</th>
                 <th></th>
               </tr>
             </thead>
@@ -77,7 +77,7 @@
         <div class="col-12 col-md-6 mt-5">
           <div class="row justify-content-center">
             <div class="col-10">
-              <h1 class="display-4 text-center">No hay nada por aqui</h1>
+              <h1 class="display-4 text-center">No hay nada por aquí</h1>
             </div>
           </div>
           <div class="row justify-content-center mt-4">
@@ -123,8 +123,8 @@
           <div class="col-12 col-md-8 col-lg-6">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Como agregar productos</h5>
-                Debes hacer doble click en el link que aparece en la parte superior de la pantalla, copiarlo, y pegarlo aca.
+                <h5 class="card-title">Cómo agregar productos</h5>
+                Debes hacer doble click en el link que aparece en la parte superior de la pantalla, copiarlo, y pegarlo acá.
                 <img class="img-responsive d-flex mx-auto mt-2 border rounded" src="{% static 'img/tutorial-pc.png' %}">
               </div>
             </div>
@@ -153,7 +153,7 @@
       </div>
       <div class="modal-body">
         <div class="row" id="row-chart">
-          <div class="col">
+          <div class="col" id="col-chart">
             <canvas id="canvas-chart" width="400" height="200"></canvas>
           </div>
         </div>
@@ -161,7 +161,7 @@
           <div class="col">
             <div class="card">
               <div class="card-body">
-                No hay suficientes datos todavia.
+                No hay suficientes datos todavía.
               </div>
             </div>
           </div>
@@ -182,6 +182,7 @@
         </div>
       </div>
       <div class="modal-footer">
+        <a  id="modalDetails-link" class="btn btn-outline-secondary" href="">Tienda</a>
         <button id="modalDetails-delete" class="btn btn-outline-secondary mdi-trash">Eliminar producto</button>
         <a id="modalDetails-deleteConfirm" class="btn bg-akatsuki text-white mdi mdi-trash" href="" hidden>Eliminar</a>
         <button id="modalDetails-deleteNotConfirm" data-dismiss="modal" class="btn bg-akatsuki text-white">Ok</button>
