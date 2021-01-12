@@ -965,15 +965,15 @@ class SteamScraper(BaseScraper):
                     ruta = "div.game_purchase_price.price"
                     self.path = "div.game_purchase_price.price/0"
                     self.status = 1
-                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])               
+                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip())               
             else:
                 if ruta == "div.game_purchase_price.price":
                     ruta = "div.discount_original_price"
                     self.path = "div.discount_original_price/0"
                     self.status = 1
-                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
+                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text)
                 else:
-                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text.strip().split('\n')[0])
+                    self.precio = string_to_number(soup.select(ruta)[int(indice)].text)
 
             
 
