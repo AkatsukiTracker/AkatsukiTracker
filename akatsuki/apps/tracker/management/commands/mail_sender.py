@@ -39,14 +39,15 @@ class Command(BaseCommand):
 
 
             for i in precios:
-              precio_anterior = precios[i][::-1][1]
-              ultimo_precio = precios[i][::-1][0]
-              media = sum(precios[i])/len(precios[i])
+              if len(precios[i]) > 1:
+                precio_anterior = precios[i][::-1][1]
+                ultimo_precio = precios[i][::-1][0]
+                media = sum(precios[i])/len(precios[i])
 
-              if ultimo_precio < media:
-                precio_bajo = ultimo_precio
-                precio_alto = precio_anterior
-                mandar = True
+                if ultimo_precio < media:
+                    precio_bajo = ultimo_precio
+                    precio_alto = precio_anterior
+                    mandar = True
 
             if mandar:
               link_img = producto.img_link

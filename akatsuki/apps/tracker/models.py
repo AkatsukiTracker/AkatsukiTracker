@@ -40,12 +40,12 @@ class Historial(models.Model):
         return "Historial:   tipo: " + self.tipo + ", fecha: " + str(self.fecha) + ", producto: " + self.producto.nombre
 
 class ProductoUsuario(models.Model):
-    user = models.ForeignKey(User, 
+    user = models.ForeignKey(User,
         on_delete=models.CASCADE,
         related_name='user',
         )
     producto = models.ForeignKey(
-        Producto, 
+        Producto,
         on_delete=models.CASCADE,
         related_name='producto',
         )
